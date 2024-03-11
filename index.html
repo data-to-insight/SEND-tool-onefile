@@ -78,7 +78,7 @@ appComponent.render();
 async function main() {
   let pyodide = await loadPyodide();
   await pyodide.loadPackage("pandas");
-  await pyodide.runPythonAsync()
+  await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
 }
 main();
     </script>
