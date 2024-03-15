@@ -10,6 +10,8 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
    <script src="https://cdn.plot.ly/plotly-2.1.0.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body class="bg-body-tertiary">
 
@@ -41,9 +43,11 @@
         </div>
         
    <script>
+      window.jsPDF = window.jspdf.jsPDF;
+
       const myForm = document.getElementById("myForm");
       const csvFile = document.getElementById("csvFile");
-      document.getElementById("print").disabled = true
+      // document.getElementById("print").disabled = true
       
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();
@@ -135,6 +139,18 @@
       async function pdfFunction () {
         console.log('stuff is happening')
 
+        var source = window.document.getElementsByTagName("plotly-output");
+        var doc = new jsPDF();
+
+        doc.html('some text', {
+          callback: function (doc) {
+            // doc.save();
+          },
+          x: 10,
+          y: 10
+        });
+
+        doc.output("dataurlnewwindow");
       }
    </script>
 
