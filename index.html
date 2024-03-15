@@ -9,6 +9,7 @@
    <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
+   <script src="https://cdn.plot.ly/plotly-2.1.0.min.js"></script>
 </head>
 <body class="bg-body-tertiary">
 
@@ -32,11 +33,14 @@
               
               <div class="progress d-none" >
                 <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <input type="plot" id="plot_button" value="plot" class="btn btn-primary"/>
+              </div>             
             </div>
           </form>
+          <form id="plotForm">
+            <input type="submit" id="plot_button" value="plot" class="btn btn-primary"/>
+          </form>
         </div>
+        <div id="plotly-output">...loading pyodide...</div>
    <script>
       const myForm = document.getElementById("myForm");
       const csvFile = document.getElementById("csvFile");
@@ -97,15 +101,42 @@
             df = px.data.iris()
             fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
 
+            fig = fig.to_html(
+              include_plotlyjs=False,
+              full_html=False,
+              default_height='350px'
+            )
+
             js.document.fig = fig
             `);
           pyodide.globals.get("fig")
           $('.progress-bar').css("width", "100" + '%')
-          document.getElementById("plot_button").disabled = false  
+          document.getElementById("plot_button").disabled = false
+          
+          let plotly = document.getElementById("plotly-output")
+          render_plot(plotly, document.fig)
           }
+          
+
+          function render_plot(container, plot_html) {
+            let range = document.createRange();
+            range.selectNode(container);
+            let documentFragment = range.createContextualFragment(plot_html);
+            while (container.hasChildNodes()) {  
+              container.removeChild(container.firstChild);
+            }
+            container.appendChild(documentFragment);
+            container.className = "plotly";
+          };
+
           main()  
-            
+          
       });
+
+        // const plotForm = document.getElementById("plotForm")
+        // plotForm.addEventListener("plot", function plot_graph(graph_object) {
+        //   console.log('plot pressed!');
+        // });
    </script>
 </body>
 </html>
