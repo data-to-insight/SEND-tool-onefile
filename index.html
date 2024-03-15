@@ -33,18 +33,17 @@
               
               <div class="progress d-none" >
                 <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>             
+              </div> 
+              <div id="plotly-output">Please submit data files.</div>            
             </div>
           </form>
-          <form id="plotForm">
-            <input type="submit" id="plot_button" value="plot" class="btn btn-primary"/>
-          </form>
+          <button id="print" type="button" class="btn btn-primary" onclick="pdfFunction()">Save to pdf</button>
         </div>
-        <div id="plotly-output">...loading pyodide...</div>
+        
    <script>
       const myForm = document.getElementById("myForm");
       const csvFile = document.getElementById("csvFile");
-      document.getElementById("plot_button").disabled = true
+      document.getElementById("print").disabled = true
       
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();
@@ -111,7 +110,7 @@
             `);
           pyodide.globals.get("fig")
           $('.progress-bar').css("width", "100" + '%')
-          document.getElementById("plot_button").disabled = false
+          document.getElementById("print").disabled = false
           
           let plotly = document.getElementById("plotly-output")
           render_plot(plotly, document.fig)
@@ -133,10 +132,11 @@
           
       });
 
-        // const plotForm = document.getElementById("plotForm")
-        // plotForm.addEventListener("plot", function plot_graph(graph_object) {
-        //   console.log('plot pressed!');
-        // });
+      async function pdfFunction () {
+        console.log('stuff is happening')
+
+      }
    </script>
+
 </body>
 </html>
