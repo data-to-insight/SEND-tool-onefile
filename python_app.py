@@ -63,5 +63,8 @@ for key, df in dfs.items():
             modules[module_name] = df
             
 
+
 print(modules.keys())
+js.document.write(modules.keys())
+
 print(module_columns.keys())
