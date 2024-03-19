@@ -64,6 +64,5 @@ for key, df in dfs.items():
             modules[module_name] = df
 
 
-print(modules.keys())
-
-print(module_columns.keys())
+if len(modules.keys()) != 5:
+    js.alert(f'Modules found {modules.keys()}, please check column names.')
