@@ -61,7 +61,7 @@ for key, df in dfs.items():
     for module_name, column_list in module_columns.items():
         if list(df.columns) == column_list:
             modules[module_name] = df
-            del module_columns[module_name]
+            
 
 print(modules.keys())
 print(module_columns.keys())
