@@ -4,7 +4,7 @@ from js import files
 import pyodide_js
 import json
 import io
-import plotly as px
+import plotly.express as px
 
 dfs = {}
 for i, v in enumerate(files):
