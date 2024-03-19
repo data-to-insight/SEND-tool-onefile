@@ -11,42 +11,39 @@ function run_analysis () {
     reader.readAsText(file);
     window.files = csv_array
    })
-   
-   async function run_python() {
-     let pyodide = await loadPyodide();
-     await pyodide.loadPackage(["pandas", "micropip"]);
-     
-     // load initial python packages
-     await pyodide.runPythonAsync(` 
-     import micropip
-     await micropip.install('plotly==5.0.0')
-     `)
+   run_python();
+}
 
-     // run main Python script
-     await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
-     pyodide.globals.get("fig")
-   
-   // document.getElementById("print").disabled = false
-     let plotly = document.getElementById("plotly-output")
-     render_plot(plotly, document.fig)
-   }
+async function run_python() {
+    let pyodide = await loadPyodide();
+    await pyodide.loadPackage(["pandas", "micropip"]);
+    
+    // load initial python packages
+    await pyodide.runPythonAsync(` 
+    import micropip
+    await micropip.install('plotly==5.0.0')
+    `)
 
-   function render_plot(container, plot_html) {
-     let range = document.createRange();
-     range.selectNode(container);
-     let documentFragment = range.createContextualFragment(plot_html);
-     while (container.hasChildNodes()) {  
-       container.removeChild(container.firstChild);
-     }
-     container.appendChild(documentFragment);
-     container.className = "plotly";
-     $(".spinner").addClass('d-none');
-   };
+    // run main Python script
+    await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
+    pyodide.globals.get("fig")
 
-   run_python();  
-   
- }  
+// document.getElementById("print").disabled = false
+    let plotly = document.getElementById("plotly-output")
+    render_plot(plotly, document.fig)
+}
 
+function render_plot(container, plot_html) {
+    let range = document.createRange();
+    range.selectNode(container);
+    let documentFragment = range.createContextualFragment(plot_html);
+    while (container.hasChildNodes()) {  
+    container.removeChild(container.firstChild);
+    }
+    container.appendChild(documentFragment);
+    container.className = "plotly";
+    $(".spinner").addClass('d-none');
+};  
 
  async function pdfFunction () {
     console.log('stuff is happening')
