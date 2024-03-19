@@ -1,3 +1,26 @@
+import pandas as pd
+import js
+from js import files
+import pyodide_js
+import json
+import io
+import plotly as px
+
+dfs = {}
+for i, v in enumerate(files):
+    dfs[i] = pd.read_csv(io.StringIO(files[i]))
+
+df = px.data.iris()
+fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+
+fig = fig.to_html(
+    include_plotlyjs=False,
+    full_html=False,
+    default_height='350px'
+)
+
+js.document.fig = fig
+
 module_columns = {
     "m1": [
         "Person ID",
@@ -66,3 +89,7 @@ for key, df in dfs.items():
 
 if len(modules.keys()) != 5:
     js.alert(f'Modules found {modules.keys()}, please check column names.')
+
+modules['m1']["Dob (ccyy-mm-dd)"] = pd.to_datetime(modules['m1']["Dob (ccyy-mm-dd)"])
+
+

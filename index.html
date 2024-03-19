@@ -78,33 +78,37 @@
             await micropip.install('plotly==5.0.0')
             `)
 
-            await pyodide.runPythonAsync(`
-            import pandas as pd
-            import js
-            from js import files
-            import pyodide_js
-            import json
-            import io
-            import plotly.express as px
-            `)
+            await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
+          }
+        
+
+            // await pyodide.runPythonAsync(`
+            // import pandas as pd
+            // import js
+            // from js import files
+            // import pyodide_js
+            // import json
+            // import io
+            // import plotly.express as px
+            // `)
 
 
-            await pyodide.runPythonAsync(`
-            dfs = {}
-            for i, v in enumerate(files):
-              dfs[i] = pd.read_csv(io.StringIO(files[i]))
+            // await pyodide.runPythonAsync(`
+            // dfs = {}
+            // for i, v in enumerate(files):
+            //   dfs[i] = pd.read_csv(io.StringIO(files[i]))
 
-            df = px.data.iris()
-            fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+            // df = px.data.iris()
+            // fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
 
-            fig = fig.to_html(
-              include_plotlyjs=False,
-              full_html=False,
-              default_height='350px'
-            )
+            // fig = fig.to_html(
+            //   include_plotlyjs=False,
+            //   full_html=False,
+            //   default_height='350px'
+            // )
 
-            js.document.fig = fig
-            `);
+            // js.document.fig = fig
+            // `);
           pyodide.globals.get("fig")
           // document.getElementById("print").disabled = false
           
