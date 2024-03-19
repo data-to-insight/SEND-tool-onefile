@@ -1,7 +1,8 @@
 module_columns = {
     "m1": [
         "Person ID",
-        "Surname Forename",
+        "Surname",
+        "Forename",
         "Dob (ccyy-mm-dd)",
         "Gender",
         "Ethnicity",
@@ -61,10 +62,8 @@ for key, df in dfs.items():
     for module_name, column_list in module_columns.items():
         if list(df.columns) == column_list:
             modules[module_name] = df
-            
 
 
 print(modules.keys())
-js.document.write(modules.keys())
 
 print(module_columns.keys())
