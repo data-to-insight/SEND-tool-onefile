@@ -47,7 +47,7 @@
 
       const myForm = document.getElementById("myForm");
       const csvFile = document.getElementById("csvFile");
-      // document.getElementById("print").disabled = true
+      document.getElementById("print").disabled = true
       
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();
@@ -118,6 +118,8 @@
           
           let plotly = document.getElementById("plotly-output")
           render_plot(plotly, document.fig)
+
+          await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
           }
           
 
@@ -132,7 +134,7 @@
             container.className = "plotly";
           };
 
-          main()  
+          main();  
           
       });
 
