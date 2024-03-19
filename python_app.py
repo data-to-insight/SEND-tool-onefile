@@ -91,7 +91,7 @@ for key, df in dfs.items():
 if len(modules.keys()) != 5:
     js.alert(f'Modules found {modules.keys()}, please check column names.')
 
-modules['m1']["Dob (ccyy-mm-dd)"] = pd.to_datetime(modules['m1']["Dob (ccyy-mm-dd)"])
+modules['m1']["Dob (ccyy-mm-dd)"] = pd.to_datetime(modules['m1']["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce")
 modules['m1']["Age"] = (pd.to_datetime('today') - modules['m1']["Dob (ccyy-mm-dd)"])/np.timedelta64(1, 'Y')
 modules['m1']["Age"] = modules['m1']["Age"].round().astype('int', errors='ignore') 
 
