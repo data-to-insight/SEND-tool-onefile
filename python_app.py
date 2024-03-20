@@ -95,9 +95,9 @@ modules["m1"]["Age"] = (
 ) / np.timedelta64(1, "Y")
 modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore")
 
-print(modules["m1"]["Age"])
+# print(modules["m1"]["Age"])
 
-gender_plot = px.histogram(modules["m1"], 
+gender_plot = px.histogram((modules["m1"][modules["m1"]["Gender"] != 9]), 
                            x="Age",
                            category_orders=dict(Age=list(modules["m1"]["Age"].unique())), 
                            color="Gender")
