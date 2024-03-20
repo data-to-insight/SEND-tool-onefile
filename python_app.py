@@ -97,17 +97,35 @@ modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore
 
 # print(modules["m1"]["Age"])
 
-gender_plot = px.histogram((modules["m1"][modules["m1"]["Gender"] != 9]), 
-                           x="Age",
-                           category_orders=dict(Age=list(modules["m1"]["Age"].unique())), 
-                           color="Gender")
-gender_plot = gender_plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
+gender_plot = px.histogram(
+    (modules["m1"][modules["m1"]["Gender"] != 9]),
+    x="Age",
+    category_orders=dict(Age=list(modules["m1"]["Age"].unique())),
+    color="Gender",
+)
+gender_plot = gender_plot.to_html(
+    include_plotlyjs=False, full_html=False, default_height="350px"
+)
 js.document.gender_plot = gender_plot
 
-ethnicity_plot = px.histogram((modules["m1"]), 
-                           x="Ethnicity",
-                           category_orders=dict(Age=list(modules["m1"]["Ethnicity"].unique())))
-ethnicity_plot = ethnicity_plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
+ethnicity_plot = px.histogram(
+    (modules["m1"]),
+    x="Ethnicity",
+    category_orders=dict(Age=list(modules["m1"]["Ethnicity"].unique())),
+)
+ethnicity_plot = ethnicity_plot.to_html(
+    include_plotlyjs=False, full_html=False, default_height="350px"
+)
 js.document.ethnicity_plot = ethnicity_plot
 
 
+assessment_outcome_plot = px.pie(
+    modules["m3"]["Assessment Outcome To Issue EHCP"][
+        modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"
+    ],
+    values="Assessment Outcome To Issue EHCP",
+)
+assessment_outcome_plot = assessment_outcome_plot.to_html(
+    include_plotlyjs=False, full_html=False, default_height="350px"
+)
+js.document.assessment_outcome_plot
