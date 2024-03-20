@@ -120,9 +120,7 @@ js.document.ethnicity_plot = ethnicity_plot
 
 
 assessment_outcome_plot = px.pie(
-    modules["m3"]["Assessment Outcome To Issue EHCP"][
-        modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"
-    ],
+    modules["m3"][modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"],
     values=modules["m3"]["Assessment Outcome To Issue EHCP"].value_counts()
 )
 assessment_outcome_plot = assessment_outcome_plot.to_html(
