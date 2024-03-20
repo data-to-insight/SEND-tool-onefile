@@ -123,7 +123,8 @@ assessment_outcome_plot = px.pie(
     modules["m3"]["Assessment Outcome To Issue EHCP"][
         modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"
     ],
-    values="Assessment Outcome To Issue EHCP",
+    values=modules["m3"]["Assessment Outcome To Issue EHCP"].value_counts(),
+    names="Assessment Outcome To Issue EHCP"
 )
 assessment_outcome_plot = assessment_outcome_plot.to_html(
     include_plotlyjs=False, full_html=False, default_height="350px"
