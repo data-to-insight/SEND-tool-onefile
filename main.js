@@ -29,8 +29,8 @@ async function run_python() {
     pyodide.globals.get("fig")
 
 // document.getElementById("print").disabled = false
-    let plotly = document.getElementById("plotly-output")
-    render_plot(plotly, document.fig)
+    let gender_plot = document.getElementById("gender_plot")
+    render_plot(gender_plot, document.fig)
 }
 
 function render_plot(container, plot_html) {

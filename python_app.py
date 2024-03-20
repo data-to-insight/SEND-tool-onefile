@@ -11,16 +11,12 @@ dfs = {}
 for i, v in enumerate(files):
     dfs[i] = pd.read_csv(io.StringIO(files[i]))
 
-df = px.data.iris()
-fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
+# df = px.data.iris()
+# fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
 
-fig = fig.to_html(
-    include_plotlyjs=False,
-    full_html=False,
-    default_height='350px'
-)
+# fig = fig.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
 
-js.document.fig = fig
+# js.document.fig = fig
 
 module_columns = {
     "m1": [
@@ -89,12 +85,21 @@ for key, df in dfs.items():
 
 
 if len(modules.keys()) != 5:
-    js.alert(f'Modules found {modules.keys()}, please check column names.')
+    js.alert(f"Modules found {modules.keys()}, please check column names.")
 
-modules['m1']["Dob (ccyy-mm-dd)"] = pd.to_datetime(modules['m1']["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce")
-modules['m1']["Age"] = (pd.to_datetime('today') - modules['m1']["Dob (ccyy-mm-dd)"])/np.timedelta64(1, 'Y')
-modules['m1']["Age"] = modules['m1']["Age"].round().astype('int', errors='ignore') 
+modules["m1"]["Dob (ccyy-mm-dd)"] = pd.to_datetime(
+    modules["m1"]["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
+)
+modules["m1"]["Age"] = (
+    pd.to_datetime("today") - modules["m1"]["Dob (ccyy-mm-dd)"]
+) / np.timedelta64(1, "Y")
+modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore")
 
-print(modules['m1']["Age"])
+print(modules["m1"]["Age"])
+
+gender_plot = px.bar(modules["m1"], x="Age", color="Gender")
+gender_plot = gender_plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
+
+js.document.gender_plot = gender_plot
 
 
