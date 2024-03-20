@@ -31,6 +31,9 @@ async function run_python() {
 // document.getElementById("print").disabled = false
     let plot_gender = document.getElementById("plot_gender")
     render_plot(plot_gender, document.gender_plot)
+
+    let plot_ethnicity = document.getElementById("plot_ethnicity")
+    render_plot(plot_ethnicity, document.ethnicity_plot)
 }
 
 function render_plot(container, plot_html) {

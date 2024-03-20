@@ -102,7 +102,12 @@ gender_plot = px.histogram((modules["m1"][modules["m1"]["Gender"] != 9]),
                            category_orders=dict(Age=list(modules["m1"]["Age"].unique())), 
                            color="Gender")
 gender_plot = gender_plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
-
 js.document.gender_plot = gender_plot
+
+ethnicity_plot = px.histogram((modules["m1"]), 
+                           x="Ethnicity",
+                           category_orders=dict(Age=list(modules["m1"]["Ethnicity"].unique())))
+ethnicity_plot = ethnicity_plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
+js.document.ethnicity_plot = ethnicity_plot
 
 
