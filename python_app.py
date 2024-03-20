@@ -97,7 +97,10 @@ modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore
 
 print(modules["m1"]["Age"])
 
-gender_plot = px.bar(modules["m1"], x="Age", color="Gender")
+gender_plot = px.histogram(modules["m1"], 
+                           x="Age",
+                           category_orders=dict(Age=list(modules["m1"]["Age"].unique())), 
+                           color="Gender")
 gender_plot = gender_plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
 
 js.document.gender_plot = gender_plot

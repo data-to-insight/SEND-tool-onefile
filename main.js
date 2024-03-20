@@ -29,8 +29,8 @@ async function run_python() {
     pyodide.globals.get("fig")
 
 // document.getElementById("print").disabled = false
-    let gender_plot = document.getElementById("gender_plot")
-    render_plot(gender_plot, document.fig)
+    let plot_gender = document.getElementById("plot_gender")
+    render_plot(plot_gender, document.gender_plot)
 }
 
 function render_plot(container, plot_html) {
