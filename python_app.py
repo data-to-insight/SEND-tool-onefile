@@ -125,4 +125,4 @@ assessment_outcome_plot =  px.pie(ass_outcomes, values='count', names='Assessmen
 assessment_outcome_plot = assessment_outcome_plot.to_html(
     include_plotlyjs=False, full_html=False, default_height="350px"
 )
-js.document.assessment_outcome_plot
+js.document.assessment_outcome_plot = assessment_outcome_plot
