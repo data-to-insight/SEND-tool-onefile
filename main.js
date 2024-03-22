@@ -37,6 +37,9 @@ async function run_python() {
 
     let plot_assessment_outcomes = document.getElementById("plot_assessment_outcomes")
     render_plot(plot_assessment_outcomes, document.assessment_outcome_plot)
+
+    let plot_request_timeliness = document.getElementById("plot_request_timeliness")
+    render_plot(plot_request_timeliness, document.request_timeliness_plot)
 }
 
 function render_plot(container, plot_html) {

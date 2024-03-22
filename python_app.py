@@ -1,3 +1,9 @@
+"""
+Plots to do:
+Normalised ethnicity breakdown vs national results
+Plot national age/gender breakdown on age plot
+"""
+
 import pandas as pd
 import js
 from js import files
@@ -119,11 +125,38 @@ ethnicity_plot = ethnicity_plot.to_html(
 js.document.ethnicity_plot = ethnicity_plot
 
 
-ass_outcomes = modules["m3"][modules["m3"]['Assessment Outcome To Issue EHCP'] != "H"]
-ass_outcomes = ass_outcomes.groupby(['Assessment Outcome To Issue EHCP'])['Assessment Outcome To Issue EHCP'].count().reset_index(name='count')
+ass_outcomes = modules["m3"][modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"]
+ass_outcomes = (
+    ass_outcomes.groupby(["Assessment Outcome To Issue EHCP"])[
+        "Assessment Outcome To Issue EHCP"
+    ]
+    .count()
+    .reset_index(name="count")
+)
 
-assessment_outcome_plot =  px.pie(ass_outcomes, values='count', names='Assessment Outcome To Issue EHCP')
+assessment_outcome_plot = px.pie(
+    ass_outcomes, values="count", names="Assessment Outcome To Issue EHCP"
+)
 assessment_outcome_plot = assessment_outcome_plot.to_html(
     include_plotlyjs=False, full_html=False, default_height="350px"
 )
 js.document.assessment_outcome_plot = assessment_outcome_plot
+
+# Request to outcome timeliness
+requests = modules["m2"][modules["m2"].notna()]
+
+requests["Request Timeliness"] = pd.to_datetime(
+    requests["Request Outcome Date"], format="%d/%m/%Y"
+) - pd.to_datetime(requests["Date Request Was Received"], format="%d/%m/%Y")
+
+requests["Request Timeliness"] = (
+    (requests["Request Timeliness"] / np.timedelta64(1, "D"))
+    .round()
+    .astype("int", errors="ignore")
+)
+
+request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
+st.plotly_chart(request_timeliness_plot)
+js.document.request_timeliness_plot = request_timeliness_plot.to_html(
+    include_plotlyjs=False, full_html=False, default_height="350px"
+)
