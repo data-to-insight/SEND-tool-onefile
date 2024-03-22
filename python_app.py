@@ -156,7 +156,6 @@ requests["Request Timeliness"] = (
 )
 
 request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
-st.plotly_chart(request_timeliness_plot)
 js.document.request_timeliness_plot = request_timeliness_plot.to_html(
     include_plotlyjs=False, full_html=False, default_height="350px"
 )
