@@ -3,6 +3,35 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
+from urllib.request import urlopen
+import json
+import requests
+
+
+
+'''
+conversion rates from place to place
+volummes of things happening by category by period eg closure reason by year
+treat like an updateable written report
+
+age
+gender
+ethnic background
+by location
+
+by age/gender compared to population
+by ethnicity compared to population
+by location if possible
+by duration since plan started
+And then similar sets for:
+- EHCPs issued this year
+Assessments completed this year (plus outcome breakdown)
+Assessments open now (plus assessment duration)
+Requests (plus request outcome)
+ 
+click through drilldowns would be cool
+Same chart appearing next to each chart per cohort (so structure by stage or by cohort)
+'''
 
 module_columns = {
     "m1": [
@@ -110,4 +139,18 @@ if uploaded_files:
     request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
     st.plotly_chart(request_timeliness_plot)
 
-#     # postcode_count = modules["m1"].groupby('Postcode')['Postcode'].count().reset_index(name="count")
+    postcode_count = modules["m1"].groupby('Postcode')['Postcode'].count().reset_index(name="count")
+
+
+    with urlopen('https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json') as response:
+    local_authorities = json.load(response)
+
+    la_data = []
+    # Iterative over JSON
+    for i in range(len(Local_authorities["features"])):
+        # Extract local authority name
+        la = Local_authorities["features"][i]['properties']['LAD21NM']
+        # Assign the local authority name to a new 'id' property for later linking to dataframe
+        Local_authorities["features"][i]['id'] = la
+        # While I'm at it, append local authority name to a list to make some dummy data to test, along with i for a value to test on map
+        la_data.append([la,i])
