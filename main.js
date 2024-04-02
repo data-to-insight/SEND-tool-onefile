@@ -15,7 +15,7 @@ function run_analysis () {
 }
 
 async function run_python() {
-    let postcode_data = $.getJSON('https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json', function(data) {
+    window.postcode_data = $.getJSON('https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json', function(data) {
       return data
     });
 

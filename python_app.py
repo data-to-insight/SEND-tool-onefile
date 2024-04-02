@@ -17,7 +17,10 @@ dfs = {}
 for i, v in enumerate(files):
     dfs[i] = pd.read_csv(io.StringIO(files[i]))
 
+
+postcode_data = json.load(postcode_data)
 print(postcode_data)
+
 # df = px.data.iris()
 # fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
 
