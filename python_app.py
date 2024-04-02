@@ -18,8 +18,7 @@ for i, v in enumerate(files):
     dfs[i] = pd.read_csv(io.StringIO(files[i]))
 
 
-postcode_data = json.load(postcode_data)
-print(postcode_data)
+print(type(postcode_data))
 
 # df = px.data.iris()
 # fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
@@ -161,5 +160,39 @@ requests["Request Timeliness"] = (
 
 request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
 js.document.request_timeliness_plot = request_timeliness_plot.to_html(
+    include_plotlyjs=False, full_html=False, default_height="350px"
+)
+
+la_data = []
+# Iterative over JSON
+for i in range(len(postcode_data["features"])):
+    # Extract local authority name
+    la = postcode_data["features"][i]["properties"]["LAD21NM"]
+    # Assign the local authority name to a new 'id' property for later linking to dataframe
+    postcode_data["features"][i]["id"] = la
+    # While I'm at it, append local authority name to a list to make some dummy data to test, along with i for a value to test on map
+    la_data.append([la, i])
+
+
+# turn dummy data into a dataframe
+df = pd.DataFrame(la_data)
+# update column names
+df.columns = ["LA", "Val"]
+
+fig = px.choropleth_mapbox(
+    df,
+    geojson=Local_authorities,
+    locations="LA",
+    color="Val",
+    featureidkey="properties.LAD21NM",
+    color_continuous_scale="Viridis",
+    mapbox_style="carto-positron",
+    center={"lat": 55.09621, "lon": -4.0286298},
+    zoom=4.2,
+    labels={"val": "value"},
+)
+
+fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+js.document.fig_plot = fig.to_html(
     include_plotlyjs=False, full_html=False, default_height="350px"
 )

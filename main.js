@@ -46,6 +46,9 @@ async function run_python() {
 
     let plot_request_timeliness = document.getElementById("plot_request_timeliness")
     render_plot(plot_request_timeliness, document.request_timeliness_plot)
+
+    let plot_fig = document.getElementById("plot_fig")
+    render_plot(plot_fig, document.fig_plot)
 }
 
 function render_plot(container, plot_html) {
