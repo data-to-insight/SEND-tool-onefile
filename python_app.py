@@ -6,7 +6,7 @@ Plot national age/gender breakdown on age plot
 
 import pandas as pd
 import js
-from js import files
+from js import files, postcode_data
 import pyodide_js
 import json
 import io
@@ -17,6 +17,7 @@ dfs = {}
 for i, v in enumerate(files):
     dfs[i] = pd.read_csv(io.StringIO(files[i]))
 
+print(postcode_data)
 # df = px.data.iris()
 # fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
 

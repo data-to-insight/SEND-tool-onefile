@@ -3,13 +3,13 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 
-from urllib.request import urlopen
+import urllib
+import urllib3
 import json
 import requests
 
 
-
-'''
+"""
 conversion rates from place to place
 volummes of things happening by category by period eg closure reason by year
 treat like an updateable written report
@@ -31,7 +31,7 @@ Requests (plus request outcome)
  
 click through drilldowns would be cool
 Same chart appearing next to each chart per cohort (so structure by stage or by cohort)
-'''
+"""
 
 module_columns = {
     "m1": [
@@ -139,18 +139,33 @@ if uploaded_files:
     request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
     st.plotly_chart(request_timeliness_plot)
 
-    postcode_count = modules["m1"].groupby('Postcode')['Postcode'].count().reset_index(name="count")
+    postcode_count = (
+        modules["m1"].groupby("Postcode")["Postcode"].count().reset_index(name="count")
+    )
 
+    # with urlopen('https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json') as response:
+    #     local_authorities = json.load(response)
 
-    with urlopen('https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json') as response:
-    local_authorities = json.load(response)
+    # urlData = "https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json"
+    # webURL = urllib.request.urlopen(urlData)
+    # data = webURL.read()
+    # encoding = webURL.info().get_content_charset('utf-8')
+    # local_authorities = json.loads(data.decode(encoding))
 
-    la_data = []
-    # Iterative over JSON
-    for i in range(len(Local_authorities["features"])):
-        # Extract local authority name
-        la = Local_authorities["features"][i]['properties']['LAD21NM']
-        # Assign the local authority name to a new 'id' property for later linking to dataframe
-        Local_authorities["features"][i]['id'] = la
-        # While I'm at it, append local authority name to a list to make some dummy data to test, along with i for a value to test on map
-        la_data.append([la,i])
+    req = urllib3.request(
+        method="GET",
+        url="https://github.com/thomasvalentine/Choropleth/blob/34e5a9fde3d58f41e3db6bf74911ef3427c000b8/Local_Authority_Districts_(December_2021)_GB_BFC.json",
+    )
+    # opener = urllib3.build_opener()
+    # f = opener.open(req)
+    # json = json.loads(f.read())
+
+    # la_data = []
+    # # Iterative over JSON
+    # for i in range(len(local_authorities["features"])):
+    #     # Extract local authority name
+    #     la = local_authorities["features"][i]['properties']['LAD21NM']
+    #     # Assign the local authority name to a new 'id' property for later linking to dataframe
+    #     local_authorities["features"][i]['id'] = la
+    #     # While I'm at it, append local authority name to a list to make some dummy data to test, along with i for a value to test on map
+    #     la_data.append([la,i])
