@@ -13,6 +13,10 @@ import requests
 conversion rates from place to place
 volummes of things happening by category by period eg closure reason by year
 treat like an updateable written report
+EHCPs issued this year
+Assessments completed this year (plus outcome breakdown)
+Assessments open now (plus assessment duration)
+Requests (plus request outcome)
 
 age
 gender
@@ -24,10 +28,7 @@ by ethnicity compared to population
 by location if possible
 by duration since plan started
 And then similar sets for:
-- EHCPs issued this year
-Assessments completed this year (plus outcome breakdown)
-Assessments open now (plus assessment duration)
-Requests (plus request outcome)
+
  
 click through drilldowns would be cool
 Same chart appearing next to each chart per cohort (so structure by stage or by cohort)
@@ -91,6 +92,18 @@ module_columns = {
     ],
 }
 
+
+def ehc_ceased_year(df):
+    # currentyly 2 years for dummy data
+    df = df[df["Date EHC Plan Ceased"].notna()]
+    df["Date EHC Plan Ceased"] = pd.to_datetime(
+        df["Date EHC Plan Ceased"], dayfirst=True
+    )  # format="%d/%m/%Y", errors="corece")
+    df["Time Since EHC Ceased"] = np.datetime64("today") - df["Date EHC Plan Ceased"]
+    ehc_ceased_in_year = df[df["Time Since EHC Ceased"] <= pd.Timedelta(730, "d")]
+    st.write(ehc_ceased_in_year)
+
+
 uploaded_files = st.file_uploader("pls", accept_multiple_files=True)
 
 
@@ -143,29 +156,4 @@ if uploaded_files:
         modules["m1"].groupby("Postcode")["Postcode"].count().reset_index(name="count")
     )
 
-    # with urlopen('https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json') as response:
-    #     local_authorities = json.load(response)
-
-    # urlData = "https://raw.githubusercontent.com/thomasvalentine/Choropleth/main/Local_Authority_Districts_(December_2021)_GB_BFC.json"
-    # webURL = urllib.request.urlopen(urlData)
-    # data = webURL.read()
-    # encoding = webURL.info().get_content_charset('utf-8')
-    # local_authorities = json.loads(data.decode(encoding))
-
-    req = urllib3.request(
-        method="GET",
-        url="https://github.com/thomasvalentine/Choropleth/blob/34e5a9fde3d58f41e3db6bf74911ef3427c000b8/Local_Authority_Districts_(December_2021)_GB_BFC.json",
-    )
-    # opener = urllib3.build_opener()
-    # f = opener.open(req)
-    # json = json.loads(f.read())
-
-    # la_data = []
-    # # Iterative over JSON
-    # for i in range(len(local_authorities["features"])):
-    #     # Extract local authority name
-    #     la = local_authorities["features"][i]['properties']['LAD21NM']
-    #     # Assign the local authority name to a new 'id' property for later linking to dataframe
-    #     local_authorities["features"][i]['id'] = la
-    #     # While I'm at it, append local authority name to a list to make some dummy data to test, along with i for a value to test on map
-    #     la_data.append([la,i])
+    ehc_ceased_year(modules["m4"])
