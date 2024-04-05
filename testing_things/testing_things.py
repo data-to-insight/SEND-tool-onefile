@@ -25,6 +25,10 @@ gender
 ethnic background
 by location
 
+EHCP issue but each broken down by gender, ethnic groups (individual), location (first bit of pstcode?)
+
+(age AND gender splits)
+
 by age/gender compared to population
 by ethnicity compared to population
 by location if possible
@@ -270,7 +274,7 @@ if uploaded_files:
     # )
 
     modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
-        modules['m1'], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
+        modules["m1"], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
     )
 
     ehc_ceased_year(modules["m4"])
