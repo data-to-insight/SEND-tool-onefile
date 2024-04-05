@@ -20,6 +20,10 @@ Assessments completed this year (plus outcome breakdown) DONE
 Assessments open now (plus assessment duration) DONE
 Requests (plus request outcome)
 
+How long plans have been open buckets
+
+conversion rates -> req ass plan using parallel_categories
+
 age
 gender
 ethnic background
