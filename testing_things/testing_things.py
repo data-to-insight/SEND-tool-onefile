@@ -11,11 +11,14 @@ import requests
 
 
 """
-For timeframes, ensure that the same child doesn't have huge timeframes when they appear multiple times
+For timeframes, ensure that the same child doesn't have huge timeframes when they appear multiple times - should be fine because of requests record ID
+Find out what H means - this could be inflating numbers
+open timeframes seem long as this is data from 2 years ago!
 
-conversion rates from place to place
+conversion rates from place to place DONE
 volummes of things happening by category by period eg closure reason by year
 
+children appearing multiple times per list as a measure - done
 EHCP closure reason this year DONE
 EHCP closed per year DONE
 EHCPs issued this year DONE
@@ -112,7 +115,7 @@ timeframe = 730
 def hist_for_categories(df):
     hist_gender = px.histogram(df, x="Gender")
     hist_ethnicity = px.histogram(df, x="Ethnicity")
-    hist_age = px.histogram(df, x="Age Group", color="Gender")
+    hist_age = px.histogram(df, x="Age Group", color="Gender", marginal="violin")
 
     return hist_gender, hist_ethnicity, hist_age
 
@@ -259,7 +262,14 @@ def closed_ass_timeframes(df1, df2):
     df = pd.merge(
         df1,
         df2,
-        on=["Requests Record ID", "Gender", "Ethnicity", "Age", "Age Group"],
+        on=[
+            "Person ID",
+            "Requests Record ID",
+            "Gender",
+            "Ethnicity",
+            "Age",
+            "Age Group",
+        ],
         how="inner",
     )
 
@@ -302,7 +312,22 @@ def open_ass_timeframes(df1, df2):
     df1 = module 2
     df2 = module 3
     """
-    uncompleted_assessment_requests = len(df2[df2["Assessment Outcome Date"].isna()])
+    df = pd.merge(
+        df1,
+        df2,
+        on=[
+            "Person ID",
+            "Requests Record ID",
+            "Gender",
+            "Ethnicity",
+            "Age",
+            "Age Group",
+        ],
+        how="inner",
+    )
+    df = df[df["Date Request Was Received"].notna()]
+
+    uncompleted_assessment_requests = len(df[df["Assessment Outcome Date"].isna()])
     uncompleted_requests = go.Figure(
         go.Indicator(value=uncompleted_assessment_requests)
     )
@@ -316,12 +341,6 @@ def open_ass_timeframes(df1, df2):
         }
     )
 
-    df = pd.merge(
-        df1,
-        df2,
-        on=["Requests Record ID", "Gender", "Ethnicity", "Age", "Age Group"],
-        how="inner",
-    )
     df = df[df["Assessment Outcome Date"].isna()]
     df["Date Request Was Received"] = pd.to_datetime(
         df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
@@ -363,15 +382,108 @@ def requests_fn(df):
 
     df["Request Timeframe"] = np.datetime64("today") - df["Date Request Was Received"]
     requests_this_year = df[df["Request Timeframe"] <= pd.Timedelta(timeframe, "d")]
+
     count_requests_this_year = len(requests_this_year)
+    fig_count_req = go.Figure(go.Indicator(value=count_requests_this_year))
+    fig_count_req.update_layout(
+        title={
+            "text": "Requests this year",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
 
     request_outcomes = (
         df.groupby("Request Outcome")["Request Outcome"]
         .count()
         .reset_index(name="count")
     )
+    requests_pie = px.pie(request_outcomes, values="count", names="Request Outcome")
 
-    return count_requests_this_year, request_outcomes
+    gender_hist, ethnicity_hist, age_hist = hist_for_categories(df)
+    gender_hist.update_layout(title="Distribution of gender for requests this year")
+    ethnicity_hist.update_layout(
+        title="Distribution of ethnicity for requests this year"
+    )
+    age_hist.update_layout(title="Distribution of age for requests this year")
+
+    return fig_count_req, gender_hist, ethnicity_hist, age_hist, requests_pie
+
+
+def multiple_appearances(m2, m3):
+    m2 = m2.groupby("Person ID")["Person ID"].count().reset_index(name="count")
+    m2 = m2[m2["count"] > 1]
+    multiple_m2 = go.Figure(go.Indicator(value=len(m2)))
+    multiple_m2.update_layout(
+        title={
+            "text": "Children appearing in the requests list multiple times",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    m3 = m3.groupby("Person ID")["Person ID"].count().reset_index(name="count")
+    m3 = m3[m3["count"] > 1]
+    multiple_m3 = go.Figure(go.Indicator(value=len(m2)))
+    multiple_m3.update_layout(
+        title={
+            "text": "Children appearing in the assessments list multiple times",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    return multiple_m2, multiple_m3
+
+
+def journeys(m2, m3):
+    m2 = m2[m2["Date Request Was Received"].notna()]
+    m2["Request"] = "Request Made"
+
+    m3["Assessment Complete"] = m3["Assessment Outcome Date"].apply(
+        lambda x: (
+            "Assessment Completed" if pd.notna(x) else "Assessment not yet completed"
+        )
+    )
+
+    df = pd.merge(
+        m2,
+        m3[
+            [
+                "Requests Record ID",
+                "Person ID",
+                "Assessment Outcome To Issue EHCP",
+                "Assessment Complete",
+            ]
+        ],
+        on=["Person ID", "Requests Record ID"],
+        how="left",
+    )
+
+    df["Assessment Complete"] = df["Assessment Complete"].fillna(
+        "Assessment uncompleted"
+    )
+    df["Assessment Outcome To Issue EHCP"] = df[
+        "Assessment Outcome To Issue EHCP"
+    ].fillna("No assessment outcome")
+
+    fig = px.parallel_categories(
+        df,
+        dimensions=[
+            "Request",
+            "Request Outcome",
+            "Assessment Complete",
+            "Assessment Outcome To Issue EHCP",
+        ],
+    )
+    fig.update_layout(margin=dict(l=50, r=50, t=50, b=50))
+    st.plotly_chart(fig)
 
 
 def age_buckets(age):
@@ -420,42 +532,6 @@ if uploaded_files:
         for module_name, column_list in module_columns.items():
             if list(df.columns) == column_list:
                 modules[module_name] = df
-
-    # st.write(loaded_files.keys())
-
-    # Assessments pie chart
-    # ass_outcomes = (
-    #     modules["m3"]
-    #     .groupby(["Assessment Outcome To Issue EHCP"])[
-    #         "Assessment Outcome To Issue EHCP"
-    #     ]
-    #     .count()
-    #     .reset_index(name="count")
-    # )
-    # assessment_outcome_plot = px.pie(
-    #     ass_outcomes, values="count", names="Assessment Outcome To Issue EHCP"
-    # )
-    # st.plotly_chart(assessment_outcome_plot)
-
-    # Request to outcome timeliness
-    # requests = modules["m2"][modules["m2"].notna()]
-
-    # requests["Request Timeliness"] = pd.to_datetime(
-    #     requests["Request Outcome Date"], format="%d/%m/%Y"
-    # ) - pd.to_datetime(requests["Date Request Was Received"], format="%d/%m/%Y")
-
-    # requests["Request Timeliness"] = (
-    #     (requests["Request Timeliness"] / np.timedelta64(1, "D"))
-    #     .round()
-    #     .astype("int", errors="ignore")
-    # )
-
-    # request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
-    # st.plotly_chart(request_timeliness_plot)
-
-    # postcode_count = (
-    #     modules["m1"].groupby("Postcode")["Postcode"].count().reset_index(name="count")
-    # )
 
     modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
         modules["m1"], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
@@ -520,4 +596,20 @@ if uploaded_files:
     st.plotly_chart(closed_ass_ethnicity_box)
     st.plotly_chart(closed_ass_age_box)
 
-    requests_fn(modules["m2"])
+    st.title("Requests this year")
+    req_fig, req_gender_box, req_ethnicity_box, req_age_box, req_pie = requests_fn(
+        modules["m2"]
+    )
+
+    st.plotly_chart(req_fig)
+    st.plotly_chart(req_gender_box)
+    st.plotly_chart(req_ethnicity_box)
+    st.plotly_chart(req_age_box)
+    st.plotly_chart(req_pie)
+
+    st.title("Multiple appearances")
+    multiple_m2, multiple_m3 = multiple_appearances(modules["m2"], modules["m3"])
+    st.plotly_chart(multiple_m2)
+    st.plotly_chart(multiple_m3)
+
+    journeys(modules["m2"], modules["m3"])
