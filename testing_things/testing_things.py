@@ -15,9 +15,10 @@ For timeframes, ensure that the same child doesn't have huge timeframes when the
 Find out what H means - this could be inflating numbers
 open timeframes seem long as this is data from 2 years ago!
 
-conversion rates from place to place DONE
+
 volummes of things happening by category by period eg closure reason by year
 
+conversion rates from place to place DONE
 children appearing multiple times per list as a measure - done
 EHCP closure reason this year DONE
 EHCP closed per year DONE
@@ -112,6 +113,58 @@ module_columns = {
 timeframe = 730
 
 
+# Utilities
+def age_buckets(age):
+    if age < 1:
+        return "Under 1"
+    elif age <= 4:
+        return "1-4 years"
+    elif age <= 9:
+        return "5-9 years"
+    elif age <= 15:
+        return "10-15 years"
+    else:
+        return "16 & over"
+
+
+def timeliness_buckets(time_delta):
+    if time_delta <= pd.Timedelta(45, "d"):
+        return "45 days or less"
+    elif time_delta <= pd.Timedelta(90, "d"):
+        return "46-90 days"
+    elif time_delta <= pd.Timedelta(150, "d"):
+        return "91-150 days"
+    elif time_delta <= pd.Timedelta(365, "d"):
+        return "151-365 days"
+    elif time_delta <= pd.Timedelta(720, "d"):
+        return "1-2 years"
+    elif time_delta <= pd.Timedelta(1085, "d"):
+        return "2-3 years"
+    elif time_delta <= pd.Timedelta(1450, "d"):
+        return "3-4 years"
+    else:
+        return "over 4 years"
+
+
+def add_identifiers(identifiers, m2, m3, m4, m5):
+    identifiers["Gender"] = identifiers["Gender"].map(
+        {1: "Male", 2: "Female", 0: "Not Stated", 9: "Neither"}
+    )
+    identifiers["Age"] = pd.to_datetime("today") - pd.to_datetime(
+        identifiers["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
+    )
+    identifiers["Age"] = round((identifiers["Age"] / np.timedelta64(1, "Y")))
+    identifiers["Age Group"] = identifiers["Age"].apply(age_buckets)
+
+    st.write(identifiers)
+    m2 = pd.merge(m2, identifiers, on="Person ID", how="left")
+    m3 = pd.merge(m3, identifiers, on="Person ID", how="left")
+    m4 = pd.merge(m4, identifiers, on="Person ID", how="left")
+    m5 = pd.merge(m5, identifiers, on="Person ID", how="left")
+    return m2, m3, m4, m5
+
+
+# Plotting functions
 def hist_for_categories(df):
     hist_gender = px.histogram(df, x="Gender")
     hist_ethnicity = px.histogram(df, x="Ethnicity")
@@ -128,6 +181,7 @@ def box_for_categories(df, y):
     return box_gender, box_ethnicity, box_age
 
 
+# Calculation functions
 def ehc_ceased_year(df):
     """
     df = module 4
@@ -486,37 +540,145 @@ def journeys(m2, m3):
     st.plotly_chart(fig)
 
 
-def age_buckets(age):
-    if age < 1:
-        return "Under 1"
-    elif age <= 4:
-        return "1-4 years"
-    elif age <= 9:
-        return "5-9 years"
-    elif age <= 15:
-        return "10-15 years"
-    else:
-        return "16 & over"
-
-
-def add_identifiers(identifiers, m2, m3, m4, m5):
-    identifiers["Gender"] = identifiers["Gender"].map(
-        {1: "Male", 2: "Female", 0: "Not Stated", 9: "Neither"}
+def plan_length_plots(m4):
+    m4["EHC Plan Start Date"] = pd.to_datetime(
+        m4["EHC Plan Start Date"], format="%d/%m/%Y"
     )
-    identifiers["Age"] = pd.to_datetime("today") - pd.to_datetime(
-        identifiers["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
+    m4["Date EHC Plan Ceased"] = pd.to_datetime(
+        m4["Date EHC Plan Ceased"], format="%d/%m/%Y"
     )
-    identifiers["Age"] = round((identifiers["Age"] / np.timedelta64(1, "Y")))
-    identifiers["Age Group"] = identifiers["Age"].apply(age_buckets)
 
-    st.write(identifiers)
-    m2 = pd.merge(m2, identifiers, on="Person ID", how="left")
-    m3 = pd.merge(m3, identifiers, on="Person ID", how="left")
-    m4 = pd.merge(m4, identifiers, on="Person ID", how="left")
-    m5 = pd.merge(m5, identifiers, on="Person ID", how="left")
-    return m2, m3, m4, m5
+    df_open = m4[m4["Date EHC Plan Ceased"].isna() & m4["EHC Plan Start Date"].notna()]
+    df_open["Plan length"] = pd.to_datetime("today") - df_open["EHC Plan Start Date"]
+    df_open["Plan length"] = df_open["Plan length"].apply(timeliness_buckets)
+    open_gender_hist = px.histogram(
+        df_open,
+        x="Plan length",
+        color="Gender",
+        title="Currently open plan lengths by gender",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    open_ethnicity_hist = px.histogram(
+        df_open,
+        x="Plan length",
+        color="Ethnicity",
+        title="Currently open plan lengths by ethnicity",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    open_age_hist = px.histogram(
+        df_open,
+        x="Plan length",
+        color="Age Group",
+        title="Currently open plan lengths by age",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+
+    df_closed = m4[
+        m4["Date EHC Plan Ceased"].notna() & m4["EHC Plan Start Date"].notna()
+    ]
+    df_closed["Plan length"] = (
+        df_closed["Date EHC Plan Ceased"] - df_closed["EHC Plan Start Date"]
+    )
+    df_closed["Plan length"] = df_closed["Plan length"].apply(timeliness_buckets)
+    closed_gender_hist = px.histogram(
+        df_closed,
+        x="Plan length",
+        color="Gender",
+        title="Closed plan lengths by gender",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    closed_ethnicity_hist = px.histogram(
+        df_closed,
+        x="Plan length",
+        color="Ethnicity",
+        title="Closed plan lengths by ethnicity",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    closed_age_hist = px.histogram(
+        df_closed,
+        x="Plan length",
+        color="Age Group",
+        title="Closed plan lengths by age",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+
+    return (
+        open_gender_hist,
+        open_ethnicity_hist,
+        open_age_hist,
+        closed_gender_hist,
+        closed_ethnicity_hist,
+        closed_age_hist,
+    )
 
 
+# Main script
 uploaded_files = st.file_uploader("pls", accept_multiple_files=True)
 
 
@@ -613,3 +775,19 @@ if uploaded_files:
     st.plotly_chart(multiple_m3)
 
     journeys(modules["m2"], modules["m3"])
+
+    st.title("Currently open and currently closed plan lengths")
+    (
+        open_gender_hist,
+        open_ethnicity_hist,
+        open_age_hist,
+        closed_gender_hist,
+        closed_ethnicity_hist,
+        closed_age_hist,
+    ) = plan_length_plots(modules["m4"])
+    st.plotly_chart(open_gender_hist)
+    st.plotly_chart(open_ethnicity_hist)
+    st.plotly_chart(open_age_hist)
+    st.plotly_chart(closed_gender_hist)
+    st.plotly_chart(closed_ethnicity_hist)
+    st.plotly_chart(closed_age_hist)
