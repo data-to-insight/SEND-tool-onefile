@@ -11,13 +11,23 @@ import requests
 
 
 """
+TODO
+Do calculations for last day of return rather than 'today'
+NUmber marks on plots
+years plans started buckets
+note to save pdf using ctrl + p
+explanation for box plot
+data analysis warnings
+pie chart sub plots
+
+headline stats
+
+length to durations
+
 For timeframes, ensure that the same child doesn't have huge timeframes when they appear multiple times - should be fine because of requests record ID
 Find out what H means - this could be inflating numbers
 open timeframes seem long as this is data from 2 years ago!
-
-
 volummes of things happening by category by period eg closure reason by year
-
 conversion rates from place to place DONE
 children appearing multiple times per list as a measure - done
 EHCP closure reason this year DONE
