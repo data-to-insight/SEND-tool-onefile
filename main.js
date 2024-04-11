@@ -35,20 +35,20 @@ async function run_python() {
     pyodide.globals.get("fig")
 
 // document.getElementById("print").disabled = false
-    let plot_gender = document.getElementById("plot_gender")
-    render_plot(plot_gender, document.gender_plot)
+    let ehc_ceased = document.getElementById("ehc_ceased")
+    render_plot(ehc_ceased, document.ehc_ceased_indicator)
 
-    let plot_ethnicity = document.getElementById("plot_ethnicity")
-    render_plot(plot_ethnicity, document.ethnicity_plot)
+    let ehc_ceased_gender = document.getElementById("ehc_ceased_gender")
+    render_plot(ehc_ceased_gender, document.ehc_ceased_gender_hist)
 
-    let plot_assessment_outcomes = document.getElementById("plot_assessment_outcomes")
-    render_plot(plot_assessment_outcomes, document.assessment_outcome_plot)
+    let ehc_ceased_ethnicity = document.getElementById("ehc_ceased_ethnicity")
+    render_plot(ehc_ceased_ethnicity, document.ehc_ceased_ethnicity_hist)
 
-    let plot_request_timeliness = document.getElementById("plot_request_timeliness")
-    render_plot(plot_request_timeliness, document.request_timeliness_plot)
+    let ehc_ceased_age = document.getElementById("ehc_ceased_age")
+    render_plot(ehc_ceased_age, document.ehc_ceased_age_hist)
 
-    let plot_fig = document.getElementById("plot_fig")
-    render_plot(plot_fig, document.fig_plot)
+    let ehc_ceased_reason = document.getElementById("ehc_ceased_reason")
+    render_plot(ehc_ceased_reason, document.ehc_ceased_reason_pie)
 }
 
 function render_plot(container, plot_html) {

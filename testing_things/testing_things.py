@@ -784,7 +784,8 @@ if uploaded_files:
     st.plotly_chart(multiple_m2)
     st.plotly_chart(multiple_m3)
 
-    journeys(modules["m2"], modules["m3"])
+    fig = journeys(modules["m2"], modules["m3"])
+    st.plotly_chart(fig)
 
     st.title("Currently open and currently closed plan lengths")
     (

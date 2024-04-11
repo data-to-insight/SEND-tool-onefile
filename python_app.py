@@ -11,21 +11,11 @@ import pyodide_js
 import json
 import io
 import plotly.express as px
+import plotly.graph_objects as go
 import numpy as np
 
-dfs = {}
-for i, v in enumerate(files):
-    dfs[i] = pd.read_csv(io.StringIO(files[i]))
-
-
-print(type(postcode_data))
-
-# df = px.data.iris()
-# fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
-
-# fig = fig.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
-
-# js.document.fig = fig
+# Initial variables
+timeframe = 730
 
 module_columns = {
     "m1": [
@@ -85,8 +75,586 @@ module_columns = {
     ],
 }
 
-modules = {}
 
+# Utilities
+def age_buckets(age):
+    if age < 1:
+        return "Under 1"
+    elif age <= 4:
+        return "1-4 years"
+    elif age <= 9:
+        return "5-9 years"
+    elif age <= 15:
+        return "10-15 years"
+    else:
+        return "16 & over"
+
+
+def timeliness_buckets(time_delta):
+    if time_delta <= pd.Timedelta(45, "d"):
+        return "45 days or less"
+    elif time_delta <= pd.Timedelta(90, "d"):
+        return "46-90 days"
+    elif time_delta <= pd.Timedelta(150, "d"):
+        return "91-150 days"
+    elif time_delta <= pd.Timedelta(365, "d"):
+        return "151-365 days"
+    elif time_delta <= pd.Timedelta(720, "d"):
+        return "1-2 years"
+    elif time_delta <= pd.Timedelta(1085, "d"):
+        return "2-3 years"
+    elif time_delta <= pd.Timedelta(1450, "d"):
+        return "3-4 years"
+    else:
+        return "over 4 years"
+
+
+def add_identifiers(identifiers, m2, m3, m4, m5):
+    identifiers["Gender"] = identifiers["Gender"].map(
+        {1: "Male", 2: "Female", 0: "Not Stated", 9: "Neither"}
+    )
+    identifiers["Age"] = pd.to_datetime("today") - pd.to_datetime(
+        identifiers["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
+    )
+    identifiers["Age"] = round((identifiers["Age"] / np.timedelta64(1, "Y")))
+    identifiers["Age Group"] = identifiers["Age"].apply(age_buckets)
+
+    m2 = pd.merge(m2, identifiers, on="Person ID", how="left")
+    m3 = pd.merge(m3, identifiers, on="Person ID", how="left")
+    m4 = pd.merge(m4, identifiers, on="Person ID", how="left")
+    m5 = pd.merge(m5, identifiers, on="Person ID", how="left")
+    return m2, m3, m4, m5
+
+
+def html_plot(plot):
+    # Used to centralise arguments for making html plots
+    plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
+
+
+# Plotting functions
+def hist_for_categories(df):
+    hist_gender = px.histogram(df, x="Gender")
+    hist_ethnicity = px.histogram(df, x="Ethnicity")
+    hist_age = px.histogram(df, x="Age Group", color="Gender", marginal="violin")
+
+    return hist_gender, hist_ethnicity, hist_age
+
+
+def box_for_categories(df, y):
+    box_gender = px.box(df, x="Gender", y=y)
+    box_ethnicity = px.box(df, x="Ethnicity", y=y)
+    box_age = px.box(df, x="Age Group", color="Gender", y=y)
+
+    return box_gender, box_ethnicity, box_age
+
+
+# Calculation functions
+def ehc_ceased_year(df):
+    """
+    df = module 4
+    """
+    df = df[df["Date EHC Plan Ceased"].notna()]
+    df["Date EHC Plan Ceased"] = pd.to_datetime(
+        df["Date EHC Plan Ceased"], dayfirst=True
+    )  # format="%d/%m/%Y", errors="corece")
+    df["Time Since EHC Ceased"] = np.datetime64("today") - df["Date EHC Plan Ceased"]
+    ehc_ceased_in_year = df[df["Time Since EHC Ceased"] <= pd.Timedelta(timeframe, "d")]
+    count_ehc_ceased = len(ehc_ceased_in_year)
+    reason_ech_ceased = (
+        ehc_ceased_in_year.groupby("Reason EHC Plan Ceased")["Reason EHC Plan Ceased"]
+        .count()
+        .reset_index(name="count")
+    )
+
+    fig_count_ceased = go.Figure(go.Indicator(value=count_ehc_ceased))
+    fig_count_ceased.update_layout(
+        title={
+            "text": "EHC ceased in the last year",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+    gender_hist, ethnicity_hist, age_hist = hist_for_categories(ehc_ceased_in_year)
+
+    gender_hist.update_layout(title="EHC ceased this year by gender")
+    ethnicity_hist.update_layout(title="EHC ceased this year by ethnicity")
+    age_hist.update_layout(title="EHC ceased this year by age and gender")
+
+    reason_ceased_pie = px.pie(
+        reason_ech_ceased,
+        values="count",
+        names="Reason EHC Plan Ceased",
+        title="Reason EHC ceased",
+    )
+    fig_count_ceased = html_plot(fig_count_ceased)
+    gender_hist = html_plot(gender_hist)
+    ethnicity_hist = html_plot(ethnicity_hist)
+    age_hist = html_plot(age_hist)
+
+    return fig_count_ceased, gender_hist, ethnicity_hist, age_hist, reason_ceased_pie
+
+
+def ehc_starting_year(df):
+    """
+    df = module 4
+    """
+    df = df[df["EHC Plan Start Date"].notna()]
+    df["EHC Plan Start Date"] = pd.to_datetime(
+        df["EHC Plan Start Date"], format="%d/%m/%Y", errors="coerce"
+    )
+    df["Time since EHC Started"] = np.datetime64("today") - df["EHC Plan Start Date"]
+    ehc_started_in_year = df[
+        df["Time since EHC Started"] <= pd.Timedelta(timeframe, "d")
+    ]
+    count_ehc_started = len(ehc_started_in_year)
+    fig_count_started = go.Figure(go.Indicator(value=count_ehc_started))
+    fig_count_started.update_layout(
+        title={
+            "text": "EHC started in the last year",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    gender_hist, ethnicity_hist, age_hist = hist_for_categories(ehc_started_in_year)
+
+    gender_hist.update_layout(title="EHC started this year by gender")
+    ethnicity_hist.update_layout(title="EHC started this year by ethnicity")
+    age_hist.update_layout(title="EHC started this year by age and gender")
+
+    return fig_count_started, gender_hist, ethnicity_hist, age_hist
+
+
+def ass_completed_year(df):
+    """
+    df = module 3
+    """
+    df_completed = df[df["Assessment Outcome Date"].notna()]
+    df_completed["Time Since Ass Completion"] = np.datetime64("today") - pd.to_datetime(
+        df_completed["Assessment Outcome Date"], format="%d/%m/%Y", errors="coerce"
+    )
+    ass_this_year = df_completed[
+        df_completed["Time Since Ass Completion"] <= pd.Timedelta(timeframe, "d")
+    ]
+
+    ass_year_outcomes = (
+        ass_this_year.groupby("Assessment Outcome To Issue EHCP")[
+            "Assessment Outcome To Issue EHCP"
+        ]
+        .count()
+        .reset_index(name="count")
+    )
+    ass_outcomes_pie = px.pie(
+        ass_year_outcomes,
+        values="count",
+        names="Assessment Outcome To Issue EHCP",
+        title="Outcomes of assessments closed this year",
+    )
+
+    assessments_completed_this_year = len(ass_this_year)
+    fig_count_completed = go.Figure(go.Indicator(value=assessments_completed_this_year))
+    fig_count_completed.update_layout(
+        title={
+            "text": "Assessments completed in the last year",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    gender_hist, ethnicity_hist, age_hist = hist_for_categories(ass_this_year)
+
+    gender_hist.update_layout(title="Assessments completed this year by gender")
+    ethnicity_hist.update_layout(title="Assessments completed this year by ethnicity")
+    age_hist.update_layout(title="Assessments completed this year by age and gender")
+
+    return fig_count_completed, gender_hist, ethnicity_hist, age_hist, ass_outcomes_pie
+
+
+def closed_ass_timeframes(df1, df2):
+    """
+    Time between request being recieved in module 2, and now, (filtering closed assessments from module 3).
+
+    df1 = module 2
+    df2 = module 3
+    """
+
+    df = pd.merge(
+        df1,
+        df2,
+        on=[
+            "Person ID",
+            "Requests Record ID",
+            "Gender",
+            "Ethnicity",
+            "Age",
+            "Age Group",
+        ],
+        how="inner",
+    )
+
+    df["Date Request Was Received"] = pd.to_datetime(
+        df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
+    )
+    df["Assessment Outcome Date"] = pd.to_datetime(
+        df["Assessment Outcome Date"], format="%d/%m/%Y", errors="coerce"
+    )
+    df = df[
+        (df["Assessment Outcome Date"].notna())
+        & (
+            (pd.to_datetime("today") - df["Assessment Outcome Date"])
+            <= pd.Timedelta(timeframe, "d")
+        )
+    ]
+    df["closed_ass_timeliness"] = (
+        df["Assessment Outcome Date"] - df["Date Request Was Received"]
+    ) / pd.Timedelta(1, "day")
+    df["closed_ass_timeliness"] = df["closed_ass_timeliness"].round()
+
+    gender_box, ethnicity_box, age_box = box_for_categories(df, "closed_ass_timeliness")
+    gender_box.update_layout(
+        title="Distribution of wait times for closed assessments by gender"
+    )
+    ethnicity_box.update_layout(
+        title="Distribution of wait times for closed assessments by ethnicity"
+    )
+    age_box.update_layout(
+        title="Distribution of wait times for closed assessments by age"
+    )
+
+    return gender_box, ethnicity_box, age_box
+
+
+def open_ass_timeframes(df1, df2):
+    """
+    Time between request being recieved in module 2, and now, (filtering closed assessments from module 3).
+
+    df1 = module 2
+    df2 = module 3
+    """
+    df = pd.merge(
+        df1,
+        df2,
+        on=[
+            "Person ID",
+            "Requests Record ID",
+            "Gender",
+            "Ethnicity",
+            "Age",
+            "Age Group",
+        ],
+        how="inner",
+    )
+    df = df[df["Date Request Was Received"].notna()]
+
+    uncompleted_assessment_requests = len(df[df["Assessment Outcome Date"].isna()])
+    uncompleted_requests = go.Figure(
+        go.Indicator(value=uncompleted_assessment_requests)
+    )
+    uncompleted_requests.update_layout(
+        title={
+            "text": "Uncompleted assessment requests",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    df = df[df["Assessment Outcome Date"].isna()]
+    df["Date Request Was Received"] = pd.to_datetime(
+        df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
+    )
+    df["open_ass_timeliness"] = (
+        np.datetime64("today") - df["Date Request Was Received"]
+    ) / pd.Timedelta(1, "day")
+    df["open_ass_timeliness"] = df["open_ass_timeliness"].round()
+
+    gender_box, ethnicity_box, age_box = box_for_categories(df, "open_ass_timeliness")
+    gender_box.update_layout(
+        title="Distribution of wait times for currently open assessments by gender"
+    )
+    ethnicity_box.update_layout(
+        title="Distribution of wait times for currently open assessments by ethnicity"
+    )
+    age_box.update_layout(
+        title="Distribution of wait times for currently open assessments by age"
+    )
+
+    return uncompleted_requests, gender_box, ethnicity_box, age_box
+
+
+def requests_fn(df):
+    df = df[df["Date Request Was Received"].notna()]
+    df["Date Request Was Received"] = pd.to_datetime(
+        df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
+    )
+    df["Request Outcome Date"] = pd.to_datetime(
+        df["Request Outcome Date"], format="%d/%m/%y", errors="coerce"
+    )
+
+    req_timeliness_df = df[df["Request Outcome Date"].notna()]
+    req_timeliness_df["Request Delta"] = (
+        req_timeliness_df["Request Outcome Date"]
+        - req_timeliness_df["Date Request Was Received"]
+    ) / pd.Timedelta(1, "days")
+    req_timeliness_df["Request Delta"] = req_timeliness_df["Request Delta"].round()
+
+    df["Request Timeframe"] = np.datetime64("today") - df["Date Request Was Received"]
+    requests_this_year = df[df["Request Timeframe"] <= pd.Timedelta(timeframe, "d")]
+
+    count_requests_this_year = len(requests_this_year)
+    fig_count_req = go.Figure(go.Indicator(value=count_requests_this_year))
+    fig_count_req.update_layout(
+        title={
+            "text": "Requests this year",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    request_outcomes = (
+        df.groupby("Request Outcome")["Request Outcome"]
+        .count()
+        .reset_index(name="count")
+    )
+    requests_pie = px.pie(request_outcomes, values="count", names="Request Outcome")
+
+    gender_hist, ethnicity_hist, age_hist = hist_for_categories(df)
+    gender_hist.update_layout(title="Distribution of gender for requests this year")
+    ethnicity_hist.update_layout(
+        title="Distribution of ethnicity for requests this year"
+    )
+    age_hist.update_layout(title="Distribution of age for requests this year")
+
+    return fig_count_req, gender_hist, ethnicity_hist, age_hist, requests_pie
+
+
+def multiple_appearances(m2, m3):
+    m2 = m2.groupby("Person ID")["Person ID"].count().reset_index(name="count")
+    m2 = m2[m2["count"] > 1]
+    multiple_m2 = go.Figure(go.Indicator(value=len(m2)))
+    multiple_m2.update_layout(
+        title={
+            "text": "Children appearing in the requests list multiple times",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    m3 = m3.groupby("Person ID")["Person ID"].count().reset_index(name="count")
+    m3 = m3[m3["count"] > 1]
+    multiple_m3 = go.Figure(go.Indicator(value=len(m2)))
+    multiple_m3.update_layout(
+        title={
+            "text": "Children appearing in the assessments list multiple times",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    return multiple_m2, multiple_m3
+
+
+def journeys(m2, m3):
+    m2 = m2[m2["Date Request Was Received"].notna()]
+    m2["Request"] = "Request Made"
+
+    m3["Assessment Complete"] = m3["Assessment Outcome Date"].apply(
+        lambda x: (
+            "Assessment Completed" if pd.notna(x) else "Assessment not yet completed"
+        )
+    )
+
+    df = pd.merge(
+        m2,
+        m3[
+            [
+                "Requests Record ID",
+                "Person ID",
+                "Assessment Outcome To Issue EHCP",
+                "Assessment Complete",
+            ]
+        ],
+        on=["Person ID", "Requests Record ID"],
+        how="left",
+    )
+
+    df["Assessment Complete"] = df["Assessment Complete"].fillna(
+        "Assessment uncompleted"
+    )
+    df["Assessment Outcome To Issue EHCP"] = df[
+        "Assessment Outcome To Issue EHCP"
+    ].fillna("No assessment outcome")
+
+    fig = px.parallel_categories(
+        df,
+        dimensions=[
+            "Request",
+            "Request Outcome",
+            "Assessment Complete",
+            "Assessment Outcome To Issue EHCP",
+        ],
+    )
+    fig.update_layout(margin=dict(l=50, r=50, t=50, b=50))
+    return fig
+
+
+def plan_length_plots(m4):
+    m4["EHC Plan Start Date"] = pd.to_datetime(
+        m4["EHC Plan Start Date"], format="%d/%m/%Y"
+    )
+    m4["Date EHC Plan Ceased"] = pd.to_datetime(
+        m4["Date EHC Plan Ceased"], format="%d/%m/%Y"
+    )
+
+    df_open = m4[m4["Date EHC Plan Ceased"].isna() & m4["EHC Plan Start Date"].notna()]
+    df_open["Plan length"] = pd.to_datetime("today") - df_open["EHC Plan Start Date"]
+    df_open["Plan length"] = df_open["Plan length"].apply(timeliness_buckets)
+    open_gender_hist = px.histogram(
+        df_open,
+        x="Plan length",
+        color="Gender",
+        title="Currently open plan lengths by gender",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    open_ethnicity_hist = px.histogram(
+        df_open,
+        x="Plan length",
+        color="Ethnicity",
+        title="Currently open plan lengths by ethnicity",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    open_age_hist = px.histogram(
+        df_open,
+        x="Plan length",
+        color="Age Group",
+        title="Currently open plan lengths by age",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+
+    df_closed = m4[
+        m4["Date EHC Plan Ceased"].notna() & m4["EHC Plan Start Date"].notna()
+    ]
+    df_closed["Plan length"] = (
+        df_closed["Date EHC Plan Ceased"] - df_closed["EHC Plan Start Date"]
+    )
+    df_closed["Plan length"] = df_closed["Plan length"].apply(timeliness_buckets)
+    closed_gender_hist = px.histogram(
+        df_closed,
+        x="Plan length",
+        color="Gender",
+        title="Closed plan lengths by gender",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    closed_ethnicity_hist = px.histogram(
+        df_closed,
+        x="Plan length",
+        color="Ethnicity",
+        title="Closed plan lengths by ethnicity",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+    closed_age_hist = px.histogram(
+        df_closed,
+        x="Plan length",
+        color="Age Group",
+        title="Closed plan lengths by age",
+        category_orders={
+            "Plan length": [
+                "45 days or less",
+                "46-90 days",
+                "91-150 days",
+                "151-365 days",
+                "1-2 years",
+                "2-3 years",
+                "3-4 years",
+                "over 4 years",
+            ]
+        },
+    )
+
+    return (
+        open_gender_hist,
+        open_ethnicity_hist,
+        open_age_hist,
+        closed_gender_hist,
+        closed_ethnicity_hist,
+        closed_age_hist,
+    )
+
+
+# main script
+dfs = {}
+for i, v in enumerate(files):
+    dfs[i] = pd.read_csv(io.StringIO(files[i]))
+
+modules = {}
 for key, df in dfs.items():
     for module_name, column_list in module_columns.items():
         if list(df.columns) == column_list:
@@ -96,103 +664,79 @@ for key, df in dfs.items():
 if len(modules.keys()) != 5:
     js.alert(f"Modules found {modules.keys()}, please check column names.")
 
-modules["m1"]["Dob (ccyy-mm-dd)"] = pd.to_datetime(
-    modules["m1"]["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
-)
-modules["m1"]["Age"] = (
-    pd.to_datetime("today") - modules["m1"]["Dob (ccyy-mm-dd)"]
-) / np.timedelta64(1, "Y")
-modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore")
+(
+    js.document.ehc_ceased_indicator,
+    js.document.ehc_ceased_gender_hist,
+    js.document.ehc_ceased_ethnicity_hist,
+    js.document.ehc_ceased_age_hist,
+    js.document.ehc_ceased_reason_pie,
+) = ehc_ceased_year(modules["m4"])
 
-# print(modules["m1"]["Age"])
+###### DEPRECATED PLOTS
+# modules["m1"]["Dob (ccyy-mm-dd)"] = pd.to_datetime(
+#     modules["m1"]["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
+# )
+#
+# modules["m1"]["Age"] = (
+#     pd.to_datetime("today") - modules["m1"]["Dob (ccyy-mm-dd)"]
+# ) / np.timedelta64(1, "Y")
+# modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore")
 
-gender_plot = px.histogram(
-    (modules["m1"][modules["m1"]["Gender"] != 9]),
-    x="Age",
-    category_orders=dict(Age=list(modules["m1"]["Age"].unique())),
-    color="Gender",
-)
-gender_plot = gender_plot.to_html(
-    include_plotlyjs=False, full_html=False, default_height="350px"
-)
-js.document.gender_plot = gender_plot
+# # print(modules["m1"]["Age"])
 
-ethnicity_plot = px.histogram(
-    (modules["m1"]),
-    x="Ethnicity",
-    category_orders=dict(Age=list(modules["m1"]["Ethnicity"].unique())),
-)
-ethnicity_plot = ethnicity_plot.to_html(
-    include_plotlyjs=False, full_html=False, default_height="350px"
-)
-js.document.ethnicity_plot = ethnicity_plot
+# gender_plot = px.histogram(
+#     (modules["m1"][modules["m1"]["Gender"] != 9]),
+#     x="Age",
+#     category_orders=dict(Age=list(modules["m1"]["Age"].unique())),
+#     color="Gender",
+# )
+# gender_plot = gender_plot.to_html(
+#     include_plotlyjs=False, full_html=False, default_height="350px"
+# )
+# js.document.gender_plot = gender_plot
 
-
-ass_outcomes = modules["m3"][modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"]
-ass_outcomes = (
-    ass_outcomes.groupby(["Assessment Outcome To Issue EHCP"])[
-        "Assessment Outcome To Issue EHCP"
-    ]
-    .count()
-    .reset_index(name="count")
-)
-
-assessment_outcome_plot = px.pie(
-    ass_outcomes, values="count", names="Assessment Outcome To Issue EHCP"
-)
-assessment_outcome_plot = assessment_outcome_plot.to_html(
-    include_plotlyjs=False, full_html=False, default_height="350px"
-)
-js.document.assessment_outcome_plot = assessment_outcome_plot
-
-# Request to outcome timeliness
-requests = modules["m2"][modules["m2"].notna()]
-
-requests["Request Timeliness"] = pd.to_datetime(
-    requests["Request Outcome Date"], format="%d/%m/%Y"
-) - pd.to_datetime(requests["Date Request Was Received"], format="%d/%m/%Y")
-
-requests["Request Timeliness"] = (
-    (requests["Request Timeliness"] / np.timedelta64(1, "D"))
-    .round()
-    .astype("int", errors="ignore")
-)
-
-request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
-js.document.request_timeliness_plot = request_timeliness_plot.to_html(
-    include_plotlyjs=False, full_html=False, default_height="350px"
-)
-
-la_data = []
-# Iterative over JSON
-for i in range(len(postcode_data["features"])):
-    # Extract local authority name
-    la = postcode_data["features"][i]["properties"]["LAD21NM"]
-    # Assign the local authority name to a new 'id' property for later linking to dataframe
-    postcode_data["features"][i]["id"] = la
-    # While I'm at it, append local authority name to a list to make some dummy data to test, along with i for a value to test on map
-    la_data.append([la, i])
+# ethnicity_plot = px.histogram(
+#     (modules["m1"]),
+#     x="Ethnicity",
+#     category_orders=dict(Age=list(modules["m1"]["Ethnicity"].unique())),
+# )
+# ethnicity_plot = ethnicity_plot.to_html(
+#     include_plotlyjs=False, full_html=False, default_height="350px"
+# )
+# js.document.ethnicity_plot = ethnicity_plot
 
 
-# turn dummy data into a dataframe
-df = pd.DataFrame(la_data)
-# update column names
-df.columns = ["LA", "Val"]
+# ass_outcomes = modules["m3"][modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"]
+# ass_outcomes = (
+#     ass_outcomes.groupby(["Assessment Outcome To Issue EHCP"])[
+#         "Assessment Outcome To Issue EHCP"
+#     ]
+#     .count()
+#     .reset_index(name="count")
+# )
 
-fig = px.choropleth_mapbox(
-    df,
-    geojson=Local_authorities,
-    locations="LA",
-    color="Val",
-    featureidkey="properties.LAD21NM",
-    color_continuous_scale="Viridis",
-    mapbox_style="carto-positron",
-    center={"lat": 55.09621, "lon": -4.0286298},
-    zoom=4.2,
-    labels={"val": "value"},
-)
+# assessment_outcome_plot = px.pie(
+#     ass_outcomes, values="count", names="Assessment Outcome To Issue EHCP"
+# )
+# assessment_outcome_plot = assessment_outcome_plot.to_html(
+#     include_plotlyjs=False, full_html=False, default_height="350px"
+# )
+# js.document.assessment_outcome_plot = assessment_outcome_plot
 
-fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-js.document.fig_plot = fig.to_html(
-    include_plotlyjs=False, full_html=False, default_height="350px"
-)
+# # Request to outcome timeliness
+# requests = modules["m2"][modules["m2"].notna()]
+
+# requests["Request Timeliness"] = pd.to_datetime(
+#     requests["Request Outcome Date"], format="%d/%m/%Y"
+# ) - pd.to_datetime(requests["Date Request Was Received"], format="%d/%m/%Y")
+
+# requests["Request Timeliness"] = (
+#     (requests["Request Timeliness"] / np.timedelta64(1, "D"))
+#     .round()
+#     .astype("int", errors="ignore")
+# )
+
+# request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
+# js.document.request_timeliness_plot = request_timeliness_plot.to_html(
+#     include_plotlyjs=False, full_html=False, default_height="350px"
+# )
