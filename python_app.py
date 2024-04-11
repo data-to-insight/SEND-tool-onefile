@@ -150,6 +150,20 @@ def box_for_categories(df, y):
 
 
 # Calculation functions
+def entire_cohort(df):
+    gender, age, ethnicity = hist_for_categories(df)
+
+    gender.update_layout(title="Entire cohort by gender")
+    ethnicity.update_layout(title="Entire cohort ethnicity")
+    age.update_layout(title="Entire cohort age and gender")
+
+    gender = html_plot(gender)
+    ethnicity = html_plot(ethnicity)
+    age = html_plot(age)
+
+    return gender, ethnicity, age
+
+
 def ehc_ceased_year(df):
     """
     df = module 4
@@ -710,6 +724,9 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     modules["m1"], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
 )
 
+(js.document.total_gender, js.document.total_ethnicity, js.document.total_age) = (
+    entire_cohort(modules["m1"])
+)
 
 # Plot outputs
 (
@@ -764,7 +781,7 @@ js.document.multiple_m2, js.document.multiple_m3 = multiple_appearances(
 js.document.journeys = journeys(modules["m2"], modules["m3"])
 
 
-#done to here
+# done to here
 (
     js.document.open_plan_length_gender_hist,
     js.document.open_plan_length_ethnicity_hist,
