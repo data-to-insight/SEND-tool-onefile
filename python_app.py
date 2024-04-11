@@ -494,7 +494,7 @@ def multiple_appearances(m2, m3):
     )
 
     multiple_m2 = html_plot(multiple_m2)
-    multiple_m2 = html_plot(multiple_m3)
+    multiple_m3 = html_plot(multiple_m3)
 
     return multiple_m2, multiple_m3
 
@@ -742,7 +742,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.ass_open_timeframe_age_box,
 ) = open_ass_timeframes(modules["m2"], modules["m3"])
 
-#done to here
+
 (
     js.document.ass_closed_timeframe_gender_box,
     js.document.ass_closed_timeframe_ethnicity_box,
@@ -757,13 +757,14 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     req_pie,
 ) = requests_fn(modules["m2"])
 
-
 js.document.multiple_m2, js.document.multiple_m3 = multiple_appearances(
     modules["m2"], modules["m3"]
 )
 
 js.document.journeys = journeys(modules["m2"], modules["m3"])
 
+
+#done to here
 (
     js.document.open_plan_length_gender_hist,
     js.document.open_plan_length_ethnicity_hist,

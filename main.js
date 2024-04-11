@@ -93,11 +93,70 @@ async function run_python() {
     let open_ass_age = document.getElementById("open_ass_age")
     render_plot(open_ass_age, document.ass_open_timeframe_age_box)
 
+    // closed ass timeframes
+    let ass_closed_timeframe_gender = document.getElementById("ass_closed_timeframe_gender")
+    render_plot(ass_closed_timeframe_gender, document.ass_closed_timeframe_gender_box)
+
+    let ass_closed_timeframe_age = document.getElementById("ass_closed_timeframe_age")
+    render_plot(ass_closed_timeframe_age, document.ass_closed_timeframe_age_box)
+
+    let ass_closed_timeframe_ethnicity = document.getElementById("ass_closed_timeframe_ethnicity")
+    render_plot(ass_closed_timeframe_ethnicity, document.ass_closed_timeframe_ethnicity_box)
+
+    // request breakdowns
+    let req_gender = document.getElementById("req_gender")
+    render_plot(req_gender, document.req_gender_box)
+
+    let req_age = document.getElementById("req_age")
+    render_plot(req_age, document.req_age_box)
+
+    let req_ethnicity = document.getElementById("req_ethnicity")
+    render_plot(req_ethnicity, document.req_ethnicity_box)
+   
+    // multiple appearances
+    let multiple_m2_div = document.getElementById("multiples_m2_div")
+    render_plot(multiple_m2_div, document.multiple_m2)
+
+    let multiple_m3_div = document.getElementById("multiples_m3_div")
+    render_plot(multiple_m3_div, document.multiple_m3)
+
+    // journeys
+    let journeys_div = document.getElementById("journeys_div")
+    render_plot(journeys_div, document.journeys)
+
+    // Open plan lengths
+    let open_plan_length_gender = document.getElementById("open_plan_length_gender")
+    render_plot(open_plan_length_gender, document.open_plan_length_gender_hist)
+
+    let open_plan_length_age = document.getElementById("open_plan_length_age")
+    render_plot(open_plan_length_age, document.open_plan_length_age_hist)
+
+    let open_plan_length_ethnicity = document.getElementById("open_plan_length_ethnicity")
+    render_plot(open_plan_length_ethnicity, document.open_plan_length_ethnicity_hist)
+
+    // Closed plan lengths
+    let closed_plan_length_gender = document.getElementById("closed_plan_length_gender")
+    render_plot(closed_plan_length_gender, document.closed_plan_length_gender_hist)
+
+    let closed_plan_length_age = document.getElementById("closed_plan_length_age")
+    render_plot(closed_plan_length_age, document.closed_plan_length_age_hist)
+
+    let closed_plan_length_ethnicity = document.getElementById("closed_plan_length_ethnicity")
+    render_plot(closed_plan_length_ethnicity, document.closed_plan_length_ethnicity_hist)
+
+
     // show plot titles
     $("#ehc_ceased_header").removeClass('d-none');
     $("#ehc_started_header").removeClass('d-none');
     $("#ass_completed_header").removeClass('d-none');
     $("#open_ass_timeframe_header").removeClass('d-none');
+    $("#ass_closed_timeframe_header").removeClass('d-none');
+    $("#request_header").removeClass('d-none');
+    $("#multiple_appearances_header").removeClass('d-none');
+    $("#journeys_header").removeClass('d-none');
+    $("#open_plan_length_header").removeClass('d-none');
+    $("#closed_plan_length_header").removeClass('d-none');
+
     
 }
 
