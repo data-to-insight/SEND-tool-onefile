@@ -710,6 +710,8 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     modules["m1"], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
 )
 
+
+# Plot outputs
 (
     js.document.ehc_ceased_indicator,
     js.document.ehc_ceased_gender_hist,
@@ -717,6 +719,59 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.ehc_ceased_age_hist,
     js.document.ehc_ceased_reason_pie,
 ) = ehc_ceased_year(modules["m4"])
+
+(
+    js.document.ehc_started_indicator,
+    js.document.ehc_started_gender_hist,
+    js.document.ehc_started_ethnicity_hist,
+    js.document.ehc_started_age_hist,
+) = ehc_starting_year(modules["m4"])
+
+(
+    js.document.ass_completed_indicator,
+    js.document.ass_completed_gender_hist,
+    js.document.ass_completed_ethnicity_hist,
+    js.document.ass_completed_age_hist,
+    js.document.ass_ass_outcome_pie,
+) = ass_completed_year(modules["m3"])
+
+(
+    js.document.ass_open_timeframe_indicator,
+    js.document.ass_open_timeframe_gender_box,
+    js.document.ass_open_timeframe_ethnicity_box,
+    js.document.ass_open_timeframe_age_box,
+) = open_ass_timeframes(modules["m2"], modules["m3"])
+
+(
+    js.document.ass_closed_timeframe_gender_box,
+    js.document.ass_closed_timeframe_ethnicity_box,
+    js.document.ass_closed_timeframe_age_box,
+) = closed_ass_timeframes(modules["m2"], modules["m3"])
+
+(
+    req_count_indicator,
+    js.document.req_gender_box,
+    js.document.req_ethnicity_box,
+    js.document.req_age_box,
+    req_pie,
+) = requests_fn(modules["m2"])
+
+
+js.document.multiple_m2, js.document.multiple_m3 = multiple_appearances(
+    modules["m2"], modules["m3"]
+)
+
+js.document.journeys = journeys(modules["m2"], modules["m3"])
+
+(
+    js.document.open_plan_length_gender_hist,
+    js.document.open_plan_length_ethnicity_hist,
+    js.document.open_plan_length_age_hist,
+    js.document.closed_plan_length_gender_hist,
+    js.document.closed_plan_length_ethnicity_hist,
+    js.document.closed_plan_length_age_hist,
+) = plan_length_plots(modules["m4"])
+
 
 ###### DEPRECATED PLOTS
 # modules["m1"]["Dob (ccyy-mm-dd)"] = pd.to_datetime(
