@@ -131,6 +131,7 @@ def html_plot(plot):
     plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
     return plot
 
+
 # Plotting functions
 def hist_for_categories(df):
     hist_gender = px.histogram(df, x="Gender")
@@ -227,6 +228,11 @@ def ehc_starting_year(df):
     ethnicity_hist.update_layout(title="EHC started this year by ethnicity")
     age_hist.update_layout(title="EHC started this year by age and gender")
 
+    fig_count_started = html_plot(fig_count_started)
+    gender_hist = html_plot(gender_hist)
+    ethnicity_hist = html_plot(ethnicity_hist)
+    age_hist = html_plot(age_hist)
+
     return fig_count_started, gender_hist, ethnicity_hist, age_hist
 
 
@@ -274,6 +280,12 @@ def ass_completed_year(df):
     ethnicity_hist.update_layout(title="Assessments completed this year by ethnicity")
     age_hist.update_layout(title="Assessments completed this year by age and gender")
 
+    fig_count_started = html_plot(fig_count_started)
+    gender_hist = html_plot(gender_hist)
+    ethnicity_hist = html_plot(ethnicity_hist)
+    age_hist = html_plot(age_hist)
+    ass_outcomes_pie = html_plot(ass_outcomes_pie)
+
     return fig_count_completed, gender_hist, ethnicity_hist, age_hist, ass_outcomes_pie
 
 
@@ -312,6 +324,7 @@ def closed_ass_timeframes(df1, df2):
             <= pd.Timedelta(timeframe, "d")
         )
     ]
+
     df["closed_ass_timeliness"] = (
         df["Assessment Outcome Date"] - df["Date Request Was Received"]
     ) / pd.Timedelta(1, "day")
@@ -327,6 +340,10 @@ def closed_ass_timeframes(df1, df2):
     age_box.update_layout(
         title="Distribution of wait times for closed assessments by age"
     )
+
+    gender_box = html_plot(gender_box)
+    ethnicity_box = html_plot(ethnicity_box)
+    age_box = html_plot(age_box)
 
     return gender_box, ethnicity_box, age_box
 
@@ -387,6 +404,11 @@ def open_ass_timeframes(df1, df2):
         title="Distribution of wait times for currently open assessments by age"
     )
 
+    uncompleted_requests = html_plot(uncompleted_requests)
+    gender_box = html_plot(gender_box)
+    ethnicity_box = html_plot(ethnicity_box)
+    age_box = html_plot(age_box)
+
     return uncompleted_requests, gender_box, ethnicity_box, age_box
 
 
@@ -435,6 +457,12 @@ def requests_fn(df):
     )
     age_hist.update_layout(title="Distribution of age for requests this year")
 
+    fig_count_req = html_plot(fig_count_req)
+    gender_hist = html_plot(gender_hist)
+    ethnicity_hist = html_plot(ethnicity_hist)
+    age_hist = html_plot(age_hist)
+    requests_pie = html_plot(requests_pie)
+
     return fig_count_req, gender_hist, ethnicity_hist, age_hist, requests_pie
 
 
@@ -464,6 +492,9 @@ def multiple_appearances(m2, m3):
             "yanchor": "top",
         }
     )
+
+    multiple_m2 = html_plot(multiple_m2)
+    multiple_m2 = html_plot(multiple_m3)
 
     return multiple_m2, multiple_m3
 
@@ -509,6 +540,9 @@ def journeys(m2, m3):
         ],
     )
     fig.update_layout(margin=dict(l=50, r=50, t=50, b=50))
+
+    fig = html_plot(fig)
+
     return fig
 
 
@@ -639,6 +673,13 @@ def plan_length_plots(m4):
             ]
         },
     )
+
+    open_gender_hist = html_plot(open_gender_hist)
+    open_ethnicity_hist = html_plot(open_ethnicity_hist)
+    open_age_hist = html_plot(open_age_hist)
+    closed_gender_hist = html_plot(closed_gender_hist)
+    closed_ethnicity_hist = html_plot(closed_ethnicity_hist)
+    closed_age_hist = html_plot(closed_age_hist)
 
     return (
         open_gender_hist,

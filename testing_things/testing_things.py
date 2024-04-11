@@ -350,6 +350,26 @@ def closed_ass_timeframes(df1, df2):
             <= pd.Timedelta(timeframe, "d")
         )
     ]
+
+    closed_assessment_requests = len(
+        df[
+            df["Assessment Outcome Date"].notna()
+            & df["Date Request Was Received"].notna()
+        ]
+    )
+    closed_requests = go.Figure(go.Indicator(value=closed_assessment_requests))
+    closed_requests.update_layout(
+        title={
+            "text": "Closed assessment requests in the past year",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
+    st.plotly_chart(closed_requests)
+
     df["closed_ass_timeliness"] = (
         df["Assessment Outcome Date"] - df["Date Request Was Received"]
     ) / pd.Timedelta(1, "day")
