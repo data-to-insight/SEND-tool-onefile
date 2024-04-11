@@ -80,10 +80,24 @@ async function run_python() {
     let ass_completed_reason = document.getElementById("ass_completed_reason")
     render_plot(ass_completed_reason, document.ass_completed_reason_pie)    
 
+    // ehc started plots
+    let open_ass = document.getElementById("open_ass")
+    render_plot(open_ass, document.ass_open_timeframe_indicator)
+
+    let open_ass_gender = document.getElementById("open_ass_gender")
+    render_plot(open_ass_gender, document.ass_open_timeframe_gender_box)
+
+    let open_ass_ethnicity = document.getElementById("open_ass_ethnicity")
+    render_plot(open_ass_ethnicity, document.ass_open_timeframe_ethnicity_box)
+
+    let open_ass_age = document.getElementById("open_ass_age")
+    render_plot(open_ass_age, document.ass_open_timeframe_age_box)
+
     // show plot titles
     $("#ehc_ceased_header").removeClass('d-none');
     $("#ehc_started_header").removeClass('d-none');
     $("#ass_completed_header").removeClass('d-none');
+    $("#open_ass_timeframe_header").removeClass('d-none');
     
 }
 
