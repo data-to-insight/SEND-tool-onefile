@@ -280,7 +280,7 @@ def ass_completed_year(df):
     ethnicity_hist.update_layout(title="Assessments completed this year by ethnicity")
     age_hist.update_layout(title="Assessments completed this year by age and gender")
 
-    fig_count_started = html_plot(fig_count_started)
+    fig_count_completed = html_plot(fig_count_completed)
     gender_hist = html_plot(gender_hist)
     ethnicity_hist = html_plot(ethnicity_hist)
     age_hist = html_plot(age_hist)
