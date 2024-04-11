@@ -664,6 +664,10 @@ for key, df in dfs.items():
 if len(modules.keys()) != 5:
     js.alert(f"Modules found {modules.keys()}, please check column names.")
 
+modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
+    modules["m1"], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
+)
+
 (
     js.document.ehc_ceased_indicator,
     js.document.ehc_ceased_gender_hist,
