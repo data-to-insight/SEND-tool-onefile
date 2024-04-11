@@ -35,6 +35,16 @@ async function run_python() {
 
 // document.getElementById("print").disabled = false
 
+    // Closed plan lengths
+    let total_gender = document.getElementById("total_gender")
+    render_plot(total_gender, document.total_gender_hist)
+
+    let total_age = document.getElementById("total_age")
+    render_plot(total_age, document.total_age_hist)
+
+    let total_ethnicity = document.getElementById("total_ethnicity")
+    render_plot(total_ethnicity, document.total_ethnicity_hist)
+
     // ehc ceased plots
     let ehc_ceased = document.getElementById("ehc_ceased")
     render_plot(ehc_ceased, document.ehc_ceased_indicator)
@@ -146,6 +156,7 @@ async function run_python() {
 
 
     // show plot titles
+    $("#total_header").removeClass('d-none');
     $("#ehc_ceased_header").removeClass('d-none');
     $("#ehc_started_header").removeClass('d-none');
     $("#ass_completed_header").removeClass('d-none');
@@ -156,6 +167,7 @@ async function run_python() {
     $("#journeys_header").removeClass('d-none');
     $("#open_plan_length_header").removeClass('d-none');
     $("#closed_plan_length_header").removeClass('d-none');
+    $("#myForm").addClass('d-none');
 
     
 }

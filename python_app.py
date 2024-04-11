@@ -724,11 +724,14 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     modules["m1"], modules["m2"], modules["m3"], modules["m4"], modules["m5"]
 )
 
-(js.document.total_gender, js.document.total_ethnicity, js.document.total_age) = (
-    entire_cohort(modules["m1"])
-)
 
 # Plot outputs
+(
+    js.document.total_gender_hist,
+    js.document.total_ethnicity_hist,
+    js.document.total_age_hist,
+) = entire_cohort(modules["m1"])
+
 (
     js.document.ehc_ceased_indicator,
     js.document.ehc_ceased_gender_hist,
@@ -780,8 +783,6 @@ js.document.multiple_m2, js.document.multiple_m3 = multiple_appearances(
 
 js.document.journeys = journeys(modules["m2"], modules["m3"])
 
-
-# done to here
 (
     js.document.open_plan_length_gender_hist,
     js.document.open_plan_length_ethnicity_hist,
