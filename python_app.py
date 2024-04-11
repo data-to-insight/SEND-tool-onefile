@@ -129,7 +129,7 @@ def add_identifiers(identifiers, m2, m3, m4, m5):
 def html_plot(plot):
     # Used to centralise arguments for making html plots
     plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px")
-
+    return plot
 
 # Plotting functions
 def hist_for_categories(df):
@@ -192,6 +192,7 @@ def ehc_ceased_year(df):
     gender_hist = html_plot(gender_hist)
     ethnicity_hist = html_plot(ethnicity_hist)
     age_hist = html_plot(age_hist)
+    reason_ceased_pie = html_plot(reason_ceased_pie)
 
     return fig_count_ceased, gender_hist, ethnicity_hist, age_hist, reason_ceased_pie
 
