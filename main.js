@@ -19,7 +19,6 @@ async function run_python() {
       return data
     });
 
-    // console.log(postcode_data)
 
     let pyodide = await loadPyodide();
     await pyodide.loadPackage(["pandas", "micropip"]);
@@ -49,6 +48,8 @@ async function run_python() {
 
     let ehc_ceased_reason = document.getElementById("ehc_ceased_reason")
     render_plot(ehc_ceased_reason, document.ehc_ceased_reason_pie)
+
+    $("#ehc").removeClass('d-none');
 }
 
 function render_plot(container, plot_html) {
@@ -63,19 +64,19 @@ function render_plot(container, plot_html) {
     $(".spinner").addClass('d-none');
 };  
 
- async function pdfFunction () {
-    console.log('stuff is happening')
+//  async function pdfFunction () {
+//     console.log('stuff is happening')
 
-    var source = window.document.getElementsByTagName("plotly-output");
-    var doc = new jsPDF();
+//     var source = window.document.getElementsByTagName("plotly-output");
+//     var doc = new jsPDF();
 
-    doc.html('some text', {
-      callback: function (doc) {
-        // doc.save();
-      },
-      x: 10,
-      y: 10
-    });
+//     doc.html('some text', {
+//       callback: function (doc) {
+//         // doc.save();
+//       },
+//       x: 10,
+//       y: 10
+//     });
 
-    doc.output("dataurlnewwindow");
-  }
+//     doc.output("dataurlnewwindow");
+//  }

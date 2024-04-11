@@ -39,14 +39,39 @@
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 Loading...
               </div>  
-              <div id="ehc_ceased"></div>  
-              <div id="ehc_ceased_gender"></div>
-              <div id="ehc_ceased_ethnicity"></div>     
-              <div id="ehc_ceased_age"></div>  
-              <div id="ehc_ceased_reason"></div>      
+ 
             </div>
           </form>
-          <button id="print" type="button" class="btn btn-primary" onclick="pdfFunction()">Save to pdf</button>
+          <div >
+            <h1 id="ehc" class="d-none">
+              EHCs ceased within the past year
+            </h1>
+            <div class="row">
+              <div class="col">
+                <div id="ehc_ceased"></div> 
+              </div>
+              <div class="col">
+                <div id="ehc_ceased_reason"></div> 
+              </div>   
+            </div>
+            <div class="row">
+              <div class="col">
+                <div id="ehc_ceased_gender"></div>
+              </div>
+              <div class="col">
+                <div id="ehc_ceased_age"></div>  
+              </div>
+            </div>
+            <div class="row">
+              <div id="ehc_ceased_ethnicity"></div> 
+            </div>
+          </div>
+               
+              
+                  
+              
+                 
+          <!-- <button id="print" type="button" class="btn btn-primary" onclick="pdfFunction()">Save to pdf</button> -->
         </div>
         
    <script>
@@ -54,7 +79,7 @@
 
       const myForm = document.getElementById("myForm");
       const csvFile = document.getElementById("csvFile");
-      document.getElementById("print").disabled = true
+      // document.getElementById("print").disabled = true
       
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();
