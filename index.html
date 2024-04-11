@@ -42,8 +42,8 @@
  
             </div>
           </form>
-          <div >
-            <h1 id="ehc" class="d-none">
+          <div class="container">
+            <h1 id="ehc_ceased_header" class="d-none">
               EHCs ceased within the past year
             </h1>
             <div class="row">
@@ -66,8 +66,51 @@
               <div id="ehc_ceased_ethnicity"></div> 
             </div>
           </div>
-               
-              
+          <div class="container">
+            <h1 id="ehc_started_header" class="d-none">
+              EHCs started within the past year
+            </h1>
+            <div class="row">
+              <div class="col">
+                <div id="ehc_started"></div> 
+              </div> 
+            </div>
+            <div class="row">
+              <div class="col">
+                <div id="ehc_started_gender"></div>
+              </div>
+              <div class="col">
+                <div id="ehc_started_age"></div>  
+              </div>
+            </div>
+            <div class="row">
+              <div id="ehc_started_ethnicity"></div> 
+            </div>
+          </div>               
+          <div class="container">
+            <h1 id="ass_ccompleted_header" class="d-none">
+              Assessments completed within the past year
+            </h1>
+            <div class="row">
+              <div class="col">
+                <div id="ass_completed"></div> 
+              </div>
+              <div class="col">
+                <div id="ass_completed_reason"></div> 
+              </div>   
+            </div>
+            <div class="row">
+              <div class="col">
+                <div id="ass_completed_gender"></div>
+              </div>
+              <div class="col">
+                <div id="ass_completed_age"></div>  
+              </div>
+            </div>
+            <div class="row">
+              <div id="ass_completed_ethnicity"></div> 
+            </div>
+          </div>     
                   
               
                  
@@ -83,7 +126,7 @@
       
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();
-         
+
          $(".spinner").removeClass('d-none');
       
         run_analysis();
