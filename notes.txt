@@ -1,0 +1,1 @@
+print the page to 1x2 columns rather than columns and rows
