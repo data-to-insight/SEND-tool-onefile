@@ -1,0 +1,43 @@
+
+
+body {
+    background-color: white;
+}
+ 
+h1 {
+    text-align: center;
+    font-family: sans-serif;
+    color: green;
+}
+ 
+h3 {
+    text-align: center;
+    font-family: sans-serif;
+    color: indigo;
+}
+ 
+h1,
+h3 {
+    text-align: center;
+    font-family: sans-serif;
+}
+ 
+.content {
+    text-align: justify;
+    font-family: sans-serif;
+    margin-left: 35px;
+    margin-right: 35px;
+    color: Tomato;
+}
+
+@media print{
+    @page {
+    size: A4 landscape;
+    }
+
+    div {
+        page-break-before: auto; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
+        page-break-after: auto; /* 'always,' 'avoid,' 'left,' 'inherit,' or 'right' */
+        page-break-inside: avoid; /* or 'auto' */
+    }
+}
