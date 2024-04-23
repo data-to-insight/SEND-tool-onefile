@@ -35,7 +35,7 @@ async function run_python() {
 
 // document.getElementById("print").disabled = false
 
-    // Closed plan lengths
+    // Totals plots
     let total_gender = document.getElementById("total_gender")
     render_plot(total_gender, document.total_gender_hist)
 
@@ -44,6 +44,9 @@ async function run_python() {
 
     let total_ethnicity = document.getElementById("total_ethnicity")
     render_plot(total_ethnicity, document.total_ethnicity_hist)
+
+    let total_count = document.getElementById("total_count")
+    render_plot(total_count, document.total_count_indicator)
 
     // ehc ceased plots
     let ehc_ceased = document.getElementById("ehc_ceased")
