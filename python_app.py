@@ -139,17 +139,17 @@ def html_plot(plot):
 
 # Plotting functions
 def hist_for_categories(df):
-    hist_gender = px.histogram(df, x="Gender")
-    hist_ethnicity = px.histogram(df, x="Ethnicity")
-    hist_age = px.histogram(df, x="Age Group", color="Gender")
+    hist_gender = px.histogram(df, x="Gender", title_x=0.5)
+    hist_ethnicity = px.histogram(df, x="Ethnicity", title_x=0.5)
+    hist_age = px.histogram(df, x="Age Group", color="Gender", title_x=0.5)
 
     return hist_gender, hist_ethnicity, hist_age
 
 
 def box_for_categories(df, y):
-    box_gender = px.box(df, x="Gender", y=y)
-    box_ethnicity = px.box(df, x="Ethnicity", y=y)
-    box_age = px.box(df, x="Age Group", color="Gender", y=y)
+    box_gender = px.box(df, x="Gender", y=y, title_x=0.5)
+    box_ethnicity = px.box(df, x="Ethnicity", y=y, title_x=0.5)
+    box_age = px.box(df, x="Age Group", color="Gender", y=y, title_x=0.5)
 
     return box_gender, box_ethnicity, box_age
 
@@ -162,7 +162,7 @@ def entire_cohort(df):
     ethnicity.update_layout(title="Entire cohort ethnicity")
     age.update_layout(title="Entire cohort age and gender")
 
-    count = len(df['Person ID'].unique())
+    count = len(df["Person ID"].unique())
 
     fig_count = go.Figure(go.Indicator(value=count))
     fig_count.update_layout(
@@ -179,7 +179,6 @@ def entire_cohort(df):
     ethnicity = html_plot(ethnicity)
     age = html_plot(age)
     fig_count = html_plot(fig_count)
-    
 
     return gender, ethnicity, age, fig_count
 
@@ -222,6 +221,7 @@ def ehc_ceased_year(df):
         values="count",
         names="Reason EHC Plan Ceased",
         title="Reason EHC ceased",
+        title_x=0.5,
     )
     fig_count_ceased = html_plot(fig_count_ceased)
     gender_hist = html_plot(gender_hist)
@@ -294,6 +294,7 @@ def ass_completed_year(df):
         values="count",
         names="Assessment Outcome To Issue EHCP",
         title="Outcomes of assessments closed this year",
+        title_x=0.5,
     )
 
     assessments_completed_this_year = len(ass_this_year)
@@ -482,7 +483,9 @@ def requests_fn(df):
         .count()
         .reset_index(name="count")
     )
-    requests_pie = px.pie(request_outcomes, values="count", names="Request Outcome")
+    requests_pie = px.pie(
+        request_outcomes, values="count", names="Request Outcome", title_x=0.5
+    )
 
     gender_hist, ethnicity_hist, age_hist = hist_for_categories(df)
     gender_hist.update_layout(title="Distribution of gender for requests this year")
@@ -750,7 +753,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.total_gender_hist,
     js.document.total_ethnicity_hist,
     js.document.total_age_hist,
-    js.document.total_count_indicator
+    js.document.total_count_indicator,
 ) = entire_cohort(modules["m1"])
 
 (
