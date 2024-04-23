@@ -11,8 +11,8 @@
 @media print{
     @page {
     size: A4 landscape;
-    margin-left: 0px;
-    padding-left: 10mm;
+    /* margin-left: 0px;
+    padding-left: 10mm; */
     }
 
     h1 {
@@ -26,6 +26,9 @@
         height: 297mm;
         margin: 0;
         padding: 0;
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
     }
 
     div {
