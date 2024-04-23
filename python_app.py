@@ -432,13 +432,16 @@ def open_ass_timeframes(df1, df2):
 
     gender_box, ethnicity_box, age_box = box_for_categories(df, "open_ass_timeliness")
     gender_box.update_layout(
-        title="Open assessment timeliness distribution by gender"
+        title="Open assessment timeliness distribution by gender",
+        yaxis_title="Timeliness (days)"
     )
     ethnicity_box.update_layout(
-        title="Open assessment timeliness distribution by ethnicity"
+        title="Open assessment timeliness distribution by ethnicity",
+        yaxis_title="Timeliness (days)"
     )
     age_box.update_layout(
-        title="Open assessment timeliness distribution by age"
+        title="Open assessment timeliness distribution by age",
+        yaxis_title="Timeliness (days)"
     )
 
     uncompleted_requests = html_plot(uncompleted_requests)
@@ -490,11 +493,14 @@ def requests_fn(df):
     ).update_layout(title_x=0.5)
 
     gender_hist, ethnicity_hist, age_hist = hist_for_categories(df)
-    gender_hist.update_layout(title="Distribution of gender for requests this year")
+    gender_hist.update_layout(title="Distribution of gender for requests this year",
+        yaxis_title="Timeliness (days)")
     ethnicity_hist.update_layout(
-        title="Distribution of ethnicity for requests this year"
+        title="Distribution of ethnicity for requests this year",
+        yaxis_title="Timeliness (days)"
     )
-    age_hist.update_layout(title="Distribution of age for requests this year")
+    age_hist.update_layout(title="Distribution of age for requests this year",
+        yaxis_title="Timeliness (days)")
 
     fig_count_req = html_plot(fig_count_req)
     gender_hist = html_plot(gender_hist)
