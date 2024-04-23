@@ -791,7 +791,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
 ) = closed_ass_timeframes(modules["m2"], modules["m3"])
 
 (
-    req_count_indicator,
+    js.document.req_count_indicator,
     js.document.req_gender_box,
     js.document.req_ethnicity_box,
     js.document.req_age_box,

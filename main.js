@@ -117,6 +117,9 @@ async function run_python() {
     render_plot(ass_closed_timeframe_ethnicity, document.ass_closed_timeframe_ethnicity_box)
 
     // request breakdowns
+    let req_count = document.getElementById("req_count")
+    render_plot(req_count, document.req_count_indicator)
+
     let req_gender = document.getElementById("req_gender")
     render_plot(req_gender, document.req_gender_box)
 
