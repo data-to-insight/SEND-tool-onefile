@@ -1,37 +1,11 @@
+@media screen{
+    @page {
+        size: A4 landscape;
+        margin-left: 0px;
+        padding-left: 10mm;
+        }
 
-@page {
-    size: A4 landscape;
-    margin-left: 0px;
-    padding-left: 10mm;
-    }
     
-body {
-    background-color: white;
-}
- 
-h1 {
-    text-align: center;
-    font-family: sans-serif;
-    color: green;
-}
- 
-h3 {
-    text-align: center;
-    font-family: sans-serif;
-    color: indigo;
-}
- 
-h3 {
-    text-align: center;
-    font-family: sans-serif;
-}
- 
-.content {
-    text-align: justify;
-    font-family: sans-serif;
-    margin-left: 35px;
-    margin-right: 35px;
-    color: Tomato;
 }
 
 @media print{

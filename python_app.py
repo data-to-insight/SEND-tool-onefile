@@ -222,7 +222,7 @@ def ehc_ceased_year(df):
         names="Reason EHC Plan Ceased",
         title="Reason EHC ceased"
     ).update_layout(title_x=0.5)
-    
+
     fig_count_ceased = html_plot(fig_count_ceased)
     gender_hist = html_plot(gender_hist)
     ethnicity_hist = html_plot(ethnicity_hist)
@@ -366,13 +366,16 @@ def closed_ass_timeframes(df1, df2):
 
     gender_box, ethnicity_box, age_box = box_for_categories(df, "closed_ass_timeliness")
     gender_box.update_layout(
-        title="Distribution of wait times for closed assessments by gender"
+        title="Closed assessment timeliness distribution by gender",
+        yaxis_title="Timeliness (days)"
     )
     ethnicity_box.update_layout(
-        title="Distribution of wait times for closed assessments by ethnicity"
+        title="Closed assessment timeliness distribution by ethnicity",
+        yaxis_title="Timeliness (days)"
     )
     age_box.update_layout(
-        title="Distribution of wait times for closed assessments by age"
+        title="Closed assessment timeliness distribution by age",
+        yaxis_title="Timeliness (days)"
     )
 
     gender_box = html_plot(gender_box)
@@ -429,13 +432,13 @@ def open_ass_timeframes(df1, df2):
 
     gender_box, ethnicity_box, age_box = box_for_categories(df, "open_ass_timeliness")
     gender_box.update_layout(
-        title="Distribution of wait times for currently open assessments by gender"
+        title="Open assessment timeliness distribution by gender"
     )
     ethnicity_box.update_layout(
-        title="Distribution of wait times for currently open assessments by ethnicity"
+        title="Open assessment timeliness distribution by ethnicity"
     )
     age_box.update_layout(
-        title="Distribution of wait times for currently open assessments by age"
+        title="Open assessment timeliness distribution by age"
     )
 
     uncompleted_requests = html_plot(uncompleted_requests)
