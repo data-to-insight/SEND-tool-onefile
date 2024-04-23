@@ -14,6 +14,10 @@ import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 
+from pandas.core.common import SettingWithCopyWarning
+
+warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
+
 # Initial variables
 timeframe = 730
 
