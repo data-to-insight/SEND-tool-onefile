@@ -14,6 +14,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
 
+import warnings
 from pandas.core.common import SettingWithCopyWarning
 
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
