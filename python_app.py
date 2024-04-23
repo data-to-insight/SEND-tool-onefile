@@ -220,9 +220,9 @@ def ehc_ceased_year(df):
         reason_ech_ceased,
         values="count",
         names="Reason EHC Plan Ceased",
-        title="Reason EHC ceased",
-        title_x=0.5,
-    )
+        title="Reason EHC ceased"
+    ).update_layout(title_x=0.5)
+    
     fig_count_ceased = html_plot(fig_count_ceased)
     gender_hist = html_plot(gender_hist)
     ethnicity_hist = html_plot(ethnicity_hist)
@@ -293,9 +293,8 @@ def ass_completed_year(df):
         ass_year_outcomes,
         values="count",
         names="Assessment Outcome To Issue EHCP",
-        title="Outcomes of assessments closed this year",
-        title_x=0.5,
-    )
+        title="Outcomes of assessments closed this year"
+    ).update_layout(title_x=0.5)
 
     assessments_completed_this_year = len(ass_this_year)
     fig_count_completed = go.Figure(go.Indicator(value=assessments_completed_this_year))
@@ -484,8 +483,8 @@ def requests_fn(df):
         .reset_index(name="count")
     )
     requests_pie = px.pie(
-        request_outcomes, values="count", names="Request Outcome", title_x=0.5
-    )
+        request_outcomes, values="count", names="Request Outcome"
+    ).update_layout(title_x=0.5)
 
     gender_hist, ethnicity_hist, age_hist = hist_for_categories(df)
     gender_hist.update_layout(title="Distribution of gender for requests this year")
