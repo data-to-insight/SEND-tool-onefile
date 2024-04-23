@@ -156,7 +156,7 @@ def box_for_categories(df, y):
 
 # Calculation functions
 def entire_cohort(df):
-    gender, age, ethnicity = hist_for_categories(df)
+    gender, ethnicity, age = hist_for_categories(df)
 
     gender.update_layout(title="Entire cohort by gender")
     ethnicity.update_layout(title="Entire cohort ethnicity")
