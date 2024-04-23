@@ -152,7 +152,7 @@ def hist_for_categories(df):
 def box_for_categories(df, y):
     box_gender = px.box(df, x="Gender", y=y).update_layout(title_x=0.5)
     box_ethnicity = px.box(df, x="Ethnicity", y=y).update_layout(title_x=0.5)
-    box_age = px.box(df, x="Age Group", color="Gender").update_layout(title_x=0.5)
+    box_age = px.box(df, x="Age Group", y=y, color="Gender").update_layout(title_x=0.5)
 
     return box_gender, box_ethnicity, box_age
 
