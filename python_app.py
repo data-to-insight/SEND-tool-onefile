@@ -139,9 +139,12 @@ def html_plot(plot):
 
 # Plotting functions
 def hist_for_categories(df):
-    hist_gender = px.histogram(df, x="Gender").update_layout(title_x=0.5)
-    hist_ethnicity = px.histogram(df, x="Ethnicity").update_layout(title_x=0.5)
-    hist_age = px.histogram(df, x="Age Group", color="Gender").update_layout(title_x=0.5)
+    hist_gender = px.histogram(df, x="Gender").update_layout(title_x=0.5,
+        yaxis_title="Number of children")
+    hist_ethnicity = px.histogram(df, x="Ethnicity").update_layout(title_x=0.5,
+        yaxis_title="Number of children")
+    hist_age = px.histogram(df, x="Age Group", color="Gender").update_layout(title_x=0.5,
+        yaxis_title="Number of children")
 
     return hist_gender, hist_ethnicity, hist_age
 
