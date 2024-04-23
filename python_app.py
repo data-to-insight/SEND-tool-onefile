@@ -141,7 +141,7 @@ def html_plot(plot):
 def hist_for_categories(df):
     hist_gender = px.histogram(df, x="Gender")
     hist_ethnicity = px.histogram(df, x="Ethnicity")
-    hist_age = px.histogram(df, x="Age Group", color="Gender", marginal="violin")
+    hist_age = px.histogram(df, x="Age Group", color="Gender", marginal="rug")
 
     return hist_gender, hist_ethnicity, hist_age
 
