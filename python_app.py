@@ -157,11 +157,26 @@ def entire_cohort(df):
     ethnicity.update_layout(title="Entire cohort ethnicity")
     age.update_layout(title="Entire cohort age and gender")
 
+    count = len(df['Person ID'].unique())
+
+    fig_count = go.Figure(go.Indicator(value=count))
+    fig_count.update_layout(
+        title={
+            "text": "Total children in SEN2 data",
+            "y": 0.6,
+            "x": 0.5,
+            "xanchor": "center",
+            "yanchor": "top",
+        }
+    )
+
     gender = html_plot(gender)
     ethnicity = html_plot(ethnicity)
     age = html_plot(age)
+    fig_count = html_plot(fig_count)
+    
 
-    return gender, ethnicity, age
+    return gender, ethnicity, age, fig_count
 
 
 def ehc_ceased_year(df):
@@ -730,6 +745,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.total_gender_hist,
     js.document.total_ethnicity_hist,
     js.document.total_age_hist,
+    js.document.total_count_indicator
 ) = entire_cohort(modules["m1"])
 
 (
