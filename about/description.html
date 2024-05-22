@@ -7,13 +7,7 @@
    <link type="text/css", rel="stylesheet" href="style.css" /> 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-   <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/1.0.21/jquery.csv.min.js"></script>
-   <script src="https://cdn.plot.ly/plotly-2.1.0.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-   <script src="main.js" type="text/javascript"></script>
+
 </head>
 <body class="bg-white">
 
@@ -34,5 +28,48 @@
         </a>
       </div>
     </nav>
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              About part 1
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porttitor arcu ipsum, sed imperdiet massa varius id. Duis sodales a mi volutpat hendrerit. Maecenas euismod luctus ullamcorper. Mauris ullamcorper, est semper suscipit luctus, nisi arcu feugiat ante, quis viverra nunc risus varius est. Praesent sodales nibh non elementum tempus. Nunc id ante nec purus sodales maximus sit amet ac neque. In in lectus egestas, congue massa vitae, rutrum elit.
 
+              Sed tincidunt dui sit amet feugiat vehicula. Ut at dictum libero. Morbi congue eros id congue porta. Nullam vitae lacus molestie, porta lacus at, malesuada massa. Phasellus sit amet dictum enim. Nunc ligula mauris, lobortis tincidunt neque eget, dapibus mollis dolor. Nam et ligula at turpis luctus porttitor at cursus enim. Sed ut lobortis lorem, sed consequat diam.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              About part 2
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porttitor arcu ipsum, sed imperdiet massa varius id. Duis sodales a mi volutpat hendrerit. Maecenas euismod luctus ullamcorper. Mauris ullamcorper, est semper suscipit luctus, nisi arcu feugiat ante, quis viverra nunc risus varius est. Praesent sodales nibh non elementum tempus. Nunc id ante nec purus sodales maximus sit amet ac neque. In in lectus egestas, congue massa vitae, rutrum elit.
+
+                Sed tincidunt dui sit amet feugiat vehicula. Ut at dictum libero. Morbi congue eros id congue porta. Nullam vitae lacus molestie, porta lacus at, malesuada massa. Phasellus sit amet dictum enim. Nunc ligula mauris, lobortis tincidunt neque eget, dapibus mollis dolor. Nam et ligula at turpis luctus porttitor at cursus enim. Sed ut lobortis lorem, sed consequat diam.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              About part 3
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porttitor arcu ipsum, sed imperdiet massa varius id. Duis sodales a mi volutpat hendrerit. Maecenas euismod luctus ullamcorper. Mauris ullamcorper, est semper suscipit luctus, nisi arcu feugiat ante, quis viverra nunc risus varius est. Praesent sodales nibh non elementum tempus. Nunc id ante nec purus sodales maximus sit amet ac neque. In in lectus egestas, congue massa vitae, rutrum elit.
+
+                Sed tincidunt dui sit amet feugiat vehicula. Ut at dictum libero. Morbi congue eros id congue porta. Nullam vitae lacus molestie, porta lacus at, malesuada massa. Phasellus sit amet dictum enim. Nunc ligula mauris, lobortis tincidunt neque eget, dapibus mollis dolor. Nam et ligula at turpis luctus porttitor at cursus enim. Sed ut lobortis lorem, sed consequat diam.
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
