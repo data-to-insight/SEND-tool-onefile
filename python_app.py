@@ -751,7 +751,7 @@ elif len(files) == 1:
         dfs = pd.read_excel(io.StringIO(files[i]))
         js.console.log("Excel read")
 else:
-    js.alert("Did you upload the correct files, mor einfo in the instructions.")
+    js.alert("Did you upload the correct files, more info in the instructions.")
 
 modules = {}
 for key, df in dfs.items():
