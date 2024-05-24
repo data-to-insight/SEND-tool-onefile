@@ -741,8 +741,15 @@ def plan_length_plots(m4):
 
 # main script
 dfs = {}
-for i, v in enumerate(files):
-    dfs[i] = pd.read_csv(io.StringIO(files[i]))
+if len(files) > 1:
+    for i, v in enumerate(files):
+        dfs[i] = pd.read_csv(io.StringIO(files[i]))
+        js.console.log("csvs sucessfully read")
+elif len(files) == 1:
+    dfs = pd.read_excel(io.StringIO(files))
+    js.console.log("Excel read")
+else:
+    js.alert("Did you upload the correct files, mor einfo in the instructions.")
 
 modules = {}
 for key, df in dfs.items():
