@@ -746,8 +746,7 @@ if len(files) > 1:
         dfs[i] = pd.read_csv(io.StringIO(files[i]))
         js.console.log("csvs sucessfully read")
 elif len(files) == 1:
-    files = enumerate(files)
-    for i, v in files:
+    for i, v in enumerate(files):
         dfs = pd.read_excel(io.StringIO(files[i]))
         js.console.log("Excel read")
 else:
