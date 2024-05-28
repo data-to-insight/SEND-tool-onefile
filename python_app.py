@@ -139,12 +139,15 @@ def html_plot(plot):
 
 # Plotting functions
 def hist_for_categories(df):
-    hist_gender = px.histogram(df, x="Gender").update_layout(title_x=0.5,
-        yaxis_title="Number of children")
-    hist_ethnicity = px.histogram(df, x="Ethnicity").update_layout(title_x=0.5,
-        yaxis_title="Number of children")
-    hist_age = px.histogram(df, x="Age Group", color="Gender").update_layout(title_x=0.5,
-        yaxis_title="Number of children")
+    hist_gender = px.histogram(df, x="Gender").update_layout(
+        title_x=0.5, yaxis_title="Number of children"
+    )
+    hist_ethnicity = px.histogram(df, x="Ethnicity").update_layout(
+        title_x=0.5, yaxis_title="Number of children"
+    )
+    hist_age = px.histogram(df, x="Age Group", color="Gender").update_layout(
+        title_x=0.5, yaxis_title="Number of children"
+    )
 
     return hist_gender, hist_ethnicity, hist_age
 
@@ -223,7 +226,7 @@ def ehc_ceased_year(df):
         reason_ech_ceased,
         values="count",
         names="Reason EHC Plan Ceased",
-        title="Reason EHC ceased"
+        title="Reason EHC ceased",
     ).update_layout(title_x=0.5)
 
     fig_count_ceased = html_plot(fig_count_ceased)
@@ -296,7 +299,7 @@ def ass_completed_year(df):
         ass_year_outcomes,
         values="count",
         names="Assessment Outcome To Issue EHCP",
-        title="Outcomes of assessments closed this year"
+        title="Outcomes of assessments closed this year",
     ).update_layout(title_x=0.5)
 
     assessments_completed_this_year = len(ass_this_year)
@@ -370,15 +373,15 @@ def closed_ass_timeframes(df1, df2):
     gender_box, ethnicity_box, age_box = box_for_categories(df, "closed_ass_timeliness")
     gender_box.update_layout(
         title="Closed assessment timeliness distribution by gender",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
     ethnicity_box.update_layout(
         title="Closed assessment timeliness distribution by ethnicity",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
     age_box.update_layout(
         title="Closed assessment timeliness distribution by age",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
 
     gender_box = html_plot(gender_box)
@@ -436,15 +439,15 @@ def open_ass_timeframes(df1, df2):
     gender_box, ethnicity_box, age_box = box_for_categories(df, "open_ass_timeliness")
     gender_box.update_layout(
         title="Open assessment timeliness distribution by gender",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
     ethnicity_box.update_layout(
         title="Open assessment timeliness distribution by ethnicity",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
     age_box.update_layout(
         title="Open assessment timeliness distribution by age",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
 
     uncompleted_requests = html_plot(uncompleted_requests)
@@ -496,14 +499,18 @@ def requests_fn(df):
     ).update_layout(title_x=0.5)
 
     gender_hist, ethnicity_hist, age_hist = hist_for_categories(df)
-    gender_hist.update_layout(title="Distribution of gender for requests this year",
-        yaxis_title="Timeliness (days)")
+    gender_hist.update_layout(
+        title="Distribution of gender for requests this year",
+        yaxis_title="Timeliness (days)",
+    )
     ethnicity_hist.update_layout(
         title="Distribution of ethnicity for requests this year",
-        yaxis_title="Timeliness (days)"
+        yaxis_title="Timeliness (days)",
     )
-    age_hist.update_layout(title="Distribution of age for requests this year",
-        yaxis_title="Timeliness (days)")
+    age_hist.update_layout(
+        title="Distribution of age for requests this year",
+        yaxis_title="Timeliness (days)",
+    )
 
     fig_count_req = html_plot(fig_count_req)
     gender_hist = html_plot(gender_hist)
@@ -746,9 +753,8 @@ if len(files) > 1:
         dfs[i] = pd.read_csv(io.StringIO(files[i]))
         js.console.log("csvs sucessfully read")
 elif len(files) == 1:
-    for i, v in enumerate(files):
-        dfs = pd.read_excel(io.StringIO(files[i]))
-        js.console.log("Excel read")
+    dfs = pd.read_excel(files)
+    js.console.log("Excel read")
 else:
     js.alert("Did you upload the correct files, more info in the instructions.")
 
