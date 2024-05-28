@@ -13,6 +13,7 @@ import io
 import plotly.express as px
 import plotly.graph_objects as go
 import numpy as np
+import openpyxl
 
 import warnings
 from pandas.core.common import SettingWithCopyWarning
@@ -753,7 +754,7 @@ if len(files) > 1:
         dfs[i] = pd.read_csv(io.StringIO(files[i]))
         js.console.log("csvs sucessfully read")
 elif len(files) == 1:
-    wb = openpyxl.load_workbook(BytesIO(js_buffer.to_py()), data_only = True)
+    wb = openpyxl.load_workbook(io.BytesIO(js_buffer.to_py()), data_only = True)
     for i in wb:
         ws = wb.worksheets[i]
         excel_data = ws.values
