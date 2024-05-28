@@ -753,7 +753,7 @@ if len(files) > 1:
         dfs[i] = pd.read_csv(io.StringIO(files[i]))
         js.console.log("csvs sucessfully read")
 elif len(files) == 1:
-    dfs = pd.read_excel(files)
+    dfs = pd.read_excel(files.to_py())
     js.console.log("Excel read")
 else:
     js.alert("Did you upload the correct files, more info in the instructions.")
