@@ -748,23 +748,23 @@ def plan_length_plots(m4):
 
 
 # main script
-dfs = {}
-if len(files) > 1:
-    for i, v in enumerate(files):
-        dfs[i] = pd.read_csv(io.StringIO(files[i]))
-        js.console.log("csvs sucessfully read")
-elif len(files) == 1:
-    wb = openpyxl.load_workbook(io.BytesIO(files.to_py()), data_only = True)
-    for i in wb:
-        ws = wb.worksheets[i]
-        excel_data = ws.values
-        columns = next(excel_data)[0:]
-        df = pd.DataFrame(excel_data , columns=columns)
-        dfs[i] = df
-    # dfs = pd.read_excel(io.StringIO((files.to_py())))
-    # js.console.log("Excel read")
-else:
-    js.alert("Did you upload the correct files, more info in the instructions.")
+# dfs = {}
+# if len(files) > 1:
+#     for i, v in enumerate(files):
+#         dfs[i] = pd.read_csv(io.StringIO(files[i]))
+#         js.console.log("csvs sucessfully read")
+# elif len(files) == 1:
+#     wb = openpyxl.load_workbook(io.BytesIO(files.to_py()), data_only = True)
+#     for i in wb:
+#         ws = wb.worksheets[i]
+#         excel_data = ws.values
+#         columns = next(excel_data)[0:]
+#         df = pd.DataFrame(excel_data , columns=columns)
+#         dfs[i] = df
+#     # dfs = pd.read_excel(io.StringIO((files.to_py())))
+#     # js.console.log("Excel read")
+# else:
+#     js.alert("Did you upload the correct files, more info in the instructions.")
 
 modules = {}
 for key, df in dfs.items():
