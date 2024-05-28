@@ -27,6 +27,7 @@ async function run_python() {
     await pyodide.runPythonAsync(` 
     import micropip
     await micropip.install('plotly==5.0.0')
+    await micropip.install('openpyxl')
     `)
 
     // run main Python script
