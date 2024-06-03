@@ -29,22 +29,42 @@ async function run_python() {
     await micropip.install('plotly==5.0.0')
     await micropip.install('openpyxl')
     import openpyxl
-    
+
+    import pandas as pd
+    import js
+    import pyodide_js
+    import json
+    import io
+    import plotly.express as px
+    import plotly.graph_objects as go
+    import numpy as np
+    import openpyxl
+
+    import warnings
+    from pandas.core.common import SettingWithCopyWarning
+
+    warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
+
+    from js import files
+
     dfs = {}
     if len(files) > 1:
         for i, v in enumerate(files):
             dfs[i] = pd.read_csv(io.StringIO(files[i]))
             js.console.log("csvs sucessfully read")
     elif len(files) == 1:
-        wb = openpyxl.load_workbook(io.BytesIO(files.to_py()), data_only = True)
-        for i in wb:
-            ws = wb.worksheets[i]
-            excel_data = ws.values
-            columns = next(excel_data)[0:]
-            df = pd.DataFrame(excel_data , columns=columns)
-            dfs[i] = df
-        # dfs = pd.read_excel(io.StringIO((files.to_py())))
-        # js.console.log("Excel read")
+        
+        for d in files:
+            js.console.log(io.StringIO(d))
+            #wb = openpyxl.load_workbook(io.StringIO(v), data_only = True)
+            #for i in wb:
+            #    ws = wb.worksheets[i]
+            #    excel_data = ws.values
+            #    columns = next(excel_data)[0:]
+            #    df = pd.DataFrame(excel_data , columns=columns)
+            #    dfs[i] = df
+            dfs = pd.read_excel(d, engine='openpyxl')
+            js.console.log("Excel read")
     else:
         js.alert("Did you upload the correct files, more info in the instructions.")
 
