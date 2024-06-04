@@ -72,14 +72,69 @@
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-              Understanding the charts
+              Report pages
             </button>
           </h2>
           <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris porttitor arcu ipsum, sed imperdiet massa varius id. Duis sodales a mi volutpat hendrerit. Maecenas euismod luctus ullamcorper. Mauris ullamcorper, est semper suscipit luctus, nisi arcu feugiat ante, quis viverra nunc risus varius est. Praesent sodales nibh non elementum tempus. Nunc id ante nec purus sodales maximus sit amet ac neque. In in lectus egestas, congue massa vitae, rutrum elit.
-
-                Sed tincidunt dui sit amet feugiat vehicula. Ut at dictum libero. Morbi congue eros id congue porta. Nullam vitae lacus molestie, porta lacus at, malesuada massa. Phasellus sit amet dictum enim. Nunc ligula mauris, lobortis tincidunt neque eget, dapibus mollis dolor. Nam et ligula at turpis luctus porttitor at cursus enim. Sed ut lobortis lorem, sed consequat diam.
+            <dl>
+              <dt>Total cohort breakdown</dt>
+                <dd>Total number of unique child IDs in the data, with breakdown by ethnicity, gender, and age.</dd>
+              <dt>EHCs ceased within the past year</dt>
+                <dd>EHC ceased  with a date within a year of the reference date with breakdown by ethnicity, gender, age, and reason for ending.</dd>
+              <dt>EHCs started within the past year</dt>
+                <dd>EHCs started with a date within a year of the reference date with breakdown by ethnicity, gender, and age.</dd>
+              <dt>Assessments completed within the past year</dt>
+                <dd>Assessment outcome dates within a year of the reference date with breakdown by ethnicity, gender, age, and outcome.</dd>
+              <dt>Closed assessment timeliness</dt>
+                <dd>The distribution of time between assessment request being recieved and completion date, shown using box plots, with breakdown by gender, age, and ethnicity.</dd>
+                <dd>This is calculated by merging module 1 and module 2 on "Person ID" and "Requests Record ID" to match rows, discarding empty rows, and finding time elapsed between request and outcome date.</dd>
+              <dt>Currently open assessment timeliness</dt>
+                <dd>Displays the distribution of timeliness for assessments with no outcome date with breakdown by ethnicity, gender, and age.</dd>
+                <dd>Calculated in the same way Closed assessment timeliness, but only taking rows with no outcome date, and instead using the reference date.</dd>
+              <dt>Requests in the past year</dt>
+                <dd>Requests in the year (number of non-null rows in the requests made column), with further breakdown by ethnicity, gender, and age.</dd>
+              <dt>Children appearing in lists multiple times</dt>
+                <dd>Child IDs appearing multiple time in requests/assessments modules.</dd>
+              <dt>Outcomes from requests journeys</dt>
+                <dd>Visualisation showing the number of children having different outcomes at each stage from request to EHCP, with bars at each section showing distribution per section
+                and bars between sections showing the distribution of children taking a given journey (the width of each bar representing the proportion of children having the exact same 
+                outcome at every stage). There is more info on this below.
+              </dd>
+              <dt>Open plan lengths</dt>
+                <dd>The amount of time plans with no close date in the data have been open at the time of the reference date. The x-axis is the amount of time plans have been open, the y-axis is the number of children in each plan-length bucket.</dd>
+                <dd>These charts are broken down by gender, age, and Ethnicity.</dd>
+              <dt>Closed plan lengths</dt>
+                <dd>These charts are the same as the open plan lengths, including gender, age, and ethnicity breakdown, with buckets shwoing the amount fo time between plans opening and closing.</dd>
+            </dl>    
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Box plots and journey plots
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>Box plots are a useful way to visualise distributions of values. 
+                In box plots the upper and lower bounds of the box represent upper and lower quartiles, and the median is given by the line inside the box.
+                The lines outside the box are the highest and lowest values not considered to be statistical outliers.
+                Points displayed outside of these lines are statistical outliers.
+                See more on the box plots used <a href="https://plotly.com/python/box-plots/">here.</a></p>
+                <p>The journeys chart shows the breakdown of children from assessment request to outcome. 
+                 The sections of the chart reflect the column names in the modules, and the value given at each section is the value in the column it represents.
+                 For instance in request outcome, the Y section is children who have made a request for an assessment and have been granted an assessment.
+                 Each of these column sections shows the distribution of children with each outcome.
+                 From the left to the right, to each column section, you can see the bars between them showing how many children move from outcome to outcome.
+                 Each of these is sized according to the number of children who take a given journey of outcomes.
+                 As an illustration lets say that 75 children might have a Y for their request outcome, but only 40 of these have a completed assessment, and then only 30 of those have an EHCP.
+                 In this case, from the Request section bar of 30 would go across to Request Outcome "Y", Assessment Complete "Assessment Completed", and Assessment Outcome to Issue EHCP "Y".
+                 Its size then is all of the childrne who take a particular journey. That set of 75 children with a Request Outcome "Y" may be split into smaller bars including those who have not
+                 got a completed assessment but dont have an ECHP, and another bar of those hwo have not got a completed assessment and then cannot have an assessment outcome.
+                 
+                </p>
             </div>
           </div>
         </div>
