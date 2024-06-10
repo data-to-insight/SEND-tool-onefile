@@ -132,9 +132,12 @@ def add_identifiers(identifiers, m2, m3, m4, m5):
     return m2, m3, m4, m5
 
 
-def html_plot(plot):
+def html_plot(plot, width):
     # Used to centralise arguments for making html plots
-    plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px", default_width="350px")
+    if width == "n":
+        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px", default_width="350px")
+    if width == "w":
+        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="350px", default_width="700px")
     return plot
 
 
@@ -182,10 +185,10 @@ def entire_cohort(df):
         }
     )
 
-    gender = html_plot(gender)
-    ethnicity = html_plot(ethnicity)
-    age = html_plot(age)
-    fig_count = html_plot(fig_count)
+    gender = html_plot(gender, "n")
+    ethnicity = html_plot(ethnicity, "w")
+    age = html_plot(age, "n")
+    fig_count = html_plot(fig_count, "n")
 
     return gender, ethnicity, age, fig_count
 
@@ -230,11 +233,11 @@ def ehc_ceased_year(df):
         title="Reason EHC ceased",
     ).update_layout(title_x=0.5)
 
-    fig_count_ceased = html_plot(fig_count_ceased)
-    gender_hist = html_plot(gender_hist)
-    ethnicity_hist = html_plot(ethnicity_hist)
-    age_hist = html_plot(age_hist)
-    reason_ceased_pie = html_plot(reason_ceased_pie)
+    fig_count_ceased = html_plot(fig_count_ceased, "n")
+    gender_hist = html_plot(gender_hist, "n")
+    ethnicity_hist = html_plot(ethnicity_hist, "w")
+    age_hist = html_plot(age_hist, "n")
+    reason_ceased_pie = html_plot(reason_ceased_pie, "n")
 
     return fig_count_ceased, gender_hist, ethnicity_hist, age_hist, reason_ceased_pie
 
@@ -269,10 +272,10 @@ def ehc_starting_year(df):
     ethnicity_hist.update_layout(title="EHC started this year by ethnicity")
     age_hist.update_layout(title="EHC started this year by age and gender")
 
-    fig_count_started = html_plot(fig_count_started)
-    gender_hist = html_plot(gender_hist)
-    ethnicity_hist = html_plot(ethnicity_hist)
-    age_hist = html_plot(age_hist)
+    fig_count_started = html_plot(fig_count_started, "n")
+    gender_hist = html_plot(gender_hist, "n")
+    ethnicity_hist = html_plot(ethnicity_hist, "w")
+    age_hist = html_plot(age_hist, "n")
 
     return fig_count_started, gender_hist, ethnicity_hist, age_hist
 
@@ -321,11 +324,11 @@ def ass_completed_year(df):
     ethnicity_hist.update_layout(title="Assessments completed this year by ethnicity")
     age_hist.update_layout(title="Assessments completed this year by age and gender")
 
-    fig_count_completed = html_plot(fig_count_completed)
-    gender_hist = html_plot(gender_hist)
-    ethnicity_hist = html_plot(ethnicity_hist)
-    age_hist = html_plot(age_hist)
-    ass_outcomes_pie = html_plot(ass_outcomes_pie)
+    fig_count_completed = html_plot(fig_count_completed, "n")
+    gender_hist = html_plot(gender_hist, "n")
+    ethnicity_hist = html_plot(ethnicity_hist, "w")
+    age_hist = html_plot(age_hist, "n")
+    ass_outcomes_pie = html_plot(ass_outcomes_pie, "n")
 
     return fig_count_completed, gender_hist, ethnicity_hist, age_hist, ass_outcomes_pie
 
@@ -385,9 +388,9 @@ def closed_ass_timeframes(df1, df2):
         yaxis_title="Timeliness (days)",
     )
 
-    gender_box = html_plot(gender_box)
-    ethnicity_box = html_plot(ethnicity_box)
-    age_box = html_plot(age_box)
+    gender_box = html_plot(gender_box, "n")
+    ethnicity_box = html_plot(ethnicity_box, "w")
+    age_box = html_plot(age_box, "n")
 
     return gender_box, ethnicity_box, age_box
 
@@ -451,10 +454,10 @@ def open_ass_timeframes(df1, df2):
         yaxis_title="Timeliness (days)",
     )
 
-    uncompleted_requests = html_plot(uncompleted_requests)
-    gender_box = html_plot(gender_box)
-    ethnicity_box = html_plot(ethnicity_box)
-    age_box = html_plot(age_box)
+    uncompleted_requests = html_plot(uncompleted_requests, "n")
+    gender_box = html_plot(gender_box, "n")
+    ethnicity_box = html_plot(ethnicity_box, "w")
+    age_box = html_plot(age_box, "n")
 
     return uncompleted_requests, gender_box, ethnicity_box, age_box
 
@@ -513,11 +516,11 @@ def requests_fn(df):
         yaxis_title="Timeliness (days)",
     )
 
-    fig_count_req = html_plot(fig_count_req)
-    gender_hist = html_plot(gender_hist)
-    ethnicity_hist = html_plot(ethnicity_hist)
-    age_hist = html_plot(age_hist)
-    requests_pie = html_plot(requests_pie)
+    fig_count_req = html_plot(fig_count_req, "n")
+    gender_hist = html_plot(gender_hist, "n")
+    ethnicity_hist = html_plot(ethnicity_hist, "w")
+    age_hist = html_plot(age_hist, "n")
+    requests_pie = html_plot(requests_pie, "n")
 
     return fig_count_req, gender_hist, ethnicity_hist, age_hist, requests_pie
 
@@ -549,8 +552,8 @@ def multiple_appearances(m2, m3):
         }
     )
 
-    multiple_m2 = html_plot(multiple_m2)
-    multiple_m3 = html_plot(multiple_m3)
+    multiple_m2 = html_plot(multiple_m2, "n")
+    multiple_m3 = html_plot(multiple_m3, "n")
 
     return multiple_m2, multiple_m3
 
@@ -597,7 +600,7 @@ def journeys(m2, m3):
     )
     fig.update_layout(margin=dict(l=50, r=50, t=50, b=50))
 
-    fig = html_plot(fig)
+    fig = html_plot(fig, "w")
 
     return fig
 
@@ -730,12 +733,12 @@ def plan_length_plots(m4):
         },
     )
 
-    open_gender_hist = html_plot(open_gender_hist)
-    open_ethnicity_hist = html_plot(open_ethnicity_hist)
-    open_age_hist = html_plot(open_age_hist)
-    closed_gender_hist = html_plot(closed_gender_hist)
-    closed_ethnicity_hist = html_plot(closed_ethnicity_hist)
-    closed_age_hist = html_plot(closed_age_hist)
+    open_gender_hist = html_plot(open_gender_hist, "n")
+    open_ethnicity_hist = html_plot(open_ethnicity_hist, "n")
+    open_age_hist = html_plot(open_age_hist, "n")
+    closed_gender_hist = html_plot(closed_gender_hist, "n")
+    closed_ethnicity_hist = html_plot(closed_ethnicity_hist, "w")
+    closed_age_hist = html_plot(closed_age_hist, "n")
 
     return (
         open_gender_hist,

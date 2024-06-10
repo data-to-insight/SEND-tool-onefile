@@ -333,18 +333,26 @@
           let verticalOffset = 3
           doc.text(0.5, verticalOffset + 12 / 72, textlines)
           verticalOffset += (textlines.length + 0.5) * 12 / 72
-  
-          html2canvas(document.getElementById("total_gender"))
+
+          doc.addPage(); 
+          html2canvas(document.getElementById("total_count"))
               .then(function (canvas) {
-              doc.addPage();
-              doc.text('Totasl cohort breakdown')
-              .setFontSize(24)
-              img1 = canvas.toDataURL("image/png")
-              doc.addImage(img1, 'PNG', 1, 1);
-  
-              img2 = canvas.toDataURL("image/png")
+              // doc.addPage();
+              doc.text('Total cohort breakdown', 1, 2).setFontSize(24)
               
-              doc.addImage(img2, 'PNG', 4, 1);
+              img1 = canvas.toDataURL("image/png")
+              doc.addImage(img1, 'PNG', 1, 2);
+              })
+
+          html2canvas(document.getElementById("total_ethnicity"))
+              .then(function (canvas) {
+              img2 = canvas.toDataURL("image/png")
+              doc.addImage(img2, 'PNG', 4.5, 2);
+              
+  
+              // img2 = canvas.toDataURL("image/png")
+              
+              // doc.addImage(img2, 'PNG', 4, 1);
   
               doc.save("plots.pdf");
               });
