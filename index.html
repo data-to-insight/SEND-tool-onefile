@@ -312,7 +312,6 @@
       document.long_text = document.getElementById("long_text")
       function pdfFunction(){
           var doc = new jsPDF('a4', 'in');
-          var img1, img2;
           var pageGap = 10;
           doc.setFont('helvetica')
           doc.setFontSize(12)
@@ -334,28 +333,64 @@
           doc.text(0.5, verticalOffset + 12 / 72, textlines)
           verticalOffset += (textlines.length + 0.5) * 12 / 72
 
+          // totals
+          var total_count, total_gender, total_ethnicity, total_age;
           doc.addPage(); 
+          // doc.setPage(2);
           html2canvas(document.getElementById("total_count"))
               .then(function (canvas) {
-              // doc.addPage();
-              doc.text('Total cohort breakdown', 1, 2).setFontSize(24)
-              
-              img1 = canvas.toDataURL("image/png")
-              doc.addImage(img1, 'PNG', 1, 2);
+              doc.text('Total cohort breakdown', 3, 1).setFontSize(30)
+              total_count = canvas.toDataURL("image/png")
+              doc.addImage(total_count, 'PNG', 0.5, 1.5);
               })
-
+            html2canvas(document.getElementById("total_gender"))
+              .then(function (canvas) {             
+              total_gender = canvas.toDataURL("image/png")
+              doc.addImage(total_gender, 'PNG', 4.5, 1.5);
+              })      
           html2canvas(document.getElementById("total_ethnicity"))
               .then(function (canvas) {
-              img2 = canvas.toDataURL("image/png")
-              doc.addImage(img2, 'PNG', 4.5, 2);
-              
-  
-              // img2 = canvas.toDataURL("image/png")
-              
-              // doc.addImage(img2, 'PNG', 4, 1);
-  
-              doc.save("plots.pdf");
+                total_ethnicity = canvas.toDataURL("image/png")
+              doc.addImage(total_ethnicity, 'PNG', 1, 4.5);
               });
+            html2canvas(document.getElementById("total_age"))
+              .then(function (canvas) {
+              total_age = canvas.toDataURL("image/png")
+              doc.addImage(total_age, 'PNG', 3, 8);
+              //doc.save("plots.pdf");
+              });
+
+          // EHCs ceased within the past year
+          var ehc_ceased_count, ehc_ceased_gender, ehc_ceased_ethnicity, ehc_ceased_age, ehc_ceased_reason;
+          // doc.addPage();
+          // doc.setPage(3)
+          html2canvas(document.getElementById("ehc_ceased_count"))
+              .then(function (canvas) { 
+              doc.text('EHCs ceased within the last year',3, 1).setFontSize(30)
+              ehc_ceased_count = canvas.toDataURL("image/png")
+              doc.addImage(ehc_ceased_count, 'PNG', 0.5, 1.5);
+              })
+          html2canvas(document.getElementById("ehc_ceased_gender"))
+              .then(function (canvas) {             
+              ehc_ceased_gender = canvas.toDataURL("image/png")
+              doc.addImage(ehc_ceased_gender, 'PNG', 4.5, 1.5);
+              })      
+          html2canvas(document.getElementById("ehc_ceased_ethnicity"))
+              .then(function (canvas) {
+              ehc_ceased_ethnicity = canvas.toDataURL("image/png")
+              doc.addImage(ehc_ceased_ethnicity, 'PNG', 1, 4.5);
+              });
+          html2canvas(document.getElementById("ehc_ceased_age"))
+              .then(function (canvas) {
+              ehc_ceased_age = canvas.toDataURL("image/png")
+              doc.addImage(ehc_ceased_age, 'PNG', 1, 8);
+              });  
+          html2canvas(document.getElementById("ehc_ceased_reason"))
+              .then(function (canvas) {
+              ehc_ceased_reason = canvas.toDataURL("image/png")
+              doc.addImage(ehc_ceased_reason, 'PNG', 4.5, 8);
+              doc.save("plots.pdf");
+              });  
             }
     </script>
 </body>
