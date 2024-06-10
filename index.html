@@ -73,28 +73,32 @@
         </div>
     <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
     </div>
-    <section class="container">
-      <h1 id="total_header" class="d-none">Total cohort breakdown</h1>
+    <section id="totals" class="container">
+    <div class="row">
+      <div class="col-2"></div>
+      <h1 id="total_header" class="col align-self-center d-none">Total cohort breakdown</h1>
+      <div class="col"></div>
+    </div>  
       <div class="row">
         <div class="col">
           <div id="total_count"></div>
         </div> 
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="total_ethnicity"></div>
-        </div>
-      </div>
-      <div class="row">
         <div class="col">
           <div id="total_gender"></div>
         </div>
-        <div class="col-2"></div>
+        <div class="col"></div>
+      </div>
+      <div class="row">
+        <div id="total_ethnicity"></div>
+      </div>
+      <div class="row">
         <div class="col">
           <div id="total_age"></div>
         </div>
+        <div class="col"></div>
       </div>
     </section>
-    <section class="container">
+    <section id="ehcs_ceased" class="container">
       <h1 id="ehc_ceased_header" class="d-none">
         EHCs ceased within the past year
       </h1>
@@ -102,22 +106,22 @@
         <div class="col">
           <div id="ehc_ceased"></div> 
         </div>
-        <div class="col-2"></div>
         <div class="col">
-            <div id="ehc_ceased_ethnicity"></div> 
-        </div>   
+            <div id="ehc_ceased_gender"></div> 
+        </div>
+        <div class="col"></div>   
+      </div>
+      <div class="row">
+        <div id="ehc_ceased_ethnicity"></div> 
       </div>
       <div class="row">
         <div class="col">
-          <div id="ehc_ceased_gender"></div>
+          <div id="ehc_ceased_age"></div>
         </div>
-        <div class="col-2"></div>
         <div class="col">
-          <div id="ehc_ceased_age"></div>  
+          <div id="ehc_ceased_reason"></div>  
         </div>
-      </div>
-      <div class="row">
-        <div id="ehc_ceased_reason"></div> 
+        <div class="col"></div>
       </div>
     </section>
     <section class="container">
@@ -334,64 +338,120 @@
           verticalOffset += (textlines.length + 0.5) * 12 / 72
 
           // totals
-          var total_count, total_gender, total_ethnicity, total_age;
-          doc.addPage(); 
-          // doc.setPage(2);
-          html2canvas(document.getElementById("total_count"))
-              .then(function (canvas) {
-              doc.text('Total cohort breakdown', 3, 1).setFontSize(30)
-              total_count = canvas.toDataURL("image/png")
-              doc.addImage(total_count, 'PNG', 0.5, 1.5);
-              })
-            html2canvas(document.getElementById("total_gender"))
-              .then(function (canvas) {             
-              total_gender = canvas.toDataURL("image/png")
-              doc.addImage(total_gender, 'PNG', 4.5, 1.5);
-              })      
-          html2canvas(document.getElementById("total_ethnicity"))
-              .then(function (canvas) {
-                total_ethnicity = canvas.toDataURL("image/png")
-              doc.addImage(total_ethnicity, 'PNG', 1, 4.5);
-              });
-            html2canvas(document.getElementById("total_age"))
-              .then(function (canvas) {
-              total_age = canvas.toDataURL("image/png")
-              doc.addImage(total_age, 'PNG', 3, 8);
-              //doc.save("plots.pdf");
-              });
+          // function totals () {
+          //   var total_count, total_gender, total_ethnicity, total_age;
+          //   //doc.addPage("a4"); 
+          //   html2canvas(document.getElementById("total_count"))
+          //       .then(function (canvas) {
+          //       doc.text('Total cohort breakdown', 3, 1).setFontSize(30)
+          //       total_count = canvas.toDataURL("image/png")
+          //       doc.addImage(total_count, 'PNG', 0.5, 1.5);
+          //       })
+          //     html2canvas(document.getElementById("total_gender"))
+          //       .then(function (canvas) {             
+          //       total_gender = canvas.toDataURL("image/png")
+          //       doc.addImage(total_gender, 'PNG', 4.5, 1.5);
+          //       })      
+          //   html2canvas(document.getElementById("total_ethnicity"))
+          //       .then(function (canvas) {
+          //         total_ethnicity = canvas.toDataURL("image/png")
+          //       doc.addImage(total_ethnicity, 'PNG', 1, 4.5);
+          //       });
+          //     html2canvas(document.getElementById("total_age"))
+          //       .then(function (canvas) {
+          //       total_age = canvas.toDataURL("image/png")
+          //       doc.addImage(total_age, 'PNG', 3, 8);
+          //       //doc.save("plots.pdf");
+          //       doc.addPage("a4")
+          //       });
+          // }
 
-          // EHCs ceased within the past year
-          var ehc_ceased_count, ehc_ceased_gender, ehc_ceased_ethnicity, ehc_ceased_age, ehc_ceased_reason;
-          // doc.addPage();
-          // doc.setPage(3)
-          html2canvas(document.getElementById("ehc_ceased_count"))
-              .then(function (canvas) { 
-              doc.text('EHCs ceased within the last year',3, 1).setFontSize(30)
-              ehc_ceased_count = canvas.toDataURL("image/png")
-              doc.addImage(ehc_ceased_count, 'PNG', 0.5, 1.5);
-              })
-          html2canvas(document.getElementById("ehc_ceased_gender"))
-              .then(function (canvas) {             
-              ehc_ceased_gender = canvas.toDataURL("image/png")
-              doc.addImage(ehc_ceased_gender, 'PNG', 4.5, 1.5);
-              })      
-          html2canvas(document.getElementById("ehc_ceased_ethnicity"))
-              .then(function (canvas) {
-              ehc_ceased_ethnicity = canvas.toDataURL("image/png")
-              doc.addImage(ehc_ceased_ethnicity, 'PNG', 1, 4.5);
-              });
-          html2canvas(document.getElementById("ehc_ceased_age"))
-              .then(function (canvas) {
-              ehc_ceased_age = canvas.toDataURL("image/png")
-              doc.addImage(ehc_ceased_age, 'PNG', 1, 8);
-              });  
-          html2canvas(document.getElementById("ehc_ceased_reason"))
-              .then(function (canvas) {
-              ehc_ceased_reason = canvas.toDataURL("image/png")
-              doc.addImage(ehc_ceased_reason, 'PNG', 4.5, 8);
-              doc.save("plots.pdf");
-              });  
-            }
+          // function ehc_ceased () {
+          //   // EHCs ceased within the past year
+          //   var ehc_ceased_count, ehc_ceased_gender, ehc_ceased_ethnicity, ehc_ceased_age, ehc_ceased_reason;
+          //   html2canvas(document.getElementById("ehc_ceased"))
+          //       .then(function (canvas) { 
+          //       doc.text('EHCs ceased within the last year',2, 1).setFontSize(30)
+          //       ehc_ceased_count = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_ceased_count, 'PNG', 0.5, 1.5);
+          //       })
+          //   html2canvas(document.getElementById("ehc_ceased_gender"))
+          //       .then(function (canvas) {             
+          //       ehc_ceased_gender = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_ceased_gender, 'PNG', 4.5, 1.5);
+          //       })      
+          //   html2canvas(document.getElementById("ehc_ceased_ethnicity"))
+          //       .then(function (canvas) {
+          //       ehc_ceased_ethnicity = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_ceased_ethnicity, 'PNG', 1, 4.5);
+          //       });
+          //   html2canvas(document.getElementById("ehc_ceased_age"))
+          //       .then(function (canvas) {
+          //       ehc_ceased_age = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_ceased_age, 'PNG', 1, 8);
+          //       });  
+          //   html2canvas(document.getElementById("ehc_ceased_reason"))
+          //       .then(function (canvas) {
+          //       ehc_ceased_reason = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_ceased_reason, 'PNG', 4.5, 8);
+          //       doc.addPage("a4")
+          //       // doc.save("plots.pdf")
+          //       });  
+          //   }
+          
+          // function ehc_started () {
+          //   var ehc_started, ehc_started_gender, ehc_started_ethnicity, ehc_started_age;
+          //   doc.addPage(); 
+          //   // doc.setPage(2);
+          //   html2canvas(document.getElementById("ehc_started"))
+          //       .then(function (canvas) {
+          //       doc.text('EHCs started within the past year', 3, 1).setFontSize(30)
+          //       ehc_started = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_started, 'PNG', 0.5, 1.5);
+          //       })
+          //     html2canvas(document.getElementById("ehc_started_gender"))
+          //       .then(function (canvas) {             
+          //         ehc_started_gender = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_started_gender, 'PNG', 4.5, 1.5);
+          //       })      
+          //   html2canvas(document.getElementById("ehc_started_ethnicity"))
+          //       .then(function (canvas) {
+          //         ehc_started_ethnicity = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_started_ethnicity, 'PNG', 1, 4.5);
+          //       });
+          //     html2canvas(document.getElementById("ehc_started_age"))
+          //       .then(function (canvas) {
+          //         ehc_started_age = canvas.toDataURL("image/png")
+          //       doc.addImage(ehc_started_age, 'PNG', 3, 8);
+          //       doc.addPage("a4")
+          //       doc.save("plots.pdf");
+          //       });
+          // }
+
+
+            // totals()
+            // ehc_ceased()
+            // ehc_started()
+          doc.addPage()  
+          var totals  
+          html2canvas(document.getElementById("totals"))
+          .then(function (canvas) {
+            totals = canvas.toDataURL("image/png")
+                doc.addImage(totals, 'PNG', 0, 0);
+                doc.addPage("a4")
+                // doc.save("plots.pdf");
+                });
+
+          var totals  
+          html2canvas(document.getElementById("ehcs_ceased"))
+          .then(function (canvas) {
+            ehcs_ceased = canvas.toDataURL("image/png")
+                doc.addImage(ehcs_ceased, 'PNG', 0, 0);
+                doc.addPage("a4")
+                doc.save("plots.pdf");
+                });
+            
+          }
     </script>
 </body>
 </html>
