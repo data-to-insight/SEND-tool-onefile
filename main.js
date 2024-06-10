@@ -216,6 +216,7 @@ async function run_python() {
     $("#closed_plan_length_header").removeClass('d-none');
     $("#myForm").addClass('d-none');
 
+    $("#print").removeClass('d-none'); 
     
 }
 

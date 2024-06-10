@@ -13,6 +13,8 @@
    <script src="https://cdn.plot.ly/plotly-2.1.0.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.js" integrity="sha512-H+0buHbolflDvyVXCBa2dGPlz8aDXXQ1ynVFKEsz5rZolkJ9kuxqoNkmt7Yxzw6pZmvGO0wKx0jQsikSkqccXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js" integrity="sha512-zPMZ/3MBK+R1rv6KcBFcf7rGwLnKS+xtB2OnWkAxgC6anqxlDhl/wMWtDbiYI4rgi/NrCJdXrmNGB8pIq+slJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
    <script src="main.js" type="text/javascript"></script>
 </head>
 <body class="bg-white">
@@ -45,6 +47,10 @@
     </div>
   </nav>
     </div>
+    <div class="container" id="long_text">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique senectus et netus et malesuada fames ac turpis. Nisl vel pretium lectus quam id. Mi sit amet mauris commodo quis imperdiet. Massa id neque aliquam vestibulum morbi blandit cursus risus at. Laoreet sit amet cursus sit amet dictum sit amet justo. Venenatis tellus in metus vulputate eu. Nunc sed blandit libero volutpat sed. Convallis a cras semper auctor. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique senectus et netus et malesuada fames ac turpis. Nisl vel pretium lectus quam id. Mi sit amet mauris commodo quis imperdiet. Massa id neque aliquam vestibulum morbi blandit cursus risus at. Laoreet sit amet cursus sit amet dictum sit amet justo. Venenatis tellus in metus vulputate eu. Nunc sed blandit libero volutpat sed. Convallis a cras semper auctor. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl.</p>
+    </div>
     <div class="container d-print-none">
       <div class="row">
         <div class="col-md-6">
@@ -55,6 +61,7 @@
             <input type="submit" value="Submit" class="btn btn-primary">
             
             </input>
+            
             <div> 
               <div class="spinner d-none" >
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -62,8 +69,9 @@
               </div>  
             </div>
           </form>
+          
         </div>
-
+    <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
     </div>
     <section class="container">
       <h1 id="total_header" class="d-none">Total cohort breakdown</h1>
@@ -280,7 +288,7 @@
     </section> 
             
                 
-        <!-- <button id="print" type="button" class="btn btn-primary" onclick="pdfFunction()">Save to pdf</button> -->
+        
       </div>
         
    <script>
@@ -294,12 +302,53 @@
          e.preventDefault();
 
          $(".spinner").removeClass('d-none');
-      
+         
         run_analysis();
+        
       });
-
-      
-   </script>
-
+    </script>
+    <script>
+      window.jsPDF = window.jspdf.jsPDF;
+      document.long_text = document.getElementById("long_text")
+      function pdfFunction(){
+          var doc = new jsPDF('a4', 'in');
+          var img1, img2;
+          var pageGap = 10;
+          doc.setFont('helvetica')
+          doc.setFontSize(12)
+          
+          var img = new Image()
+          img.src = 'images/d2i_logo.png'
+          doc.addImage( img, 'png', 1, 1, 1, 1)
+  
+          doc.text(
+              'SEND analysis tool', 2, 2)
+              .setFontSize(24)
+  
+  
+          textlines = doc.setFont('helvetica')
+          .setFontSize(12)
+          .splitTextToSize(document.long_text.innerText, 7.25);
+  
+          let verticalOffset = 3
+          doc.text(0.5, verticalOffset + 12 / 72, textlines)
+          verticalOffset += (textlines.length + 0.5) * 12 / 72
+  
+          html2canvas(document.getElementById("total_gender"))
+              .then(function (canvas) {
+              doc.addPage();
+              doc.text('Totasl cohort breakdown')
+              .setFontSize(24)
+              img1 = canvas.toDataURL("image/png")
+              doc.addImage(img1, 'PNG', 1, 1);
+  
+              img2 = canvas.toDataURL("image/png")
+              
+              doc.addImage(img2, 'PNG', 4, 1);
+  
+              doc.save("plots.pdf");
+              });
+            }
+    </script>
 </body>
 </html>
