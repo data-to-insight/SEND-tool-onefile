@@ -137,7 +137,7 @@ def html_plot(plot, width):
     if width == "n":
         plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="625px")
     if width == "w":
-        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="1275px")
+        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="1285px")
     return plot
 
 
