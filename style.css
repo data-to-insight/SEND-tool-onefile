@@ -1,11 +1,14 @@
-@media screen{
-    @page {
-        size: A4 portrait;
-        margin-left: 0px;
-        padding-left: 10mm;
-        }
 
-    
-}
+html, section {background-color: lightgrey;}
+
+@page {
+    size: A4 portrait;
+    margin-left: 0px;
+    padding-left: 0px;
+    }
+
+
+        
+
 
 

@@ -76,23 +76,25 @@
     <section id="totals" class="container">
     <div class="row">
       <div class="col"></div>
-      <h1 id="total_header" class="col align-self-center d-none">Total cohort breakdown</h1>
+      <h1 id="total_header" class="col justify-content-center d-none">Total cohort breakdown</h1>
       <div class="col"></div>
     </div>  
       <div class="row">
-        <div class="col">
+        <div class="col  justify-content-center">
           <div class="img-fluid" id="total_count"></div>
         </div> 
-        <div class="col">
-          <div lass="img-fluid" id="total_gender"></div>
+        <div class="col justify-content-center">
+          <div class="img-fluid " id="total_gender"></div>
         </div>
       </div>
-      <div class="row">
-        <div lass="img-fluid" id="total_ethnicity"></div>
+      <div class="row justify-content-center">
+        <div class="img-fluid" id="total_ethnicity"></div>
       </div>
       <div class="row">
-        <div class="col">
-          <div lass="img-fluid" id="total_age"></div>
+        <div class="col justify-content-center">
+          <div class="col"></div>
+          <div class="img-fluid" id="total_age"></div>
+          <div class="col"></div>
         </div>
       </div>
     </section>
@@ -433,10 +435,13 @@
           html2canvas(document.getElementById("totals"), {scale: 2})
           .then(function (canvas) {
             totals = canvas.toDataURL("image/png")
-                doc.addImage(totals, 'PNG', 0, 0, 8.3, 11.7);
-                doc.addPage("a4")
-                // doc.save("plots.pdf");
-                });
+            const imgProps= doc.getImageProperties(totals);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(totals, 'PNG', 0, 1.5, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            // doc.save("plots.pdf");
+            });
 
           var totals  
           html2canvas(document.getElementById("ehcs_ceased"), {scale: 2})
