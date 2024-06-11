@@ -103,10 +103,13 @@
       </div>
     </section>
     <section id="ehcs_ceased" class="container">
-      <h1 id="ehc_ceased_header" class="d-none">
-        EHCs ceased within the past year
-      </h1>
-      <div class="row">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="ehc_ceased_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          EHCs ceased within the past year
+        </h1>
+      </div>    
+
+      <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="ehc_ceased"></div> 
         </div>
@@ -114,10 +117,10 @@
             <div id="ehc_ceased_gender"></div> 
         </div>  
       </div>
-      <div class="row">
+      <div class="row justify-content-center py-2">
         <div id="ehc_ceased_ethnicity"></div> 
       </div>
-      <div class="row">
+      <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="ehc_ceased_age"></div>
         </div>
@@ -126,27 +129,31 @@
         </div>
       </div>
     </section>
-    <section class="container">
-      <h1 id="ehc_started_header" class="d-none">
-        EHCs started within the past year
-      </h1>
-      <div class="row">
+    <section id="ehcs_started" class="container">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="ehc_started_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          EHCs started within the past year
+        </h1>
+      </div>   
+      <div class="row row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="ehc_started"></div> 
         </div> 
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="ehc_started_ethnicity"></div> 
-        </div>
-      </div>
-      <div class="row">
         <div class="col">
           <div id="ehc_started_gender"></div>
         </div>
-        <div class="col-2"></div>
+
+      </div>
+      <div class="row justify-content-center py-2">
         <div class="col">
-          <div id="ehc_started_age"></div>  
+          <div id="ehc_started_ethnicity"></div> 
         </div>
+        <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
+          <div class="col">
+            <div class="col"></div>
+            <div  id="ehc_started_age"></div>
+            <div class="col"></div>
+          </div>
       </div>
 
     </section>               
@@ -324,13 +331,13 @@
           
           var img = new Image()
           img.src = 'images/d2i_logo.png'
-          doc.addImage( img, 'png', 1, 1, 1, 1)
+          doc.addImage( img, 'png', 0.5, 1, 1, 1)
 
           var d2i_logo = new Image()
           d2i_logo.src = 'images/DTI full png.png'
             
           doc.text(
-              'SEND analysis tool', 1, 2)
+              'SEND analysis tool', 2, 2)
               .setFontSize(24)
   
   
@@ -442,7 +449,7 @@
           html2canvas(document.getElementById("totals"), {scale: 2})
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
-            doc.rect(0, 0, 8.7, 0.75, 'F');
+            doc.rect(0, 0, 8.7, 11.7, 'F');
             doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
@@ -454,20 +461,43 @@
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(totals, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
             doc.addPage("a4")
-
-            doc.setFillColor(33,37,41);
-            doc.rect(0, 10, 8.7, 0.75, 'F');
-            doc.text("2", 4.33, 11.35)
             });
 
-          var totals  
+          var ehcs_ceased  
           html2canvas(document.getElementById("ehcs_ceased"), {scale: 2})
           .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
             ehcs_ceased = canvas.toDataURL("image/png")
-                doc.addImage(ehcs_ceased, 'PNG', 0, 0, 8.3, 11.7);
-                doc.addPage("a4")
-                doc.save("plots.pdf");
-                });
+            const imgProps= doc.getImageProperties(ehcs_ceased);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(ehcs_ceased, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            });
+
+         var ehcs_started 
+          html2canvas(document.getElementById("ehcs_started"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            ehcs_started = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(ehcs_started);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(ehcs_started, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.save("plots.pdf");
+            });  
             
           }
     </script>
