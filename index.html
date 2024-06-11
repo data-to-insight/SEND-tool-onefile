@@ -74,24 +74,24 @@
     <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
     </div>
     <section id="totals" class="container">
-    <div class="row">
+    <div class="row  justify-content-center">
       <div class="col"></div>
-      <h1 id="total_header" class="col justify-content-center d-none">Total cohort breakdown</h1>
+      <h1 id="total_header" class="m-3 p-5 bg-white text-black d-none">Total cohort breakdown</h1>
       <div class="col"></div>
     </div>  
-      <div class="row">
-        <div class="col  justify-content-center">
-          <div class="img-fluid" id="total_count"></div>
+      <div class="row  justify-content-center row-cols-2 g-2 g-lg-3">
+        <div class="col">
+          <div class="m-3 p-5 rounded bg-white" id="total_count"></div>
         </div> 
-        <div class="col justify-content-center">
-          <div class="img-fluid " id="total_gender"></div>
+        <div class="col">
+          <div class="m-3 p-5 rounded bg-white" id="total_gender"></div>
         </div>
       </div>
-      <div class="row justify-content-center">
+      <div class="row  justify-content-center">
         <div class="img-fluid" id="total_ethnicity"></div>
       </div>
-      <div class="row">
-        <div class="col justify-content-center">
+      <div class="row  justify-content-center row-cols-2 g-2 g-lg-3">
+        <div class="col">
           <div class="col"></div>
           <div class="img-fluid" id="total_age"></div>
           <div class="col"></div>
@@ -434,11 +434,14 @@
           var totals  
           html2canvas(document.getElementById("totals"), {scale: 2})
           .then(function (canvas) {
+            doc.addImage(img, 0.25, 0.15, 0.25, 0.25) 
+            doc.text("Data to Insight: SEND analysis tool", 6, 0.15)
+            .setFontSize(8)
             totals = canvas.toDataURL("image/png")
             const imgProps= doc.getImageProperties(totals);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(totals, 'PNG', 0, 1.5, pdfWidth, pdfHeight);
+            doc.addImage(totals, 'PNG', 0, 1, pdfWidth, pdfHeight);
             doc.addPage("a4")
             // doc.save("plots.pdf");
             });
