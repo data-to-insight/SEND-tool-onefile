@@ -330,7 +330,7 @@
           d2i_logo.src = 'images/DTI full png.png'
             
           doc.text(
-              'SEND analysis tool', 2, 2)
+              'SEND analysis tool', 1, 2)
               .setFontSize(24)
   
   
@@ -443,17 +443,21 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 0.75, 'F');
-            doc.addImage(img, 'png', 1, 0.15, 0.4, 0.4) 
-            doc.text("Data to Insight: SEND analysis tool", 5, 0.3)
-            .setFontSize(8)
-            .setTextColor(0, 0, 0)
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+            
             totals = canvas.toDataURL("image/png")
             const imgProps= doc.getImageProperties(totals);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(totals, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
             doc.addPage("a4")
-            // doc.save("plots.pdf");
+
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 10, 8.7, 0.75, 'F');
+            doc.text("2", 4.33, 11.35)
             });
 
           var totals  
