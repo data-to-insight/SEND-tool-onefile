@@ -55,7 +55,7 @@
     </div>
     </section>
     <section class="container">
-
+      <div class="m-3 p-5 bg-white text-black rounded py-5 px-2">
       <div class="d-print-none">
         <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
           <div class="col">
@@ -77,6 +77,7 @@
             
           </div>
       <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
+      </div>
     </section>
     <section id="totals" class="container">
     <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
@@ -324,7 +325,10 @@
           var img = new Image()
           img.src = 'images/d2i_logo.png'
           doc.addImage( img, 'png', 1, 1, 1, 1)
-  
+
+          var d2i_logo = new Image()
+          d2i_logo.src = 'images/DTI full png.png'
+            
           doc.text(
               'SEND analysis tool', 2, 2)
               .setFontSize(24)
@@ -437,14 +441,17 @@
           var totals  
           html2canvas(document.getElementById("totals"), {scale: 2})
           .then(function (canvas) {
-            doc.addImage(img, 0.25, 0.15, 0.25, 0.25) 
-            doc.text("Data to Insight: SEND analysis tool", 6, 0.15)
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 0.75, 'F');
+            doc.addImage(img, 'png', 1, 0.15, 0.4, 0.4) 
+            doc.text("Data to Insight: SEND analysis tool", 5, 0.3)
             .setFontSize(8)
+            .setTextColor(0, 0, 0)
             totals = canvas.toDataURL("image/png")
             const imgProps= doc.getImageProperties(totals);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(totals, 'PNG', 0, 1, pdfWidth, pdfHeight);
+            doc.addImage(totals, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
             doc.addPage("a4")
             // doc.save("plots.pdf");
             });
