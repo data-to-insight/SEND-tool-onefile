@@ -214,6 +214,9 @@ async function run_python() {
     $("#journeys_header").removeClass('d-none');
     $("#open_plan_length_header").removeClass('d-none');
     $("#closed_plan_length_header").removeClass('d-none');
+    
+
+
     $("#myForm").addClass('d-none');
 
     $("#print").removeClass('d-none'); 
