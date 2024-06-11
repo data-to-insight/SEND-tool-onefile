@@ -75,27 +75,25 @@
     </div>
     <section id="totals" class="container">
     <div class="row">
-      <div class="col-2"></div>
+      <div class="col"></div>
       <h1 id="total_header" class="col align-self-center d-none">Total cohort breakdown</h1>
       <div class="col"></div>
     </div>  
       <div class="row">
         <div class="col">
-          <div id="total_count"></div>
+          <div class="img-fluid" id="total_count"></div>
         </div> 
         <div class="col">
-          <div id="total_gender"></div>
+          <div lass="img-fluid" id="total_gender"></div>
         </div>
-        <div class="col"></div>
       </div>
       <div class="row">
-        <div id="total_ethnicity"></div>
+        <div lass="img-fluid" id="total_ethnicity"></div>
       </div>
       <div class="row">
         <div class="col">
-          <div id="total_age"></div>
+          <div lass="img-fluid" id="total_age"></div>
         </div>
-        <div class="col"></div>
       </div>
     </section>
     <section id="ehcs_ceased" class="container">
@@ -108,8 +106,7 @@
         </div>
         <div class="col">
             <div id="ehc_ceased_gender"></div> 
-        </div>
-        <div class="col"></div>   
+        </div>  
       </div>
       <div class="row">
         <div id="ehc_ceased_ethnicity"></div> 
@@ -121,7 +118,6 @@
         <div class="col">
           <div id="ehc_ceased_reason"></div>  
         </div>
-        <div class="col"></div>
       </div>
     </section>
     <section class="container">
@@ -434,19 +430,19 @@
             // ehc_started()
           doc.addPage()  
           var totals  
-          html2canvas(document.getElementById("totals"))
+          html2canvas(document.getElementById("totals"), {scale: 2})
           .then(function (canvas) {
             totals = canvas.toDataURL("image/png")
-                doc.addImage(totals, 'PNG', 0, 0);
+                doc.addImage(totals, 'PNG', 0, 0, 8.3, 11.7);
                 doc.addPage("a4")
                 // doc.save("plots.pdf");
                 });
 
           var totals  
-          html2canvas(document.getElementById("ehcs_ceased"))
+          html2canvas(document.getElementById("ehcs_ceased"), {scale: 2})
           .then(function (canvas) {
             ehcs_ceased = canvas.toDataURL("image/png")
-                doc.addImage(ehcs_ceased, 'PNG', 0, 0);
+                doc.addImage(ehcs_ceased, 'PNG', 0, 0, 8.3, 11.7);
                 doc.addPage("a4")
                 doc.save("plots.pdf");
                 });
