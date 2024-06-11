@@ -135,9 +135,9 @@ def add_identifiers(identifiers, m2, m3, m4, m5):
 def html_plot(plot, width):
     # Used to centralise arguments for making html plots
     if width == "n":
-        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="625px")
+        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="630px")
     if width == "w":
-        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="1285px")
+        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="1295px")
     return plot
 
 

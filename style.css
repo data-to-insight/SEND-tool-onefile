@@ -1,5 +1,6 @@
 
-html, section {background-color: lightgrey;}
+html, body {background-color: gainsboro;}
+html, section {background-color: gainsboro;}
 
 @page {
     size: A4 portrait;

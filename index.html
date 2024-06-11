@@ -17,7 +17,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.js" integrity="sha512-zPMZ/3MBK+R1rv6KcBFcf7rGwLnKS+xtB2OnWkAxgC6anqxlDhl/wMWtDbiYI4rgi/NrCJdXrmNGB8pIq+slJQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
    <script src="main.js" type="text/javascript"></script>
 </head>
-<body class="bg-white">
+<body>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-print-none">
     <div class="container">
@@ -47,34 +47,39 @@
     </div>
   </nav>
     </div>
-    <div class="container" id="long_text">
+    </div>
+    <section class="container">
+      <div class="m-3 p-5 bg-white text-black rounded py-5 px-2" id="long_text">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique senectus et netus et malesuada fames ac turpis. Nisl vel pretium lectus quam id. Mi sit amet mauris commodo quis imperdiet. Massa id neque aliquam vestibulum morbi blandit cursus risus at. Laoreet sit amet cursus sit amet dictum sit amet justo. Venenatis tellus in metus vulputate eu. Nunc sed blandit libero volutpat sed. Convallis a cras semper auctor. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique senectus et netus et malesuada fames ac turpis. Nisl vel pretium lectus quam id. Mi sit amet mauris commodo quis imperdiet. Massa id neque aliquam vestibulum morbi blandit cursus risus at. Laoreet sit amet cursus sit amet dictum sit amet justo. Venenatis tellus in metus vulputate eu. Nunc sed blandit libero volutpat sed. Convallis a cras semper auctor. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl.</p>
     </div>
-    <div class="container d-print-none">
-      <div class="row">
-        <div class="col-md-6">
-        </div>
-          <form id="myForm">
-            <input type="file" id="csvFile" accept=".csv, .xlsx" class="form-control" multiple/>
-            <br />
-            <input type="submit" value="Submit" class="btn btn-primary">
+    </section>
+    <section class="container">
+
+      <div class="d-print-none">
+        <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+          <div class="col">
+          </div>
+            <form id="myForm">
+              <input type="file" id="csvFile" accept=".csv, .xlsx" class="form-control" multiple/>
+              <br />
+              <input type="submit" value="Submit" class="btn btn-primary">
+              
+              </input>
+              
+              <div> 
+                <div class="spinner d-none" >
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </div>  
+              </div>
+            </form>
             
-            </input>
-            
-            <div> 
-              <div class="spinner d-none" >
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                Loading...
-              </div>  
-            </div>
-          </form>
-          
-        </div>
-    <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
-    </div>
+          </div>
+      <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
+    </section>
     <section id="totals" class="container">
-    <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2">
+    <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
       <h1 id="total_header" class="m-3 p-5 bg-white text-black rounded d-none">Total cohort breakdown</h1>
     </div>  
       <div class="row  justify-content-center row-cols-2 g-2 g-lg-3 py-2">
