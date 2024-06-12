@@ -79,6 +79,7 @@
       <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
       </div>
     </section>
+
     <section id="totals" class="container">
     <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
       <h1 id="total_header" class="m-3 p-5 bg-white text-black rounded d-none">Total cohort breakdown</h1>
@@ -102,13 +103,13 @@
         </div>
       </div>
     </section>
+
     <section id="ehcs_ceased" class="container">
       <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
         <h1 id="ehc_ceased_header" class="m-3 p-5 bg-white text-black rounded d-none">
           EHCs ceased within the past year
         </h1>
       </div>    
-
       <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="ehc_ceased"></div> 
@@ -129,6 +130,7 @@
         </div>
       </div>
     </section>
+
     <section id="ehcs_started" class="container">
       <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
         <h1 id="ehc_started_header" class="m-3 p-5 bg-white text-black rounded d-none">
@@ -142,7 +144,6 @@
         <div class="col">
           <div id="ehc_started_gender"></div>
         </div>
-
       </div>
       <div class="row justify-content-center py-2">
         <div class="col">
@@ -155,116 +156,149 @@
             <div class="col"></div>
           </div>
       </div>
+    </section>
 
-    </section>               
-    <section class="container">
-      <h1 id="ass_completed_header" class="d-none">
-        Assessments completed within the past year
-      </h1>
-      <div class="row">
+    <section id="assessments_completed" class="container">
+      <div class="row justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="ass_completed_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Assessments completed within the past year
+        </h1>
+      </div>     
+      <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="ass_completed"></div> 
         </div>
-        <div class="col-2"></div>
         <div class="col">
-          <div id="ass_completed_ethnicity"></div> 
-        </div>   
+            <div id="ass_completed_gender"></div> 
+        </div>  
       </div>
-      <div class="row">
-        <div class="col">
-          <div id="ass_completed_gender"></div>
-        </div>
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="ass_completed_age"></div>  
-        </div>
+      <div class="row justify-content-center py-2">
+        <div id="ass_completed_ethnicity"></div> 
       </div>
-      <div class="row">
-        <div id="ass_completed_reason"></div> 
-      </div>
-    </section>    
-    <section class="container">
-      <h1 id="ass_closed_timeframe_header" class="d-none">
-        Completed assessment timeliness
-      </h1>
-      <div class="row">
+      <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
-          <div id="ass_closed_timeframe_gender"></div>
+          <div id="ass_completed_age"></div>
         </div>
-        <div class="col-2"></div>
         <div class="col">
-          <div id="ass_closed_timeframe_age"></div>  
+          <div id="ass_completed_reason"></div>  
         </div>
       </div>
-      <div class="row">
-        <div id="ass_closed_timeframe_ethnicity"></div> 
+    </section>
+           
+
+
+    <section id="assessments_closed_timeframes" class="container">
+      <div class="row justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="ass_closed_timeframe_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Completed assessment timeliness
+        </h1>
+      </div> 
+      <div class="row  justify-content-center row-cols-2 g-2 g-lg-3 py-2">
+        <div class="col">
+          <div  id="ass_closed_timeframe_gender"></div>
+        </div> 
+        <div class="col">
+          <div id="ass_closed_timeframe_age"></div>
+        </div>
+      </div>
+      <div class="row  justify-content-center py-2">
+        <div class="img-fluid" id="ass_closed_timeframe_ethnicity"></div>
       </div>
     </section>
         
-    <section class="container">
-      <h1 id="open_ass_timeframe_header" class="d-none">
-        Currently open assessment timeframes
-      </h1>
-      <div class="row">
+    <section id="open_assessment_timeframes" class="container">
+      <div class="row justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="open_ass_timeframe_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Currently open assessment timeframes
+        </h1>
+      </div>   
+      <div class="row row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="open_ass"></div> 
         </div> 
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="open_ass_ethnicity"></div> 
-        </div>
-      </div>
-      <div class="row">
         <div class="col">
           <div id="open_ass_gender"></div>
         </div>
-        <div class="col-2"></div>
+      </div>
+      <div class="row justify-content-center py-2">
         <div class="col">
-          <div id="open_ass_age"></div>  
+          <div id="open_ass_ethnicity"></div> 
         </div>
+        <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
+          <div class="col">
+            <div class="col"></div>
+            <div  id="open_ass_age"></div>
+            <div class="col"></div>
+          </div>
       </div>
     </section>
-    <section class="container">
-      <h1 id="request_header" class="d-none">
-        Request in the past year
-      </h1>
-      <div class="row">
-        <div class="col">
-          <div id="req_count"></div>
+
+
+    <section id="requests_year" class="container">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="request_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Request in the past year
+        </h1>
+      </div>  
+        <div class="row  justify-content-center row-cols-2 g-2 g-lg-3 py-2">
+          <div class="col">
+            <div  id="req_count"></div>
+          </div> 
+          <div class="col">
+            <div id="req_gender"></div>
+          </div>
         </div>
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="req_ethnicity"></div>
+        <div class="row  justify-content-center py-2">
+          <div class="img-fluid" id="req_ethnicity"></div>
         </div>
-      </div>               
-      <div class="row">
-        <div class="col">
-          <div id="req_gender"></div>
+        <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
+          <div class="col">
+            <div class="col"></div>
+            <div  id="req_age"></div>
+            <div class="col"></div>
+          </div>
         </div>
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="req_age"></div>
-        </div>
-      </div>
     </section>
-    <section class="container">
-      <h1 id="multiple_appearances_header" class="d-none">
-        Children appearing in lists multiple times
-      </h1>
-      <div class="row">
+
+
+    <section id="multiples_and_journeys" class="container">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="multiple_appearances_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Children appearing in lists multiple times
+        </h1>
+      </div>  
+      <div class="row justify-content-center row-cols-2 g-2 g-lg-3 py-2">
         <div class="col"><div id="multiples_m2_div"></div></div>
-        <div class="col-2"></div>
         <div class="col"><div id="multiples_m3_div"></div></div>
       </div>
-      <h1 id="journeys_header" class="d-none">
-        Outcomes from requests journeys
-      </h1>
-      <div class="row">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="journeys_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Outcomes from requests journeys
+        </h1>
+      </div>
+      <div class="row justify-content-center py-2">
         <div id="journeys_div"></div>
       </div>
     </section>
-    <section class="container">
-      <h1 id="open_plan_length_header" class="d-none">
+
+    <section id="open_plan_lengths" class="container">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="open_plan_length_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Open plan lengths
+        </h1>  
+      </div>
+      <div class="row row-cols-2 g-2 g-lg-3 py-2">
+        <div class="col">
+          <div id="open_plan_length_gender"></div>
+        </div>
+        <div class="col">
+          <div id="open_plan_length_age"></div>  
+        </div>
+      </div>
+      <div class="row justify-content-center py-2">
+        <div id="open_plan_length_ethnicity"></div> 
+      </div>
+      <!-- <h1 id="open_plan_length_header" class="d-none">
         Open plan lengths
       </h1>
       </div>
@@ -279,23 +313,23 @@
       </div>
       <div class="row">
         <div id="open_plan_length_ethnicity"></div> 
-      </div>
+      </div> -->
     </section> 
-    <section class="container">
-      <h1 id="closed_plan_length_header" class="d-none">
-        Closed plan lengths
-      </h1>
+    <section id="closed_plan_lengths" class="container">
+      <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
+        <h1 id="closed_plan_length_header" class="m-3 p-5 bg-white text-black rounded d-none">
+          Closed plan lengths
+        </h1>  
       </div>
-      <div class="row">
+      <div class="row row-cols-2 g-2 g-lg-3 py-2">
         <div class="col">
           <div id="closed_plan_length_gender"></div>
         </div>
-        <div class="col-2"></div>
         <div class="col">
           <div id="closed_plan_length_age"></div>  
         </div>
       </div>
-      <div class="row">
+      <div class="row justify-content-center py-2">
         <div id="closed_plan_length_ethnicity"></div> 
       </div>
     </section> 
@@ -349,101 +383,6 @@
           doc.text(0.5, verticalOffset + 12 / 72, textlines)
           verticalOffset += (textlines.length + 0.5) * 12 / 72
 
-          // totals
-          // function totals () {
-          //   var total_count, total_gender, total_ethnicity, total_age;
-          //   //doc.addPage("a4"); 
-          //   html2canvas(document.getElementById("total_count"))
-          //       .then(function (canvas) {
-          //       doc.text('Total cohort breakdown', 3, 1).setFontSize(30)
-          //       total_count = canvas.toDataURL("image/png")
-          //       doc.addImage(total_count, 'PNG', 0.5, 1.5);
-          //       })
-          //     html2canvas(document.getElementById("total_gender"))
-          //       .then(function (canvas) {             
-          //       total_gender = canvas.toDataURL("image/png")
-          //       doc.addImage(total_gender, 'PNG', 4.5, 1.5);
-          //       })      
-          //   html2canvas(document.getElementById("total_ethnicity"))
-          //       .then(function (canvas) {
-          //         total_ethnicity = canvas.toDataURL("image/png")
-          //       doc.addImage(total_ethnicity, 'PNG', 1, 4.5);
-          //       });
-          //     html2canvas(document.getElementById("total_age"))
-          //       .then(function (canvas) {
-          //       total_age = canvas.toDataURL("image/png")
-          //       doc.addImage(total_age, 'PNG', 3, 8);
-          //       //doc.save("plots.pdf");
-          //       doc.addPage("a4")
-          //       });
-          // }
-
-          // function ehc_ceased () {
-          //   // EHCs ceased within the past year
-          //   var ehc_ceased_count, ehc_ceased_gender, ehc_ceased_ethnicity, ehc_ceased_age, ehc_ceased_reason;
-          //   html2canvas(document.getElementById("ehc_ceased"))
-          //       .then(function (canvas) { 
-          //       doc.text('EHCs ceased within the last year',2, 1).setFontSize(30)
-          //       ehc_ceased_count = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_ceased_count, 'PNG', 0.5, 1.5);
-          //       })
-          //   html2canvas(document.getElementById("ehc_ceased_gender"))
-          //       .then(function (canvas) {             
-          //       ehc_ceased_gender = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_ceased_gender, 'PNG', 4.5, 1.5);
-          //       })      
-          //   html2canvas(document.getElementById("ehc_ceased_ethnicity"))
-          //       .then(function (canvas) {
-          //       ehc_ceased_ethnicity = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_ceased_ethnicity, 'PNG', 1, 4.5);
-          //       });
-          //   html2canvas(document.getElementById("ehc_ceased_age"))
-          //       .then(function (canvas) {
-          //       ehc_ceased_age = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_ceased_age, 'PNG', 1, 8);
-          //       });  
-          //   html2canvas(document.getElementById("ehc_ceased_reason"))
-          //       .then(function (canvas) {
-          //       ehc_ceased_reason = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_ceased_reason, 'PNG', 4.5, 8);
-          //       doc.addPage("a4")
-          //       // doc.save("plots.pdf")
-          //       });  
-          //   }
-          
-          // function ehc_started () {
-          //   var ehc_started, ehc_started_gender, ehc_started_ethnicity, ehc_started_age;
-          //   doc.addPage(); 
-          //   // doc.setPage(2);
-          //   html2canvas(document.getElementById("ehc_started"))
-          //       .then(function (canvas) {
-          //       doc.text('EHCs started within the past year', 3, 1).setFontSize(30)
-          //       ehc_started = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_started, 'PNG', 0.5, 1.5);
-          //       })
-          //     html2canvas(document.getElementById("ehc_started_gender"))
-          //       .then(function (canvas) {             
-          //         ehc_started_gender = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_started_gender, 'PNG', 4.5, 1.5);
-          //       })      
-          //   html2canvas(document.getElementById("ehc_started_ethnicity"))
-          //       .then(function (canvas) {
-          //         ehc_started_ethnicity = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_started_ethnicity, 'PNG', 1, 4.5);
-          //       });
-          //     html2canvas(document.getElementById("ehc_started_age"))
-          //       .then(function (canvas) {
-          //         ehc_started_age = canvas.toDataURL("image/png")
-          //       doc.addImage(ehc_started_age, 'PNG', 3, 8);
-          //       doc.addPage("a4")
-          //       doc.save("plots.pdf");
-          //       });
-          // }
-
-
-            // totals()
-            // ehc_ceased()
-            // ehc_started()
           doc.addPage()  
           var totals  
           html2canvas(document.getElementById("totals"), {scale: 2})
@@ -496,9 +435,29 @@
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(ehcs_started, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
-            doc.save("plots.pdf");
+            // doc.save("plots.pdf");
+            doc.addPage("a4")
             });  
-            
+          
+          var closed_plan_lengths 
+          html2canvas(document.getElementById("closed_plan_lengths"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            closed_plan_lengths = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(closed_plan_lengths);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(closed_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.save("plots.pdf");
+            });    
+
+
           }
     </script>
 </body>

@@ -132,12 +132,29 @@ def add_identifiers(identifiers, m2, m3, m4, m5):
     return m2, m3, m4, m5
 
 
-def html_plot(plot, width):
+def html_plot(plot, width, tall=False):
     # Used to centralise arguments for making html plots
-    if width == "n":
-        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="640px")
-    if width == "w":
-        plot = plot.to_html(include_plotlyjs=False, full_html=False, default_height="400px", default_width="1295px")
+    if tall == True:
+        plot = plot.to_html(
+            include_plotlyjs=False,
+            full_html=False,
+            default_height="600px",
+            default_width="1295px",
+        )
+    elif width == "n":
+        plot = plot.to_html(
+            include_plotlyjs=False,
+            full_html=False,
+            default_height="400px",
+            default_width="640px",
+        )
+    elif width == "w":
+        plot = plot.to_html(
+            include_plotlyjs=False,
+            full_html=False,
+            default_height="400px",
+            default_width="1295px",
+        )
     return plot
 
 
@@ -734,10 +751,10 @@ def plan_length_plots(m4):
     )
 
     open_gender_hist = html_plot(open_gender_hist, "n")
-    open_ethnicity_hist = html_plot(open_ethnicity_hist, "n")
+    open_ethnicity_hist = html_plot(open_ethnicity_hist, "w", tall=True)
     open_age_hist = html_plot(open_age_hist, "n")
     closed_gender_hist = html_plot(closed_gender_hist, "n")
-    closed_ethnicity_hist = html_plot(closed_ethnicity_hist, "w")
+    closed_ethnicity_hist = html_plot(closed_ethnicity_hist, "w", tall=True)
     closed_age_hist = html_plot(closed_age_hist, "n")
 
     return (
