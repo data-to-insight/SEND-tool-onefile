@@ -61,17 +61,25 @@
           <div class="col">
           </div>
             <form id="myForm">
-              <input type="file" id="csvFile" accept=".csv, .xlsx" class="form-control" multiple/>
-              <br />
-              <input type="submit" value="Submit" class="btn btn-primary">
+              <h1>Select files and reference date</h1>
               
-              </input>
+              <div class="row">
+                <div class="col">
+                  <input type="file" id="csvFile" accept=".csv, .xlsx" class="form-control" multiple/>
+                </div>
+                <div class="col">
+                  <input id="refDate" class="form-control" type="date" />
+                </div>
+              </div>
+             <div class="row py-2 px-2">
+              <input type="submit" value="Submit" class="btn btn-primary"></input>
+             </div>
               
-              <div> 
+              <div class="row py-2 m-2">
                 <div class="spinner d-none" >
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
-                </div>  
+                </div> 
               </div>
             </form>
             
@@ -340,10 +348,17 @@
         
    <script>
       window.jsPDF = window.jspdf.jsPDF;
+      const version_number = "0.0.1"
 
       const myForm = document.getElementById("myForm");
       const csvFile = document.getElementById("csvFile");
-      // document.getElementById("print").disabled = true
+
+      let refDate = document.getElementById('refDate')
+      
+      refDate.addEventListener('change',(e)=>{
+        let refDateVal = e.target.value
+        console.log(refDateVal)
+      })
       
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();

@@ -21,6 +21,9 @@ from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 # Initial variables
+
+ref_date_val = pd.to_datetime(refDateVal, format="%Y-%m-%d")
+js.console.log(ref_date_val)
 timeframe = 730
 
 module_columns = {

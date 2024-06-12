@@ -45,7 +45,7 @@ async function run_python() {
 
     warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
-    from js import files
+    from js import files, refDateVal
 
     dfs = {}
     if len(files) > 1:
