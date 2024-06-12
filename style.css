@@ -2,11 +2,15 @@
 html, body {background-color: gainsboro;}
 html, section {background-color: gainsboro;}
 
+
+
 @page {
     size: A4 portrait;
     margin-left: 0px;
     padding-left: 0px;
     }
+
+    
 
 
         
