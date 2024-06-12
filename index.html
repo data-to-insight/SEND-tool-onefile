@@ -84,7 +84,10 @@
             </form>
             
           </div>
-      <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
+      <div class="row py-2 px-2">
+        <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
+        </div>
+      <!-- <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button> -->
       </div>
     </section>
 
@@ -355,9 +358,10 @@
 
       let refDate = document.getElementById('refDate')
       
-      refDate.addEventListener('change',(e)=>{
-        let refDateVal = e.target.value
+      var refDateVal = refDate.addEventListener('change',(e)=>{
+        refDateVal = e.target.value
         console.log(refDateVal)
+        return refDateVal
       })
       
       myForm.addEventListener("submit", function (e) {

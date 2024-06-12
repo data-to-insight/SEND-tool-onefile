@@ -22,9 +22,12 @@ warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 # Initial variables
 
-ref_date_val = pd.to_datetime(refDateVal, format="%Y-%m-%d")
-js.console.log(ref_date_val)
-timeframe = 730
+ref_date = pd.to_datetime(refDateVal, format="%Y-%m-%d")
+
+days_to_ref_date = pd.to_datetime("today") - ref_date
+days_to_ref_date = int(days_to_ref_date / pd.Timedelta(1, 'd'))
+
+timeframe = 365 + days_to_ref_date
 
 module_columns = {
     "m1": [
