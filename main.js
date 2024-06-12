@@ -45,9 +45,13 @@ async function run_python() {
 
     warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
-    from js import files, refDateVal
+    try:
+        from js import files, refDateVal
+    except:
+        js.alert("Did you upload the correct files, more info in the instructions.")
 
     dfs = {}
+    
     if len(files) > 1:
         for i, v in enumerate(files):
             dfs[i] = pd.read_csv(io.StringIO(files[i]))
@@ -232,7 +236,7 @@ function render_plot(container, plot_html) {
     }
     container.appendChild(documentFragment);
     container.className = "plotly";
-    $(".spinner").addClass('d-none');
+    $("#submitSpinner").addClass('d-none');
 };  
 
 //  async function pdfFunction () {

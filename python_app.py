@@ -774,26 +774,6 @@ def plan_length_plots(m4):
         closed_age_hist,
     )
 
-
-# main script
-# dfs = {}
-# if len(files) > 1:
-#     for i, v in enumerate(files):
-#         dfs[i] = pd.read_csv(io.StringIO(files[i]))
-#         js.console.log("csvs sucessfully read")
-# elif len(files) == 1:
-#     wb = openpyxl.load_workbook(io.BytesIO(files.to_py()), data_only = True)
-#     for i in wb:
-#         ws = wb.worksheets[i]
-#         excel_data = ws.values
-#         columns = next(excel_data)[0:]
-#         df = pd.DataFrame(excel_data , columns=columns)
-#         dfs[i] = df
-#     # dfs = pd.read_excel(io.StringIO((files.to_py())))
-#     # js.console.log("Excel read")
-# else:
-#     js.alert("Did you upload the correct files, more info in the instructions.")
-
 modules = {}
 for key, df in dfs.items():
     for module_name, column_list in module_columns.items():
@@ -878,71 +858,4 @@ js.document.journeys = journeys(modules["m2"], modules["m3"])
 ) = plan_length_plots(modules["m4"])
 
 
-###### DEPRECATED PLOTS
-# modules["m1"]["Dob (ccyy-mm-dd)"] = pd.to_datetime(
-#     modules["m1"]["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
-# )
-#
-# modules["m1"]["Age"] = (
-#     pd.to_datetime("today") - modules["m1"]["Dob (ccyy-mm-dd)"]
-# ) / np.timedelta64(1, "Y")
-# modules["m1"]["Age"] = modules["m1"]["Age"].round().astype("int", errors="ignore")
 
-# # print(modules["m1"]["Age"])
-
-# gender_plot = px.histogram(
-#     (modules["m1"][modules["m1"]["Gender"] != 9]),
-#     x="Age",
-#     category_orders=dict(Age=list(modules["m1"]["Age"].unique())),
-#     color="Gender",
-# )
-# gender_plot = gender_plot.to_html(
-#     include_plotlyjs=False, full_html=False, default_height="350px"
-# )
-# js.document.gender_plot = gender_plot
-
-# ethnicity_plot = px.histogram(
-#     (modules["m1"]),
-#     x="Ethnicity",
-#     category_orders=dict(Age=list(modules["m1"]["Ethnicity"].unique())),
-# )
-# ethnicity_plot = ethnicity_plot.to_html(
-#     include_plotlyjs=False, full_html=False, default_height="350px"
-# )
-# js.document.ethnicity_plot = ethnicity_plot
-
-
-# ass_outcomes = modules["m3"][modules["m3"]["Assessment Outcome To Issue EHCP"] != "H"]
-# ass_outcomes = (
-#     ass_outcomes.groupby(["Assessment Outcome To Issue EHCP"])[
-#         "Assessment Outcome To Issue EHCP"
-#     ]
-#     .count()
-#     .reset_index(name="count")
-# )
-
-# assessment_outcome_plot = px.pie(
-#     ass_outcomes, values="count", names="Assessment Outcome To Issue EHCP"
-# )
-# assessment_outcome_plot = assessment_outcome_plot.to_html(
-#     include_plotlyjs=False, full_html=False, default_height="350px"
-# )
-# js.document.assessment_outcome_plot = assessment_outcome_plot
-
-# # Request to outcome timeliness
-# requests = modules["m2"][modules["m2"].notna()]
-
-# requests["Request Timeliness"] = pd.to_datetime(
-#     requests["Request Outcome Date"], format="%d/%m/%Y"
-# ) - pd.to_datetime(requests["Date Request Was Received"], format="%d/%m/%Y")
-
-# requests["Request Timeliness"] = (
-#     (requests["Request Timeliness"] / np.timedelta64(1, "D"))
-#     .round()
-#     .astype("int", errors="ignore")
-# )
-
-# request_timeliness_plot = px.histogram(requests, x="Request Timeliness")
-# js.document.request_timeliness_plot = request_timeliness_plot.to_html(
-#     include_plotlyjs=False, full_html=False, default_height="350px"
-# )

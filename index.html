@@ -76,7 +76,7 @@
              </div>
               
               <div class="row py-2 m-2">
-                <div class="spinner d-none" >
+                <div id="submitSpinner" class="spinner d-none" >
                   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                   Loading...
                 </div> 
@@ -87,6 +87,13 @@
       <div class="row py-2 px-2">
         <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button>
         </div>
+        <div class="row py-2 m-2">
+          <div id="pdfSpinner" class="spinner d-none" >
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </div> 
+        </div>
+
       <!-- <button id="print" type="button" class="btn btn-primary d-none" onclick="pdfFunction()">Save to pdf</button> -->
       </div>
     </section>
@@ -352,7 +359,7 @@
       myForm.addEventListener("submit", function (e) {
          e.preventDefault();
 
-         $(".spinner").removeClass('d-none');
+         $("#submitSpinner").removeClass('d-none');
          
         run_analysis();
         
@@ -361,7 +368,9 @@
     <script>
       window.jsPDF = window.jspdf.jsPDF;
       document.long_text = document.getElementById("long_text")
+
       function pdfFunction(){
+          
           var doc = new jsPDF('a4', 'in');
           var pageGap = 10;
           doc.setFont('helvetica')
@@ -377,6 +386,10 @@
           doc.text(
               'SEND analysis tool', 2, 2)
               .setFontSize(24)
+          
+              doc.text(
+              version_number, 4, 2)
+              .setFontSize(24)    
   
   
           textlines = doc.setFont('helvetica')
@@ -391,12 +404,14 @@
           var totals  
           html2canvas(document.getElementById("totals"), {scale: 2})
           .then(function (canvas) {
+            $("#pdfSpinner").removeClass('d-none');
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
             doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+            doc.text(version_number, 4.3, 8)
             
             totals = canvas.toDataURL("image/png")
             const imgProps= doc.getImageProperties(totals);
@@ -548,7 +563,7 @@
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(open_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
-            doc.save("plots.pdf");
+            doc.addPage("a4")
             });    
 
           var closed_plan_lengths 
@@ -567,9 +582,10 @@
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(closed_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
             doc.save("plots.pdf");
+            $("#pdfSpinner").addClass('d-none');
             });    
 
-
+          
           }
     </script>
 </body>
