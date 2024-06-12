@@ -21,13 +21,15 @@ from pandas.core.common import SettingWithCopyWarning
 warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
 # Initial variables
+try:
+    ref_date = pd.to_datetime(refDateVal, format="%Y-%m-%d")
 
-ref_date = pd.to_datetime(refDateVal, format="%Y-%m-%d")
+    days_to_ref_date = pd.to_datetime("today") - ref_date
+    days_to_ref_date = int(days_to_ref_date / pd.Timedelta(1, 'd'))
 
-days_to_ref_date = pd.to_datetime("today") - ref_date
-days_to_ref_date = int(days_to_ref_date / pd.Timedelta(1, 'd'))
-
-timeframe = 365 + days_to_ref_date
+    timeframe = 365 + days_to_ref_date
+except:
+    js.alert("Did you enter a date value? Refresh and try again.")
 
 module_columns = {
     "m1": [

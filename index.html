@@ -309,22 +309,7 @@
       <div class="row justify-content-center py-2">
         <div id="open_plan_length_ethnicity"></div> 
       </div>
-      <!-- <h1 id="open_plan_length_header" class="d-none">
-        Open plan lengths
-      </h1>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div id="open_plan_length_gender"></div>
-        </div>
-        <div class="col-2"></div>
-        <div class="col">
-          <div id="open_plan_length_age"></div>  
-        </div>
-      </div>
-      <div class="row">
-        <div id="open_plan_length_ethnicity"></div> 
-      </div> -->
+
     </section> 
     <section id="closed_plan_lengths" class="container">
       <div class="row  justify-content-center row-cols-1 g-2 g-lg-3 py-2 px-2">
@@ -457,7 +442,115 @@
             // doc.save("plots.pdf");
             doc.addPage("a4")
             });  
+
+          var assessments_completed 
+          html2canvas(document.getElementById("assessments_completed"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            assessments_completed = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(assessments_completed);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(assessments_completed, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            });  
+
+          var completed_assessment_timelinness 
+          html2canvas(document.getElementById("assessments_closed_timeframes"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            completed_assessment_timelinness = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(completed_assessment_timelinness);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(completed_assessment_timelinness, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            });  
           
+          var open_assessment_timelinness 
+          html2canvas(document.getElementById("open_assessment_timeframes"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            open_assessment_timelinness  = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(open_assessment_timelinness );
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(open_assessment_timelinness , 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            });              
+
+          var requests_year 
+          html2canvas(document.getElementById("requests_year"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            requests_year = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(requests_year);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(requests_year, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            });  
+          
+          var multiples_and_journeys 
+          html2canvas(document.getElementById("multiples_and_journeys"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            multiples_and_journeys = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(multiples_and_journeys);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(multiples_and_journeys, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.addPage("a4")
+            });    
+
+          var open_plan_lengths 
+          html2canvas(document.getElementById("open_plan_lengths"), {scale: 2})
+          .then(function (canvas) {
+            doc.setFillColor(33,37,41);
+            doc.rect(0, 0, 8.7, 11.7, 'F');
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35) 
+            doc.setFontSize(12)
+            doc.setTextColor(255, 255, 255)
+            doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
+
+            open_plan_lengths = canvas.toDataURL("image/png")
+            const imgProps= doc.getImageProperties(open_plan_lengths);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+            doc.addImage(open_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
+            doc.save("plots.pdf");
+            });    
+
           var closed_plan_lengths 
           html2canvas(document.getElementById("closed_plan_lengths"), {scale: 2})
           .then(function (canvas) {
