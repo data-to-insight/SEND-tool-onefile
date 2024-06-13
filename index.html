@@ -370,34 +370,56 @@
       document.long_text = document.getElementById("long_text")
 
       function pdfFunction(){
-          
+          window.alert('Generating PDF, this may take some time.')
+
           var doc = new jsPDF('a4', 'in');
           var pageGap = 10;
           doc.setFont('helvetica')
           doc.setFontSize(40)
+          doc.setTextColor(220,220,220)
+
+
+          // title card
+          doc.setFillColor(33,37,41);
+          doc.rect(0, 3, 8.7, 2, 'F');
+
+          doc.text(
+                'SEND analysis tool', 1.75, 3.75)
+
+          doc.setFontSize(8)      
+          let version = "Version number: "
+          let version_text = version.concat(version_number)
+          doc.text(
+            version_text, 1.75, 3.9) 
           
+          doc.setFontSize(20)
+          let refDateText = "Reference date: "
+          let fullRefDate = refDateText.concat(refDateVal)
+          doc.text(
+            fullRefDate, 1.75, 4.25
+          )
+            
+          
+          // Logo + d2i description
           var img = new Image()
           img.src = 'images/d2i_logo.png'
-          doc.addImage( img, 'png', 0.4, 1, 1, 1)
-
           var d2i_logo = new Image()
           d2i_logo.src = 'images/DTI full png.png'
-            
-          doc.text(
-                'SEND analysis tool', 2, 2)
-            
+          doc.addImage( d2i_logo, 'png', 6.6, 0.3, 1.2, 1)  
+                      
           doc.setFontSize(12)
-          
-            doc.text(
-              version_number, 4, 2)
-              .setFontSize(24)    
+
+          doc.text("Data to Insight is a national project commissioned by the ADCS,", 0.5, 0.9)
+          doc.text("DfE and Ofsted to help local authorities make better use of data.", 0.5, 1.1)
+
   
-  
+          // long text
+          doc.setTextColor(0, 0, 0)
           textlines = doc.setFont('helvetica')
-          .setFontSize(12)
+          
           .splitTextToSize(document.long_text.innerText, 7.25);
   
-          let verticalOffset = 3
+          let verticalOffset = 6
           doc.text(0.5, verticalOffset + 12 / 72, textlines)
           verticalOffset += (textlines.length + 0.5) * 12 / 72
 
