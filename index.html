@@ -374,20 +374,21 @@
           var doc = new jsPDF('a4', 'in');
           var pageGap = 10;
           doc.setFont('helvetica')
-          doc.setFontSize(12)
+          doc.setFontSize(40)
           
           var img = new Image()
           img.src = 'images/d2i_logo.png'
-          doc.addImage( img, 'png', 0.5, 1, 1, 1)
+          doc.addImage( img, 'png', 0.4, 1, 1, 1)
 
           var d2i_logo = new Image()
           d2i_logo.src = 'images/DTI full png.png'
             
           doc.text(
-              'SEND analysis tool', 2, 2)
-              .setFontSize(24)
+                'SEND analysis tool', 2, 2)
+            
+          doc.setFontSize(12)
           
-              doc.text(
+            doc.text(
               version_number, 4, 2)
               .setFontSize(24)    
   
@@ -411,7 +412,7 @@
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
-            doc.text(version_number, 4.3, 8)
+            doc.text(version_number, 4.3, 4)
             
             totals = canvas.toDataURL("image/png")
             const imgProps= doc.getImageProperties(totals);
@@ -564,7 +565,7 @@
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(open_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
             doc.addPage("a4")
-            });    
+            });     
 
           var closed_plan_lengths 
           html2canvas(document.getElementById("closed_plan_lengths"), {scale: 2})
