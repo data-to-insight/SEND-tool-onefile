@@ -25,7 +25,7 @@ try:
     ref_date = pd.to_datetime(refDateVal, format="%Y-%m-%d")
 
     days_to_ref_date = pd.to_datetime("today") - ref_date
-    days_to_ref_date = int(days_to_ref_date / pd.Timedelta(1, 'd'))
+    days_to_ref_date = int(days_to_ref_date / pd.Timedelta(1, "d"))
 
     timeframe = 365 + days_to_ref_date
 except:
@@ -774,6 +774,7 @@ def plan_length_plots(m4):
         closed_age_hist,
     )
 
+
 modules = {}
 for key, df in dfs.items():
     for module_name, column_list in module_columns.items():
@@ -856,6 +857,3 @@ js.document.journeys = journeys(modules["m2"], modules["m3"])
     js.document.closed_plan_length_ethnicity_hist,
     js.document.closed_plan_length_age_hist,
 ) = plan_length_plots(modules["m4"])
-
-
-
