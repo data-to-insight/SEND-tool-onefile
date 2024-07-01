@@ -30,15 +30,21 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="./index.html">Home</a>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item">
+            <a class="nav-link" href="about/about.html">About</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="./index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               About
             </a>
+            <li class="nav-item">
+              <a class="nav-link" href="about/about.html">About</a>
+            </li>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="about/instructions.html">Instructions for using the tool</a></li>
               <li><a class="dropdown-item" href="about/description.html">About the tool</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
         <li><a class="navbar-brand ms-auto" href="#">Data to Insight
           <img src="./images/d2i_logo.png" alt="Logo" width="20" height="auto" class="d-inline-block align-text-top">
@@ -49,9 +55,46 @@
     </div>
     </div>
     <section class="container">
-      <div class="m-3 p-5 bg-white text-black rounded py-5 px-2" id="long_text">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique senectus et netus et malesuada fames ac turpis. Nisl vel pretium lectus quam id. Mi sit amet mauris commodo quis imperdiet. Massa id neque aliquam vestibulum morbi blandit cursus risus at. Laoreet sit amet cursus sit amet dictum sit amet justo. Venenatis tellus in metus vulputate eu. Nunc sed blandit libero volutpat sed. Convallis a cras semper auctor. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tristique senectus et netus et malesuada fames ac turpis. Nisl vel pretium lectus quam id. Mi sit amet mauris commodo quis imperdiet. Massa id neque aliquam vestibulum morbi blandit cursus risus at. Laoreet sit amet cursus sit amet dictum sit amet justo. Venenatis tellus in metus vulputate eu. Nunc sed blandit libero volutpat sed. Convallis a cras semper auctor. Cras fermentum odio eu feugiat pretium nibh ipsum consequat nisl.</p>
+      <div class="m-3 p-5 bg-white text-black rounded py-5 px-2" id="intro_text">
+        <p>
+          This tool provides visualisations based on SEND data held by local authorities 
+          (LAs) in the standard format of the “SEN2” special educational needs survey. Until 
+          recently, the “SEN2” data was produced by LAs as aggregate data. The survey is now a
+          client-level survey, meaning that a standard client-level dataset is available 
+          for analysis by LAs. 
+        </p>
+        <p>
+          To get started, use the tool below to point at your local SEN2 CSVs (excel uploads are currently not supported, 
+          descriptions of file structure can be found on the 'Instructions for using the tool' page). You can 
+          then view the visualisations in your browser, or produce a PDF output. Give the tool
+          some time to run as the calculations and plot rendering is a little intensive. NOTE: if using a smaller
+          screen, you may need to zoom out of the page (normally ctrl + the minus button) until the plots align properly,
+          this is necessary for the PDF to correctly render, too.
+          Detailed instructions and further info can be found on the About page.  
+        </p>
+        <p>
+          This tool works in much the same way as other Data to Insight web tools; when you use 
+          the tool, no data leaves your local network. For more information on how this works, 
+          please see our <a href="https://www.datatoinsight.org/patch#:~:text=read/write%20permissions.-,How%20it%20works">detailed guide</a>. 
+          More information about how to contribute feedback, 
+          or access our learning resources, can be found <a href="https://www.datatoinsight.org/patch">here</a>.
+        </p>
+        <p>
+          You can view and contribute to the source code for this tool <a href="https://github.com/data-to-insight/SEND-tool">here</a>.
+        </p>
+    </div>
+    <div class="d-none" id="long_text">
+      <p>
+        This report provides visualisations based on SEND data held by local authorities 
+        (LAs) in the standard format of the “SEN2” special educational needs survey. Until 
+        recently, the “SEN2” data was produced by LAs as aggregate data. The survey is now a
+        client-level survey, meaning that a standard client-level dataset is available 
+        for analysis by LAs. 
+      </p>
+      <p>
+        You can visit the tool in browser https://data-to-insight.github.io/SEND-tool/
+        You can view and contribute to the source code for this tool https://github.com/data-to-insight/SEND-tool
+      </p>
     </div>
     </section>
     <section class="container" >

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link type="text/css", rel="stylesheet" href="style.css" /> 
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body class="bg-white">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark d-print-none">
+    <div class="container">
+      <a class="navbar-brand" href="#">SEND Analysis Tool</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="../index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="about/about.html">About</a>
+          </li>
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="./index.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              About
+            </a>
+            <li class="nav-item">
+              <a class="nav-link" href="about/about.html">About</a>
+            </li>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="about/instructions.html">Instructions for using the tool</a></li>
+              <li><a class="dropdown-item" href="about/description.html">About the tool</a></li>
+            </ul>
+          </li> -->
+        </ul>
+        <li><a class="navbar-brand ms-auto" href="#">Data to Insight
+          <img src="../images/d2i_logo.png" alt="Logo" width="20" height="auto" class="d-inline-block align-text-top">
+        </a></li>
+      </div>
+    </div>
+  </nav>
+
+      <div class="container">
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              What data to use
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>This tool uses the five modules of the SEN2 dataset. The column names in each module must be capitalised, spelled, and formatted correctly as they are used to identify each module within the code.
+                Further details can be seen in the explandable box below.
+              </p>
+              <p>The tool currently only accepts CSV data. Each module must be loaded in a seprate CSV with headers in the first row, and no empty rows/columns before headers or data.</p>
+              <p>We are working on XLSX support but at the moment this is not a feature.</p>
+              <p>To use the tool drag and drop your five CSVs into the upload box on the <a href="../index.html">main page</a> and click submit. The tool may take a couple of minutes to process the data and display visualisations.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Header/column names for each module
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              The column names for each module must appear exactly as is shown below (between quotation marks).
+              Modules cannot be ommited. Columns must be yyyy-mm-dd format using dashes (-) between elements and numberical, zero padded days/months.
+              <dl>
+                <dt>Module 1</dt>
+                <dd>"Forename", "Dob (ccyy-mm-dd)", "Gender","Ethnicity", "Postcode","UPN - Unique Pupil Number", "ULN - Young Persons Unique Learner Number", "UPN and ULN unavailable reason",</dd>
+                <dt>Module 2</dt>
+                <dd>"Person ID",
+                  "Requests Record ID",
+                  "Date Request Was Received",
+                  "Initial Request Whilst In RYA",
+                  "Request Outcome Date",
+                  "Request Outcome",
+                  "Request Mediation",
+                  "Request Tribunal",
+                  "Exported - Child Or Young Person Moves Out Of LA Before Assessment Is Completed",
+                  "New start date"</dd>
+                <dt>Module 3</dt>
+                <dd>"Person ID",
+                  "Requests Record ID",
+                  "Assessment Outcome To Issue EHCP",
+                  "Assessment Outcome Date",
+                  "Assessment Mediation",
+                  "Assessment Tribunal",
+                  "Other Mediation",
+                  "Other Tribunal",
+                  "Twenty Weeks Time Limit Exceptions Apply"</dd>  
+                <dt>Module 4</dt>
+                <dd>"Person ID",
+                  "Request Records ID",
+                  "EHC Plan Start Date",
+                  "Residential Settings",
+                  "Worked based learning activity",
+                  "Personal budget taken up",
+                  "Personal budget - organised arrangements",
+                  "Personal budget - direct payments",
+                  "Date EHC Plan Ceased",
+                  "Reason EHC Plan Ceased"</dd> 
+                <dt>Module 5</dt>   
+                <dd>"Person ID",
+                  "Request Records ID",
+                  "EHC Plan (Transfer)",
+                  "Residential Settings",
+                  "Worked based learning activity",
+                  "EHCP review decisions date",</dd>
+              </dl>
+
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Report pages
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+            <dl>
+              <dt>Total cohort breakdown</dt>
+                <dd>Total number of unique child IDs in the data, with breakdown by ethnicity, gender, and age.</dd>
+              <dt>EHCs ceased within the past year</dt>
+                <dd>EHC ceased  with a date within a year of the reference date with breakdown by ethnicity, gender, age, and reason for ending.</dd>
+              <dt>EHCs started within the past year</dt>
+                <dd>EHCs started with a date within a year of the reference date with breakdown by ethnicity, gender, and age.</dd>
+              <dt>Assessments completed within the past year</dt>
+                <dd>Assessment outcome dates within a year of the reference date with breakdown by ethnicity, gender, age, and outcome.</dd>
+              <dt>Closed assessment timeliness</dt>
+                <dd>The distribution of time between assessment request being recieved and completion date, shown using box plots, with breakdown by gender, age, and ethnicity.</dd>
+                <dd>This is calculated by merging module 1 and module 2 on "Person ID" and "Requests Record ID" to match rows, discarding empty rows, and finding time elapsed between request and outcome date.</dd>
+              <dt>Currently open assessment timeliness</dt>
+                <dd>Displays the distribution of timeliness for assessments with no outcome date with breakdown by ethnicity, gender, and age.</dd>
+                <dd>Calculated in the same way Closed assessment timeliness, but only taking rows with no outcome date, and instead using the reference date.</dd>
+              <dt>Requests in the past year</dt>
+                <dd>Requests in the year (number of non-null rows in the requests made column), with further breakdown by ethnicity, gender, and age.</dd>
+              <dt>Children appearing in lists multiple times</dt>
+                <dd>Child IDs appearing multiple time in requests/assessments modules.</dd>
+              <dt>Outcomes from requests journeys</dt>
+                <dd>Visualisation showing the number of children having different outcomes at each stage from request to EHCP, with bars at each section showing distribution per section
+                and bars between sections showing the distribution of children taking a given journey (the width of each bar representing the proportion of children having the exact same 
+                outcome at every stage). There is more info on this below.
+              </dd>
+              <dt>Open plan lengths</dt>
+                <dd>The amount of time plans with no close date in the data have been open at the time of the reference date. The x-axis is the amount of time plans have been open, the y-axis is the number of children in each plan-length bucket.</dd>
+                <dd>These charts are broken down by gender, age, and Ethnicity.</dd>
+              <dt>Closed plan lengths</dt>
+                <dd>These charts are the same as the open plan lengths, including gender, age, and ethnicity breakdown, with buckets shwoing the amount fo time between plans opening and closing.</dd>
+            </dl>    
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              Box plots and journey plots
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>Box plots are a useful way to visualise distributions of values. 
+                In box plots the upper and lower bounds of the box represent upper and lower quartiles, and the median is given by the line inside the box.
+                The lines outside the box are the highest and lowest values not considered to be statistical outliers.
+                Points displayed outside of these lines are statistical outliers.
+                See more on the box plots used <a href="https://plotly.com/python/box-plots/">here.</a></p>
+                <p>The journeys chart shows the breakdown of children from assessment request to outcome. 
+                 The sections of the chart reflect the column names in the modules, and the value given at each section is the value in the column it represents.
+                 For instance in request outcome, the Y section is children who have made a request for an assessment and have been granted an assessment.
+                 Each of these column sections shows the distribution of children with each outcome.
+                 From the left to the right, to each column section, you can see the bars between them showing how many children move from outcome to outcome.
+                 Each of these is sized according to the number of children who take a given journey of outcomes.
+                 As an illustration lets say that 75 children might have a Y for their request outcome, but only 40 of these have a completed assessment, and then only 30 of those have an EHCP.
+                 In this case, from the Request section bar of 30 would go across to Request Outcome "Y", Assessment Complete "Assessment Completed", and Assessment Outcome to Issue EHCP "Y".
+                 Its size then is all of the childrne who take a particular journey. That set of 75 children with a Request Outcome "Y" may be split into smaller bars including those who have not
+                 got a completed assessment but dont have an ECHP, and another bar of those hwo have not got a completed assessment and then cannot have an assessment outcome.
+                 
+                </p>
+            </div>
+          </div>
+        </div>
+   
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+              Errors
+            </button>
+          </h2>
+          <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>As the tool is still in development, if you have any unflagged errors, or the tools seems to be taking multiple minutes to run, the developer console it a good place to start looking.</p>    
+              <p>A guide on how to access the developer console in multiple different browsers can be seen: <a href="https://help.planday.com/en/articles/30207-how-to-open-the-developer-console-in-your-web-browser"> here.</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+              Using the plots in a report
+            </button>
+          </h2>
+          <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <p>There are two ways to use the tool to make a report. The first is to use the tool in browser, picking visualisations as needed for your 
+                own reporting needs. 
+                Simply hover over each plot and use the save icon to save the plot and then bring it into your report. 
+                The second is to use the "Save as PDF" which appears after generating the report. 
+                This option takes a little time as generating PDFs is rather intensive computationally, so give it a few minutes. You may have to
+                tell your browser to keep waiting for the page to respond a couple of times too.
+
+                NOTE: because of how PDFs render, when using a particularly small screen the report formatting might be a little off when using the 
+                'Save to PDF' button. If this is the case,
+                simply zoom out your screen a little (this can be done in most browsers using ctrl + the minus key) and re-generate the report. You'll
+                know if this has happened if the plot sides don't line up nicely with the title cards.
+              </p>    
+              Incorrect zoom with small screen
+              <img src="../images/imcorrect_zoom.png" class="img-thumbnail">
+              Correct zoom with small screen
+              <img src="../images/correct_zoom.png" class="img-thumbnail">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
