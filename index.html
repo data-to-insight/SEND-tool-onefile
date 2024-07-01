@@ -417,7 +417,7 @@
       function pdfFunction(){
           window.alert('Generating PDF, this may take some time. You can close this dialog box but please don’t leave the page. If your browser asks you if you want to keep waiting, please say yes.')
 
-          var doc = new jsPDF('a4', 'in');
+          var doc = new jsPDF('p','in','a4',  true);
           var pageGap = 10;
           doc.setFont('helvetica')
           doc.setFontSize(40)
@@ -475,7 +475,7 @@
             $("#pdfSpinner").removeClass('d-none');
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "1", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "1", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -485,7 +485,7 @@
             const imgProps= doc.getImageProperties(totals);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(totals, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "2", 'SLOW');
+            doc.addImage(totals, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "2", "FAST");
             doc.addPage("a4")
             });
 
@@ -494,7 +494,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "3", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "3", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -503,7 +503,7 @@
             const imgProps= doc.getImageProperties(ehcs_ceased);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(ehcs_ceased, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "4", 'SLOW');
+            doc.addImage(ehcs_ceased, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "4", "FAST");
             doc.addPage("a4")
             });
 
@@ -512,7 +512,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "5", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "5", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -521,7 +521,7 @@
             const imgProps= doc.getImageProperties(ehcs_started);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(ehcs_started, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "6", 'SLOW');
+            doc.addImage(ehcs_started, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "6", "FAST");
             // doc.save("plots.pdf");
             doc.addPage("a4")
             });  
@@ -531,7 +531,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "7", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "7", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -540,7 +540,7 @@
             const imgProps= doc.getImageProperties(assessments_completed);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(assessments_completed, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "8", 'SLOW');
+            doc.addImage(assessments_completed, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "8", "FAST");
             doc.addPage("a4")
             });  
 
@@ -549,7 +549,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "9", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "9", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -558,7 +558,7 @@
             const imgProps= doc.getImageProperties(completed_assessment_timelinness);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(completed_assessment_timelinness, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "10", 'SLOW');
+            doc.addImage(completed_assessment_timelinness, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "10", "FAST");
             doc.addPage("a4")
             });  
           
@@ -567,7 +567,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "11", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "11", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -576,7 +576,7 @@
             const imgProps= doc.getImageProperties(open_assessment_timelinness );
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(open_assessment_timelinness , 'PNG', 0, 0.75, pdfWidth, pdfHeight, "12", 'SLOW');
+            doc.addImage(open_assessment_timelinness , 'PNG', 0, 0.75, pdfWidth, pdfHeight, "12", "FAST");
             doc.addPage("a4")
             });              
 
@@ -585,7 +585,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "13", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "13", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -594,7 +594,7 @@
             const imgProps= doc.getImageProperties(requests_year);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(requests_year, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "14", 'SLOW');
+            doc.addImage(requests_year, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "14", "FAST");
             doc.addPage("a4")
             });  
           
@@ -603,7 +603,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "15", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "15", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -612,7 +612,7 @@
             const imgProps= doc.getImageProperties(multiples_and_journeys);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(multiples_and_journeys, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "16", 'SLOW');
+            doc.addImage(multiples_and_journeys, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "16", "FAST");
             doc.addPage("a4")
             });    
 
@@ -621,7 +621,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "17", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "17", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -630,7 +630,7 @@
             const imgProps= doc.getImageProperties(open_plan_lengths);
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-            doc.addImage(open_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "18", 'SLOW');
+            doc.addImage(open_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight, "18", "FAST");
             doc.addPage("a4")
             });     
 
@@ -639,7 +639,7 @@
           .then(function (canvas) {
             doc.setFillColor(33,37,41);
             doc.rect(0, 0, 8.7, 11.7, 'F');
-            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "19", 'SLOW') 
+            doc.addImage(img, 'png', 0.5, 0.15, 0.175, 0.35, "19", "FAST") 
             doc.setFontSize(12)
             doc.setTextColor(255, 255, 255)
             doc.text("Data to Insight: SEND analysis tool", 5.5, 0.4)
@@ -652,7 +652,7 @@
             saveText = "SEND Report: "
             saveText = saveText.concat(refDateVal)
             saveText = saveText.concat(".pdf")
-            doc.save(saveText);
+            doc.save(saveText, {compress:true});
             $("#pdfSpinner").addClass('d-none');
             });    
 
