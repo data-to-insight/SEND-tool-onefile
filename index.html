@@ -604,7 +604,7 @@
             const pdfWidth = doc.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
             doc.addImage(closed_plan_lengths, 'PNG', 0, 0.75, pdfWidth, pdfHeight);
-            doc.save("plots.pdf");
+            doc.save("SEND Report.pdf");
             $("#pdfSpinner").addClass('d-none');
             });    
 
