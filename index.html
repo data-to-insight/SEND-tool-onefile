@@ -415,7 +415,7 @@
       document.long_text = document.getElementById("long_text")
 
       function pdfFunction(){
-          window.alert('Generating PDF, this may take some time.')
+          window.alert('Generating PDF, this may take some time. You can close this dialog box but please don’t leave the page. If your browser asks you if you want to keep waiting, please say yes.')
 
           var doc = new jsPDF('a4', 'in');
           var pageGap = 10;
@@ -450,7 +450,7 @@
           img.src = 'images/d2i_logo.png'
           var d2i_logo = new Image()
           d2i_logo.src = 'images/DTI full png.png'
-          doc.addImage( d2i_logo, 'png', 6.6, 0.3, 1.2, 1, "0", "SLOW")  
+          doc.addImage( d2i_logo, 'png', 6.6, 0.3, 1.2, 1, "0", "FAST")  
                       
           doc.setFontSize(12)
 
