@@ -53,7 +53,7 @@ async function run_python() {
     dfs = {}
 
     if len(files) != 5:
-        js.alert("Wrong number of files uploaded, expected 5.")
+        js.alert("Wrong number of files uploaded, expected 5. See the 'About' page for more info.")
     
     if len(files) > 1:
         for i, v in enumerate(files):
