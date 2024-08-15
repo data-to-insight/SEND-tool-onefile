@@ -10,6 +10,7 @@ function run_analysis () {
     };
     reader.readAsText(file);
     window.files = csv_array
+    window.excel_file = csvFile.files
    })
    run_python();
 }
@@ -52,8 +53,8 @@ async function run_python() {
 
     dfs = {}
 
-    if len(files) != 5:
-        js.alert("Wrong number of files uploaded, expected 5. See the 'About' page for more info.")
+    #if len(files) != 5:
+    #    js.alert("Wrong number of files uploaded, expected 5. See the 'About' page for more info.")
     
     if len(files) > 1:
         for i, v in enumerate(files):
@@ -61,17 +62,8 @@ async function run_python() {
             js.console.log("csvs sucessfully read")
     elif len(files) == 1:
         
-        for d in files:
-            js.console.log(io.StringIO(d))
-            #wb = openpyxl.load_workbook(io.StringIO(v), data_only = True)
-            #for i in wb:
-            #    ws = wb.worksheets[i]
-            #    excel_data = ws.values
-            #    columns = next(excel_data)[0:]
-            #    df = pd.DataFrame(excel_data , columns=columns)
-            #    dfs[i] = df
-            dfs = pd.read_excel(d, engine='openpyxl')
-            js.console.log("Excel read")
+        dta = files[0]
+        js.console.log(dta)
     else:
         js.alert("Did you upload the correct files, more info in the instructions.")
 
