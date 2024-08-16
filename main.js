@@ -30,6 +30,7 @@ async function run_python() {
     await micropip.install('plotly==5.0.0')
     await micropip.install('openpyxl')
     import openpyxl
+    import xml.etree.ElementTree as ET
 
     import pandas as pd
     import js
@@ -46,6 +47,8 @@ async function run_python() {
 
     warnings.simplefilter(action="ignore", category=SettingWithCopyWarning)
 
+    input_type = None
+
     try:
         from js import files, refDateVal
     except:
@@ -60,10 +63,16 @@ async function run_python() {
         for i, v in enumerate(files):
             dfs[i] = pd.read_csv(io.StringIO(files[i]))
             js.console.log("csvs sucessfully read")
+            input_type = 'csv'
     elif len(files) == 1:
         
         dta = files[0]
         js.console.log(dta)
+        try:
+            root = ET.fromstring(dta)
+            input_type = 'xml'
+        except:
+            js.alert("Did you upload the correct files, more info in the instructions.")
     else:
         js.alert("Did you upload the correct files, more info in the instructions.")
 
