@@ -1174,6 +1174,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.total_count_indicator,
 ) = entire_cohort(modules["m1"])
 
+js.console.log('Entire cohort plots made')
 (
     js.document.ehc_ceased_indicator,
     js.document.ehc_ceased_gender_hist,
@@ -1181,6 +1182,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.ehc_ceased_age_hist,
     js.document.ehc_ceased_reason_pie,
 ) = ehc_ceased_year(modules["m4"])
+js.console.log('EHC ceased year plots made')
 
 (
     js.document.ehc_started_indicator,
@@ -1188,6 +1190,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.ehc_started_ethnicity_hist,
     js.document.ehc_started_age_hist,
 ) = ehc_starting_year(modules["m4"])
+js.console.log('EHC starting year plots made')
 
 (
     js.document.ass_completed_indicator,
@@ -1196,6 +1199,7 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.ass_completed_age_hist,
     js.document.ass_completed_reason_pie,
 ) = ass_completed_year(modules["m3"])
+js.console.log('EHC starting year plots made')
 
 (
     js.document.ass_open_timeframe_indicator,
@@ -1203,13 +1207,14 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.ass_open_timeframe_ethnicity_box,
     js.document.ass_open_timeframe_age_box,
 ) = open_ass_timeframes(modules["m2"], modules["m3"])
-
+js.console.log('Open assessments plots made')
 
 (
     js.document.ass_closed_timeframe_gender_box,
     js.document.ass_closed_timeframe_ethnicity_box,
     js.document.ass_closed_timeframe_age_box,
 ) = closed_ass_timeframes(modules["m2"], modules["m3"])
+js.console.log('Closed assessments plots made')
 
 (
     js.document.req_count_indicator,
@@ -1218,12 +1223,15 @@ modules["m2"], modules["m3"], modules["m4"], modules["m5"] = add_identifiers(
     js.document.req_age_box,
     req_pie,
 ) = requests_fn(modules["m2"])
+js.console.log('Requests plots made')
 
 js.document.multiple_m2, js.document.multiple_m3 = multiple_appearances(
     modules["m2"], modules["m3"]
 )
+js.console.log('Multiple appearances plots made')
 
 js.document.journeys = journeys(modules["m2"], modules["m3"])
+js.console.log('Journeys plots made')
 
 (
     js.document.open_plan_length_gender_hist,
@@ -1233,3 +1241,4 @@ js.document.journeys = journeys(modules["m2"], modules["m3"])
     js.document.closed_plan_length_ethnicity_hist,
     js.document.closed_plan_length_age_hist,
 ) = plan_length_plots(modules["m4"])
+js.console.log('Plan length plots made')
