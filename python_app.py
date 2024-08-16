@@ -1111,6 +1111,8 @@ def convert_for_sen2_tool(m1, m2, m3, m4, m5):
                    'm4':m4,
                    'm5':m5}
     
+    js.console.log(output_dict)
+    
     return output_dict
                     
 
@@ -1126,6 +1128,8 @@ def convert_data(root: ET.Element):
 # Main App
 ##############
 modules = {}
+
+js.console.log(f'Input type detected: {input_type}')
 
 if input_type == 'csv':
     for key, df in dfs.items():
