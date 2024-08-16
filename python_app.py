@@ -798,8 +798,8 @@ class XMLtoCSV():
 
     persons = pd.DataFrame(
         columns = [
-            'FamilyName',
-            'Firstname',
+            'Surname',
+            'Forename',
             'PersonBirthDate',
             'Sex',
             'Ethnicity',
