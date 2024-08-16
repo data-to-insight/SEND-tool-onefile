@@ -1088,18 +1088,21 @@ def convert_for_sen2_tool(m1, m2, m3, m4, m5):
                         'Sex':'Gender'},
                           inplace=True)
     
-    m2.rename(columns={'requests_id':'Requests Record ID',
+    m2.rename(columns={'child_id': 'Person ID',
+                       'requests_id':'Requests Record ID',
                        'RequestOutcome':'Request Outcome',
                        'RequestOutcomeDate':'Request Outcome Date',
                        'ReceivedDate':'Date Request Was Received'},
               inplace=True)
     
-    m3.rename(columns={'requests_id':'Requests Record ID',
+    m3.rename(columns={'child_id': 'Person ID',
+                       'requests_id':'Requests Record ID',
                        'AssessmentOutcome':'Assessment Outcome To Issue EHCP',
                        'AssessmentOutcomeDate':'Assessment Outcome Date'},
               inplace=True)
     
-    m4.rename(columns={'requests_id':'Requests Record ID',
+    m4.rename(columns={'child_id': 'Person ID',
+                       'requests_id':'Requests Record ID',
                        'StartDate':'EHC Plan Start Date',
                        'CeaseDate':'Date EHC Plan Ceased',
                        'CeaseReason':'Reason EHC Plan Ceased',},
