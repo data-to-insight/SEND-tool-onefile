@@ -72,6 +72,7 @@ async function run_python() {
         try:
             root = ET.fromstring(dta)
             input_type = 'xml'
+            js.window.input_type = input_type
             js.console.log('input type xml')
         except:
             js.alert("Did you upload the correct files, more info in the instructions.")
@@ -80,7 +81,7 @@ async function run_python() {
 
     `)
 
-    console.log(input_type)
+    console.log(window.input_type)
     // run main Python script
     await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
     pyodide.globals.get("fig")

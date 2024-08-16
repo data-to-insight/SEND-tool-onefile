@@ -1127,6 +1127,8 @@ def convert_data(root: ET.Element):
 ##############
 # Main App
 ##############
+
+input_type = js.window.input_type.to_py()
 modules = {}
 
 js.console.log(f'Input type detected: {input_type}')
