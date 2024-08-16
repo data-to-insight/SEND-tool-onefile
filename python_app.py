@@ -193,6 +193,7 @@ def box_for_categories(df, y):
 # Calculation functions
 def entire_cohort(df):
     gender, ethnicity, age = hist_for_categories(df)
+    js.console.log('got here')
 
     gender.update_layout(title="Entire cohort by gender")
     ethnicity.update_layout(title="Entire cohort ethnicity")
