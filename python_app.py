@@ -6,6 +6,7 @@ Plot national age/gender breakdown on age plot
 
 import pandas as pd
 import js
+
 # from js import files, postcode_data
 import pyodide_js
 import json
@@ -774,6 +775,7 @@ def plan_length_plots(m4):
         closed_age_hist,
     )
 
+
 ####################################
 # XML INGRESS
 ####################################
@@ -785,33 +787,28 @@ def get_values(xml_elements, table_dict: dict, xml_block):
             table_dict[element] = xml_block.find(element).text
         except:
             table_dict[element] = pd.NA
-    return table_dict 
+    return table_dict
 
-class XMLtoCSV():
-    header = pd.DataFrame(
-        columns = [
-            'Collection',
-            'Year',
-            'Reference Date'
-        ]
-    )
+
+class XMLtoCSV:
+    header = pd.DataFrame(columns=["Collection", "Year", "Reference Date"])
 
     persons = pd.DataFrame(
-        columns = [
-            'Surname',
-            'Forename',
-            'PersonBirthDate',
-            'Sex',
-            'Ethnicity',
-            'PostCode',
-            'UPN',
-            'UniqueLearnerNumber',
-            'UPNunknown',
+        columns=[
+            "Surname",
+            "Forename",
+            "PersonBirthDate",
+            "Sex",
+            "Ethnicity",
+            "PostCode",
+            "UPN",
+            "UniqueLearnerNumber",
+            "UPNunknown",
         ]
     )
 
     requests = pd.DataFrame(
-        columns = [
+        columns=[
             "ReceivedDate",
             "RYA",
             "RequestOutcomeDate",
@@ -835,68 +832,64 @@ class XMLtoCSV():
     )
 
     named_plan = pd.DataFrame(
-        columns = [
-            'StartDate',
-            'URN',
-            'UKPRN',
-            'SENSetting', 
-            'PlacementRank',
-            'SENunitIndicator',
-            'ResourcedProvisionIndicator',
-            'PlanRes',
-            'PlanWPB',
-            'PB',
-            'OA',
-            'DP',
-            'CeaseDate',
-            'CeaseReason'
+        columns=[
+            "StartDate",
+            "URN",
+            "UKPRN",
+            "SENSetting",
+            "PlacementRank",
+            "SENunitIndicator",
+            "ResourcedProvisionIndicator",
+            "PlanRes",
+            "PlanWPB",
+            "PB",
+            "OA",
+            "DP",
+            "CeaseDate",
+            "CeaseReason",
         ]
     )
 
     active_plans = pd.DataFrame(
-        columns = [
-            'TransferLA',
-            'URN',
-            'UKPRN',
-            'SENSetting',
-            'SENSettingOther',
-            'PlacementRank',
-            'EntryDate',
-            'LeavingDate',
-            'SENunitIndicator',
-            'ResourcedProvisionIndicator',
-            'RES',
-            'WPB',
-            'SENtype',
-            'SENtypeRank',
-            'ReviewMeeting',
-            'ReviewOutcome',
-            'LastReview'
+        columns=[
+            "TransferLA",
+            "URN",
+            "UKPRN",
+            "SENSetting",
+            "SENSettingOther",
+            "PlacementRank",
+            "EntryDate",
+            "LeavingDate",
+            "SENunitIndicator",
+            "ResourcedProvisionIndicator",
+            "RES",
+            "WPB",
+            "SENtype",
+            "SENtypeRank",
+            "ReviewMeeting",
+            "ReviewOutcome",
+            "LastReview",
         ]
     )
 
-    
-
     def __init__(self, root):
         self.child_id = 0
-        header = root.find('Header')
+        header = root.find("Header")
         self.Header = self.create_header(header)
         self.name = None
 
-        children  = root.find('Persons')
+        children = root.find("Persons")
 
-        for child in children.findall('Person'):      
+        for child in children.findall("Person"):
             self.create_child(child)
 
-        self.named_plan = self.named_plan[self.named_plan['StartDate'].notna()].copy()
-
- 
+        self.named_plan = self.named_plan[self.named_plan["StartDate"].notna()].copy()
 
     def create_header(self, header):
 
         header_dict = {}
-        collection_details = header.find('CollectionDetails')
-        collection_elements = ['Collection', 'Year', 'ReferenceDate'] 
+        collection_details = header.find("CollectionDetails")
+        collection_elements = ["Collection", "Year", "ReferenceDate"]
         header_dict = get_values(collection_elements, header_dict, collection_details)
 
         source = header.find("Source")
@@ -911,42 +904,39 @@ class XMLtoCSV():
         header_dict = get_values(source_elements, header_dict, source)
 
         header_df = pd.DataFrame.from_dict([header_dict])
-        return header_df    
-    
+        return header_df
+
     def create_child(self, person):
         self.create_person(person)
         self.create_requests(person)
 
-
     def create_person(self, child):
-        forename = child.find('Forename').text
-        surname = child.find('Surname').text
-        self.name = f'{forename} {surname}'
+        forename = child.find("Forename").text
+        surname = child.find("Surname").text
+        self.name = f"{forename} {surname}"
         self.child_id += 1
         person_dict = {}
         elements = self.persons.columns
         person_dict = get_values(elements, person_dict, child)
-        person_dict['child_id'] = self.child_id
+        person_dict["child_id"] = self.child_id
 
         persons_df = pd.DataFrame.from_dict([person_dict])
-        self.persons = pd.concat(
-            [self.persons, persons_df], ignore_index=True
-        )
+        self.persons = pd.concat([self.persons, persons_df], ignore_index=True)
 
     def create_requests(self, child):
         self.requests_id = 0
         elements = self.requests.columns
         requests_list = []
-        
-        requests = child.findall('Requests')
+
+        requests = child.findall("Requests")
         for request in requests:
             requests_dict = {}
             self.requests_id += 1
 
             requests_dict = get_values(elements, requests_dict, request)
 
-            requests_dict['child_id'] = self.child_id
-            requests_dict['requests_id'] = self.requests_id
+            requests_dict["child_id"] = self.child_id
+            requests_dict["requests_id"] = self.requests_id
 
             requests_list.append(requests_dict)
 
@@ -954,18 +944,14 @@ class XMLtoCSV():
             self.create_active_plans(request)
 
         requests_df = pd.DataFrame(requests_list)
-        self.requests = pd.concat(
-            [self.requests, requests_df], ignore_index=True
-        )
+        self.requests = pd.concat([self.requests, requests_df], ignore_index=True)
 
-        
-    
     def create_assessments(self, request):
         assessment_list = []
         elements = self.assessments.columns
         self.assessment_id = 0
 
-        assessments = request.findall('Assessment')
+        assessments = request.findall("Assessment")
 
         for assessment in assessments:
 
@@ -974,18 +960,17 @@ class XMLtoCSV():
             assessment_dict = {}
 
             assessment_dict = get_values(elements, assessment_dict, assessment)
-            
-            assessment_dict['name'] = self.name
-            assessment_dict['child_id'] = self.child_id
-            assessment_dict['requests_id'] = self.requests_id
-            assessment_dict['assessment_id'] = self.assessment_id
-            
+
+            assessment_dict["name"] = self.name
+            assessment_dict["child_id"] = self.child_id
+            assessment_dict["requests_id"] = self.requests_id
+            assessment_dict["assessment_id"] = self.assessment_id
+
             assessment_list.append(assessment_dict)
 
             # named_plans
             self.create_named_plan(assessment)
 
-        
         assessment_df = pd.DataFrame(assessment_list)
         self.assessments = pd.concat(
             [self.assessments, assessment_df], ignore_index=True
@@ -993,40 +978,44 @@ class XMLtoCSV():
 
     def create_named_plan(self, assessment):
 
-        named_plan_elements= [
-            'StartDate',
-            'PlanRes',
-            'PlanWPB',
-            'PB',
-            'OA',
-            'DP',
-            'CeaseDate',
-            'CeaseReason'
-            ]
+        named_plan_elements = [
+            "StartDate",
+            "PlanRes",
+            "PlanWPB",
+            "PB",
+            "OA",
+            "DP",
+            "CeaseDate",
+            "CeaseReason",
+        ]
         named_plan_dict = {}
 
         plan_detail_elements = [
-            'URN',
-            'UKPRN',
-            'SENSetting',
-            'SENSettingOther',
-            'PlacementRank',
-            'SENunitIndicator',
-            'ResourcedProvisionIndicator'
+            "URN",
+            "UKPRN",
+            "SENSetting",
+            "SENSettingOther",
+            "PlacementRank",
+            "SENunitIndicator",
+            "ResourcedProvisionIndicator",
         ]
 
-        named_plan_locs = assessment.find('NamedPlan')
+        named_plan_locs = assessment.find("NamedPlan")
         plan_detail_list = []
-        
+
         if named_plan_locs:
-            for plan_detail in named_plan_locs.findall('PlanDetail'):
-                named_plan_dict = get_values(named_plan_elements, named_plan_dict, named_plan_locs)
-                
-                named_plan_dict = get_values(plan_detail_elements, named_plan_dict, plan_detail)
-                named_plan_dict['name'] = self.name
-                named_plan_dict['child_id'] = self.child_id
-                named_plan_dict['requests_id'] = self.requests_id
-                named_plan_dict['assessment_id'] = self.assessment_id
+            for plan_detail in named_plan_locs.findall("PlanDetail"):
+                named_plan_dict = get_values(
+                    named_plan_elements, named_plan_dict, named_plan_locs
+                )
+
+                named_plan_dict = get_values(
+                    plan_detail_elements, named_plan_dict, plan_detail
+                )
+                named_plan_dict["name"] = self.name
+                named_plan_dict["child_id"] = self.child_id
+                named_plan_dict["requests_id"] = self.requests_id
+                named_plan_dict["assessment_id"] = self.assessment_id
 
                 plan_detail_list.append(named_plan_dict)
 
@@ -1037,43 +1026,46 @@ class XMLtoCSV():
 
     def create_active_plans(self, request):
         active_plans_list = []
-        
+
         active_plan_elements = [
-            'TransferLA',
-            'RES',
-            'WPB',
-            'ReviewMeeting',
-            'ReviewOutcome',
-            'LastReview'
+            "TransferLA",
+            "RES",
+            "WPB",
+            "ReviewMeeting",
+            "ReviewOutcome",
+            "LastReview",
         ]
         placement_detail_elements = [
-            'URN',
-            'SENSetting',
-            'SENSettingOther',
-            'PlacementRank',
-            'EntryDate',
-            'LeavingDate',
-            'SENunitIndicator',
-            'ResourcedProvisionIndicator',
+            "URN",
+            "SENSetting",
+            "SENSettingOther",
+            "PlacementRank",
+            "EntryDate",
+            "LeavingDate",
+            "SENunitIndicator",
+            "ResourcedProvisionIndicator",
         ]
-        sen_need_elements = [
-            'SENtype',
-            'SENtypeRank'
-        ]
+        sen_need_elements = ["SENtype", "SENtypeRank"]
 
-        active_plan_locs = request.find('ActivePlans')
+        active_plan_locs = request.find("ActivePlans")
         if active_plan_locs:
-            placement_detail_locs = active_plan_locs.findall('PlacementDetail')
-            sen_need_locs = active_plan_locs.find('SENneed')
-            
-            for placement_detail in placement_detail_locs:  
-                active_plans_dict = {} 
-                active_plans_dict = get_values(active_plan_elements, active_plans_dict, active_plan_locs)
-                active_plans_dict = get_values(placement_detail_elements, active_plans_dict, placement_detail)
-                active_plans_dict = get_values(sen_need_elements, active_plans_dict, sen_need_locs)
-                active_plans_dict['name'] = self.name
-                active_plans_dict['child_id'] = self.child_id
-                active_plans_dict['requests_id'] = self.requests_id
+            placement_detail_locs = active_plan_locs.findall("PlacementDetail")
+            sen_need_locs = active_plan_locs.find("SENneed")
+
+            for placement_detail in placement_detail_locs:
+                active_plans_dict = {}
+                active_plans_dict = get_values(
+                    active_plan_elements, active_plans_dict, active_plan_locs
+                )
+                active_plans_dict = get_values(
+                    placement_detail_elements, active_plans_dict, placement_detail
+                )
+                active_plans_dict = get_values(
+                    sen_need_elements, active_plans_dict, sen_need_locs
+                )
+                active_plans_dict["name"] = self.name
+                active_plans_dict["child_id"] = self.child_id
+                active_plans_dict["requests_id"] = self.requests_id
 
                 active_plans_list.append(active_plans_dict)
 
@@ -1082,49 +1074,62 @@ class XMLtoCSV():
                 [self.active_plans, active_plan_df], ignore_index=True
             )
 
+
 def convert_for_sen2_tool(m1, m2, m3, m4, m5):
-    m1.rename(columns={'child_id': 'Person ID',
-                        'PersonBirthDate': 'Dob (ccyy-mm-dd)',
-                        'Sex':'Gender'},
-                          inplace=True)
-    
-    m2.rename(columns={'child_id': 'Person ID',
-                       'requests_id':'Requests Record ID',
-                       'RequestOutcome':'Request Outcome',
-                       'RequestOutcomeDate':'Request Outcome Date',
-                       'ReceivedDate':'Date Request Was Received'},
-              inplace=True)
-    
-    m3.rename(columns={'child_id': 'Person ID',
-                       'requests_id':'Requests Record ID',
-                       'AssessmentOutcome':'Assessment Outcome To Issue EHCP',
-                       'AssessmentOutcomeDate':'Assessment Outcome Date'},
-              inplace=True)
-    
-    m4.rename(columns={'child_id': 'Person ID',
-                       'requests_id':'Requests Record ID',
-                       'StartDate':'EHC Plan Start Date',
-                       'CeaseDate':'Date EHC Plan Ceased',
-                       'CeaseReason':'Reason EHC Plan Ceased',},
-              inplace=True)
-    
-    output_dict = {'m1':m1,
-                   'm2':m2,
-                   'm3':m3,
-                   'm4':m4,
-                   'm5':m5}
-    
+    m1.rename(
+        columns={
+            "child_id": "Person ID",
+            "PersonBirthDate": "Dob (ccyy-mm-dd)",
+            "Sex": "Gender",
+        },
+        inplace=True,
+    )
+
+    m2.rename(
+        columns={
+            "child_id": "Person ID",
+            "requests_id": "Requests Record ID",
+            "RequestOutcome": "Request Outcome",
+            "RequestOutcomeDate": "Request Outcome Date",
+            "ReceivedDate": "Date Request Was Received",
+        },
+        inplace=True,
+    )
+
+    m3.rename(
+        columns={
+            "child_id": "Person ID",
+            "requests_id": "Requests Record ID",
+            "AssessmentOutcome": "Assessment Outcome To Issue EHCP",
+            "AssessmentOutcomeDate": "Assessment Outcome Date",
+        },
+        inplace=True,
+    )
+
+    m4.rename(
+        columns={
+            "child_id": "Person ID",
+            "requests_id": "Requests Record ID",
+            "StartDate": "EHC Plan Start Date",
+            "CeaseDate": "Date EHC Plan Ceased",
+            "CeaseReason": "Reason EHC Plan Ceased",
+        },
+        inplace=True,
+    )
+
+    m5.rename(columns={"child_id": "Person ID"})
+
+    output_dict = {"m1": m1, "m2": m2, "m3": m3, "m4": m4, "m5": m5}
+
     js.console.log(output_dict)
-    
+
     return output_dict
-                    
 
 
 def convert_data(root: ET.Element):
     datafiles = XMLtoCSV(root)
 
     return datafiles
-
 
 
 ##############
@@ -1134,19 +1139,21 @@ def convert_data(root: ET.Element):
 
 modules = {}
 
-if input_type == 'csv':
+if input_type == "csv":
     modules = {}
     for key, df in dfs.items():
         for module_name, column_list in module_columns.items():
             if list(df.columns) == column_list:
                 modules[module_name] = df
-elif input_type == 'xml':   
+elif input_type == "xml":
     data_files = convert_data(root)
-    modules = convert_for_sen2_tool(data_files.persons,
-                                data_files.requests,
-                                data_files.assessments,
-                                data_files.named_plan,
-                                data_files.active_plans)
+    modules = convert_for_sen2_tool(
+        data_files.persons,
+        data_files.requests,
+        data_files.assessments,
+        data_files.named_plan,
+        data_files.active_plans,
+    )
 else:
     js.alert("Did you upload the correct files, more info in the instructions.")
 
