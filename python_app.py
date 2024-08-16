@@ -1117,7 +1117,7 @@ def convert_for_sen2_tool(m1, m2, m3, m4, m5):
         inplace=True,
     )
 
-    m5.rename(columns={"child_id": "Person ID"})
+    m5.rename(columns={"child_id": "Person ID"}, inplace=True)
 
     output_dict = {"m1": m1, "m2": m2, "m3": m3, "m4": m4, "m5": m5}
 
