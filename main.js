@@ -83,7 +83,7 @@ async function run_python() {
 
     console.log(window.input_type)
     // run main Python script
-    await pyodide.runPythonAsync(await (await fetch("https://raw.githubusercontent.com/WillLP-code/pyodide-test/main/python_app.py")).text());
+    await pyodide.runPythonAsync(await (await fetch('https://raw.githubusercontent.com/data-to-insight/SEND-tool/main/python_app.py')).text());
     pyodide.globals.get("fig")
 
 // document.getElementById("print").disabled = false

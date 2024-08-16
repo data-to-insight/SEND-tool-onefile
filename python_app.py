@@ -6,7 +6,7 @@ Plot national age/gender breakdown on age plot
 
 import pandas as pd
 import js
-from js import files, postcode_data
+# from js import files, postcode_data
 import pyodide_js
 import json
 import io
@@ -1134,6 +1134,7 @@ modules = {}
 js.console.log(f'Input type detected: {input_type}')
 
 if input_type == 'csv':
+    modules = {}
     for key, df in dfs.items():
         for module_name, column_list in module_columns.items():
             if list(df.columns) == column_list:
