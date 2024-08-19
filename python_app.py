@@ -280,7 +280,7 @@ def ehc_starting_year(df):
     """
     df = df[df["EHC Plan Start Date"].notna()]
     df["EHC Plan Start Date"] = pd.to_datetime(
-        df["EHC Plan Start Date"], format="%d/%m/%Y", errors="coerce"
+        df["EHC Plan Start Date"], format="%Y-%m-%d", errors="coerce"
     )
     df["Time since EHC Started"] = np.datetime64("today") - df["EHC Plan Start Date"]
     ehc_started_in_year = df[
@@ -318,7 +318,7 @@ def ass_completed_year(df):
     """
     df_completed = df[df["Assessment Outcome Date"].notna()]
     df_completed["Time Since Ass Completion"] = np.datetime64("today") - pd.to_datetime(
-        df_completed["Assessment Outcome Date"], format="%d/%m/%Y", errors="coerce"
+        df_completed["Assessment Outcome Date"], format="%Y-%m-%d", errors="coerce"
     )
     ass_this_year = df_completed[
         df_completed["Time Since Ass Completion"] <= pd.Timedelta(timeframe, "d")
@@ -388,10 +388,10 @@ def closed_ass_timeframes(df1, df2):
     )
 
     df["Date Request Was Received"] = pd.to_datetime(
-        df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
+        df["Date Request Was Received"], format="%Y-%m-%d", errors="coerce"
     )
     df["Assessment Outcome Date"] = pd.to_datetime(
-        df["Assessment Outcome Date"], format="%d/%m/%Y", errors="coerce"
+        df["Assessment Outcome Date"], format="%Y-%m-%d", errors="coerce"
     )
     df = df[
         (df["Assessment Outcome Date"].notna())
@@ -465,7 +465,7 @@ def open_ass_timeframes(df1, df2):
 
     df = df[df["Assessment Outcome Date"].isna()]
     df["Date Request Was Received"] = pd.to_datetime(
-        df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
+        df["Date Request Was Received"], format="%Y-%m-%d", errors="coerce"
     )
     df["open_ass_timeliness"] = (
         np.datetime64("today") - df["Date Request Was Received"]
@@ -497,10 +497,10 @@ def open_ass_timeframes(df1, df2):
 def requests_fn(df):
     df = df[df["Date Request Was Received"].notna()]
     df["Date Request Was Received"] = pd.to_datetime(
-        df["Date Request Was Received"], format="%d/%m/%Y", errors="coerce"
+        df["Date Request Was Received"], format="%Y-%m-%d", errors="coerce"
     )
     df["Request Outcome Date"] = pd.to_datetime(
-        df["Request Outcome Date"], format="%d/%m/%y", errors="coerce"
+        df["Request Outcome Date"], format="%Y-%m-%d", errors="coerce"
     )
 
     req_timeliness_df = df[df["Request Outcome Date"].notna()]
@@ -639,10 +639,10 @@ def journeys(m2, m3):
 
 def plan_length_plots(m4):
     m4["EHC Plan Start Date"] = pd.to_datetime(
-        m4["EHC Plan Start Date"], format="%d/%m/%Y"
+        m4["EHC Plan Start Date"], format="%Y-%m-%d"
     )
     m4["Date EHC Plan Ceased"] = pd.to_datetime(
-        m4["Date EHC Plan Ceased"], format="%d/%m/%Y"
+        m4["Date EHC Plan Ceased"], format="%Y-%m-%d"
     )
 
     df_open = m4[m4["Date EHC Plan Ceased"].isna() & m4["EHC Plan Start Date"].notna()]
