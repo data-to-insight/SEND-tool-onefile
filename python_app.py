@@ -134,7 +134,7 @@ def add_identifiers(identifiers, m2, m3, m4, m5):
          'F':'Female'}
     )
     identifiers["Age"] = pd.to_datetime("today") - pd.to_datetime(
-        identifiers["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
+        identifiers["Dob (ccyy-mm-dd)"], format="%Y-%m-%d", errors="coerce"
     )
     identifiers["Age"] = round((identifiers["Age"] / np.timedelta64(1, "Y")))
     identifiers["Age Group"] = identifiers["Age"].apply(age_buckets)
