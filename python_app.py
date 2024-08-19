@@ -126,7 +126,12 @@ def timeliness_buckets(time_delta):
 
 def add_identifiers(identifiers, m2, m3, m4, m5):
     identifiers["Gender"] = identifiers["Gender"].map(
-        {1: "Male", 2: "Female", 0: "Not Stated", 9: "Neither"}
+        {1: "Male", 
+         2: "Female", 
+         0: "Not Stated", 
+         9: "Neither",
+         'M':'Male', 
+         'F':'Female'}
     )
     identifiers["Age"] = pd.to_datetime("today") - pd.to_datetime(
         identifiers["Dob (ccyy-mm-dd)"], format="%d/%m/%Y", errors="coerce"
