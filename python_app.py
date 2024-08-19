@@ -1077,6 +1077,13 @@ class XMLtoCSV:
 
 
 def convert_for_sen2_tool(m1, m2, m3, m4, m5):
+
+    m1.replace(['', '<NA>'], pd.NA, inplace=True)
+    m2.replace(['', '<NA>'], pd.NA, inplace=True)
+    m3.replace(['', '<NA>'], pd.NA, inplace=True)
+    m4.replace(['', '<NA>'], pd.NA, inplace=True)
+    m5.replace(['', '<NA>'], pd.NA, inplace=True)
+    
     m1.rename(
         columns={
             "child_id": "Person ID",
